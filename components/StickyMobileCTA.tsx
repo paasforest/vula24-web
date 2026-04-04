@@ -6,10 +6,10 @@ export function StickyMobileCTA() {
   return (
     <div className="fixed bottom-0 left-0 right-0 z-40 md:hidden">
       <Link
-        href="/#request"
+        href="#request"
         className="flex items-center justify-center gap-2 bg-gold text-background font-heading font-bold py-4 px-6 w-full hover:opacity-90 transition-opacity"
       >
-        Find a Locksmith
+        Get Help Now
         <svg
           width="20"
           height="20"
