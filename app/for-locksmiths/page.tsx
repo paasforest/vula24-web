@@ -37,8 +37,8 @@ export default function ForLocksmithsPage() {
             Simple monthly plans. No hidden fees.
           </h2>
           <p className="text-muted-foreground text-center mb-12 max-w-2xl mx-auto">
-            Pay one flat monthly fee plus a small platform fee added on top of
-            each job. You always earn what you set.
+            Pay one flat monthly fee plus a 25% platform fee added on top of
+            each job. You always earn your full set price.
           </p>
 
           <div className="grid md:grid-cols-2 gap-8 max-w-3xl mx-auto mb-8">
