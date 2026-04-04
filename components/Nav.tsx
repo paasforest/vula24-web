@@ -5,16 +5,18 @@ import Link from 'next/link'
 import { cn } from '@/lib/utils'
 import { Logo } from './Logo'
 import { GoldButton } from './GoldButton'
+import { LOCKSMITH_PORTAL_HREF, LOCKSMITH_SIGNUP_HREF } from '@/lib/constants'
 
 /** Main site header links — keep in sync with routes under `app/` */
-const NAV_LINKS = [
+const NAV_LINKS: { label: string; href: string }[] = [
   { label: 'How It Works', href: '/how-it-works' },
-  { label: 'Coverage', href: '/coverage' },
   { label: 'Pricing', href: '/pricing' },
   { label: 'For Locksmiths', href: '/for-locksmiths' },
   { label: 'About', href: '/about' },
   { label: 'Contact', href: '/contact' },
-] as const
+  { label: 'Login', href: LOCKSMITH_PORTAL_HREF },
+  { label: 'Sign up', href: LOCKSMITH_SIGNUP_HREF },
+]
 
 export function Nav() {
   const [isOpen, setIsOpen] = useState(false)
