@@ -5,17 +5,13 @@ import Link from 'next/link'
 import { cn } from '@/lib/utils'
 import { Logo } from './Logo'
 import { GoldButton } from './GoldButton'
-import { LOCKSMITH_PORTAL_HREF, LOCKSMITH_SIGNUP_HREF } from '@/lib/constants'
 
 /** Main site header links — keep in sync with routes under `app/` */
 const NAV_LINKS: { label: string; href: string }[] = [
   { label: 'How It Works', href: '/how-it-works' },
   { label: 'Pricing', href: '/pricing' },
   { label: 'For Locksmiths', href: '/for-locksmiths' },
-  { label: 'About', href: '/about' },
   { label: 'Contact', href: '/contact' },
-  { label: 'Login', href: LOCKSMITH_PORTAL_HREF },
-  { label: 'Sign up', href: LOCKSMITH_SIGNUP_HREF },
 ]
 
 export function Nav() {
@@ -37,11 +33,17 @@ export function Nav() {
                 {link.label}
               </Link>
             ))}
-            <GoldButton label="Find a Locksmith" href="/#request" size="sm" />
+            <Link
+              href="/for-locksmiths/account"
+              className="text-xs text-muted-foreground hover:text-foreground transition-colors"
+            >
+              Partner Login
+            </Link>
+            <GoldButton label="Get Help Now" href="/#request" size="sm" />
           </div>
 
           <div className="flex md:hidden items-center gap-3">
-            <GoldButton label="Find a Locksmith" href="/#request" size="sm" />
+            <GoldButton label="Get Help Now" href="/#request" size="sm" />
             <button
               onClick={() => setIsOpen(!isOpen)}
               className="p-2 text-foreground"
@@ -74,17 +76,28 @@ export function Nav() {
           isOpen ? 'max-h-[28rem] opacity-100' : 'max-h-0 opacity-0'
         )}
       >
-        <div className="px-4 py-4 space-y-3">
-          {NAV_LINKS.map((link) => (
+        <div className="px-4 py-4">
+          <div className="space-y-3">
+            {NAV_LINKS.map((link) => (
+              <Link
+                key={link.label}
+                href={link.href}
+                onClick={() => setIsOpen(false)}
+                className="block text-muted-foreground hover:text-foreground transition-colors text-base font-medium py-2"
+              >
+                {link.label}
+              </Link>
+            ))}
+          </div>
+          <div className="border-t border-border mt-3 pt-3">
             <Link
-              key={link.label}
-              href={link.href}
+              href="/for-locksmiths/account"
               onClick={() => setIsOpen(false)}
-              className="block text-muted-foreground hover:text-foreground transition-colors text-base font-medium py-2"
+              className="text-xs text-muted-foreground hover:text-foreground transition-colors"
             >
-              {link.label}
+              Partner Login
             </Link>
-          ))}
+          </div>
         </div>
       </div>
     </nav>
