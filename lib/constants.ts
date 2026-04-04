@@ -76,14 +76,6 @@ export const PRICING = [
   },
 ];
 
-export const NAV_LINKS = [
-  { label: "How It Works", href: "/how-it-works" },
-  { label: "Coverage", href: "/coverage" },
-  { label: "For Locksmiths", href: "/for-locksmiths" },
-  { label: "About", href: "/about" },
-  { label: "Contact", href: "/contact" },
-];
-
 export const HEARD_ABOUT_OPTIONS = [
   { value: "", label: "Select an option" },
   { value: "google", label: "Google" },

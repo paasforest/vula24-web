@@ -5,7 +5,17 @@ import Link from 'next/link'
 import { cn } from '@/lib/utils'
 import { Logo } from './Logo'
 import { GoldButton } from './GoldButton'
-import { LOCKSMITH_LOGIN_URL, NAV_LINKS } from '@/lib/constants'
+import { LOCKSMITH_LOGIN_URL } from '@/lib/constants'
+
+/** Main site header links — keep in sync with routes under `app/` */
+const NAV_LINKS = [
+  { label: 'How It Works', href: '/how-it-works' },
+  { label: 'Coverage', href: '/coverage' },
+  { label: 'Pricing', href: '/pricing' },
+  { label: 'For Locksmiths', href: '/for-locksmiths' },
+  { label: 'About', href: '/about' },
+  { label: 'Contact', href: '/contact' },
+] as const
 
 export function Nav() {
   const [isOpen, setIsOpen] = useState(false)
@@ -21,7 +31,7 @@ export function Nav() {
           <div className="hidden md:flex items-center gap-6">
             {NAV_LINKS.map((link) => (
               <Link
-                key={link.href}
+                key={link.label}
                 href={link.href}
                 className="text-muted-foreground hover:text-foreground transition-colors text-sm font-medium"
               >
@@ -74,7 +84,7 @@ export function Nav() {
         <div className="px-4 py-4 space-y-3">
           {NAV_LINKS.map((link) => (
             <Link
-              key={link.href}
+              key={link.label}
               href={link.href}
               onClick={() => setIsOpen(false)}
               className="block text-muted-foreground hover:text-foreground transition-colors text-base font-medium py-2"
