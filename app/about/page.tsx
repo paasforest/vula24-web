@@ -5,43 +5,26 @@ import { GoldButton } from '@/components/GoldButton'
 import { LOCKSMITH_PORTAL_HREF } from '@/lib/constants'
 
 export const metadata: Metadata = {
-  title: 'Vula24 — About | Lead generation for locksmiths',
+  title: 'Vula24 — About | Built in South Africa',
   description:
-    'Vula24 connects customers with locksmiths through SMS leads. Built in South Africa for independent professionals.',
+    'Vula24 connects customers with verified locksmiths across Gauteng and Western Cape. Fast, trusted, available 24/7.',
 }
 
 const values = [
   {
-    title: 'Clarity',
+    title: 'Speed',
     description:
-      'We are upfront that Vula24 is a lead generation service — not a locksmith brand. Locksmiths on the network are independent owners who subscribe for SMS leads.',
-    icon: (
-      <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-        <circle cx="12" cy="12" r="10" />
-        <path d="M12 16v-4M12 8h.01" />
-      </svg>
-    ),
+      'When you are locked out, every minute counts. We built Vula24 around fast response — connecting you with help in minutes, not hours.',
   },
   {
     title: 'Trust',
     description:
-      'Profiles, reviews and verification help customers choose with confidence. Professionals build reputation on the platform over time.',
-    icon: (
-      <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
-        <path d="M9 12l2 2 4-4" />
-      </svg>
-    ),
+      'Every locksmith on our network is verified and rated by real customers. You always know who is coming.',
   },
   {
-    title: 'Independence',
+    title: 'Reliability',
     description:
-      'You set your coverage, your prices and which jobs you take. The platform connects demand with supply — it does not replace your business.',
-    icon: (
-      <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-        <path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83" />
-      </svg>
-    ),
+      'Available 24 hours a day, 7 days a week. Emergencies do not keep office hours and neither do we.',
   },
 ]
 
@@ -53,31 +36,13 @@ export default function AboutPage() {
       <section className="pt-24 pb-16 md:pt-32 md:pb-24 px-4">
         <div className="max-w-4xl mx-auto text-center">
           <h1 className="font-heading font-bold text-4xl md:text-5xl lg:text-6xl leading-tight mb-6 text-balance">
-            Built in South Africa,{' '}
-            <span className="text-gold">for South African locksmiths</span>
+            Built in South Africa,
+            <br />
+            <span className="text-gold">for South Africans.</span>
           </h1>
           <p className="text-lg md:text-xl text-muted-foreground mb-8 max-w-2xl mx-auto text-pretty">
-            Vula24 is a lead generation service. We connect customers who need a
-            locksmith with independent professionals who subscribe to receive SMS
-            leads in their area.
+            We believe getting a trusted locksmith should be fast, simple, and stress-free — wherever you are in South Africa.
           </p>
-        </div>
-      </section>
-
-      <section className="py-16 md:py-24 px-4 bg-surface">
-        <div className="max-w-4xl mx-auto">
-          <div className="bg-background border border-border rounded-xl p-8 md:p-12">
-            <h2 className="font-heading font-bold text-2xl md:text-3xl mb-6 text-center">
-              What we do
-            </h2>
-            <p className="text-lg text-muted-foreground text-center max-w-2xl mx-auto">
-              Locksmiths pay a monthly fee to receive customer contact details by
-              SMS. There is no app, no wallet and no payment processing through
-              Vula24 — you agree the job and payment directly with the customer.
-              We are not a locksmith employer and we do not guarantee response
-              times.
-            </p>
-          </div>
         </div>
       </section>
 
@@ -89,12 +54,12 @@ export default function AboutPage() {
 
           <div className="grid md:grid-cols-3 gap-8">
             {values.map((value) => (
-              <div key={value.title} className="text-center">
-                <div className="w-20 h-20 bg-surface border border-border rounded-2xl flex items-center justify-center mx-auto mb-4 text-gold">
-                  {value.icon}
-                </div>
-                <h3 className="font-heading font-bold text-xl mb-2">{value.title}</h3>
-                <p className="text-muted-foreground">{value.description}</p>
+              <div
+                key={value.title}
+                className="border-l-2 border-gold pl-6"
+              >
+                <h3 className="font-heading font-bold text-xl mb-2 text-foreground">{value.title}</h3>
+                <p className="text-muted-foreground text-sm">{value.description}</p>
               </div>
             ))}
           </div>
@@ -123,10 +88,10 @@ export default function AboutPage() {
       <section className="py-16 md:py-24 px-4">
         <div className="max-w-3xl mx-auto text-center">
           <h2 className="font-heading font-bold text-3xl md:text-4xl mb-4">
-            Use the platform for your business
+            Are you a locksmith?
           </h2>
           <p className="text-muted-foreground mb-8 text-lg">
-            Apply in a few minutes. We review and get back to you on WhatsApp.
+            Join the Vula24 network and receive jobs in your area directly to your phone.
           </p>
           <GoldButton label="Join as a Locksmith" href={LOCKSMITH_PORTAL_HREF} size="lg" />
         </div>

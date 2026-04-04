@@ -5,9 +5,9 @@ import { CONTACT } from '@/lib/constants'
 import { ContactForm } from './contact-form'
 
 export const metadata: Metadata = {
-  title: 'Vula24 — Contact | Platform support for locksmiths & customers',
+  title: 'Vula24 — Contact Us',
   description:
-    'Contact the Vula24 team. WhatsApp, phone or email — questions about the platform, billing or your account.',
+    'Get in touch with Vula24. WhatsApp, phone or email — we are here to help.',
 }
 
 export default function ContactPage() {
@@ -22,7 +22,7 @@ export default function ContactPage() {
             Get in touch
           </h1>
           <p className="text-lg md:text-xl text-muted-foreground mb-8 max-w-2xl mx-auto text-pretty">
-            Questions about the platform, your subscription or your account? Reach us on WhatsApp, phone or email.
+            Need help or have a question? Reach us on WhatsApp, phone or email — we respond fast.
           </p>
         </div>
       </section>
