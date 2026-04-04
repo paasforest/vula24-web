@@ -73,10 +73,6 @@ export function PricingTiers() {
           </div>
         ))}
       </div>
-
-      <p className="text-center text-sm text-muted-foreground max-w-lg mx-auto pt-2 border-t border-border">
-        All plans include a 14-day free trial. No credit card required to start.
-      </p>
     </div>
   )
 }

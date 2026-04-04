@@ -1,14 +1,14 @@
 import { Metadata } from 'next'
-import Link from 'next/link'
 import { Nav } from '@/components/Nav'
 import { Footer } from '@/components/Footer'
 import { GoldButton } from '@/components/GoldButton'
+import { PricingTiers } from '@/components/PricingTiers'
 import { LOCKSMITH_PORTAL_HREF } from '@/lib/constants'
 
 export const metadata: Metadata = {
-  title: 'Vula24 — For Locksmiths | SMS lead generation',
+  title: 'Vula24 — For Locksmiths | Get more locksmith jobs',
   description:
-    'Pay monthly to receive customer leads by SMS. No app — Vula24 connects you with jobs in Gauteng and Western Cape.',
+    'Join the Vula24 network. Receive SMS leads from customers in Gauteng and Western Cape. Simple monthly plans, no commission.',
 }
 
 export default function ForLocksmithsPage() {
@@ -28,15 +28,8 @@ export default function ForLocksmithsPage() {
             paid your way.
           </p>
           <div className="flex flex-wrap justify-center gap-4">
-            <GoldButton label="Apply to join" href={LOCKSMITH_PORTAL_HREF} size="lg" />
-            <GoldButton label="View pricing" href="/pricing" size="lg" variant="outline" />
+            <GoldButton label="Join as a Locksmith" href={LOCKSMITH_PORTAL_HREF} size="lg" />
           </div>
-          <p className="mt-8 text-sm text-muted-foreground">
-            Already on the platform?{' '}
-            <Link href={LOCKSMITH_PORTAL_HREF} className="text-gold font-medium hover:underline">
-              Log in to your account
-            </Link>
-          </p>
         </div>
       </section>
 
@@ -92,23 +85,17 @@ export default function ForLocksmithsPage() {
         </div>
       </section>
 
-      <section className="py-16 md:py-24 px-4 border-t border-border bg-surface/30">
-        <div className="max-w-2xl mx-auto text-center">
-          <h2 className="font-heading font-bold text-2xl md:text-3xl mb-4">
-            Ready for dashboard access?
-          </h2>
-          <p className="text-muted-foreground mb-8 leading-relaxed">
-            Log in and manage your leads on a dedicated account page — separate from this overview.
-          </p>
-          <div className="flex flex-wrap justify-center gap-4">
-            <GoldButton label="Open account page" href={LOCKSMITH_PORTAL_HREF} size="lg" />
-            <GoldButton
-              label="Apply to join"
-              href={LOCKSMITH_PORTAL_HREF}
-              size="lg"
-              variant="outline"
-            />
+      <section className="py-16 md:py-24 px-4 border-t border-border">
+        <div className="max-w-5xl mx-auto">
+          <div className="text-center mb-12">
+            <h2 className="font-heading font-bold text-3xl md:text-4xl mb-4">
+              Simple monthly pricing
+            </h2>
+            <p className="text-muted-foreground text-lg max-w-xl mx-auto">
+              One flat fee. No commission. What you earn is yours — always.
+            </p>
           </div>
+          <PricingTiers />
         </div>
       </section>
 
