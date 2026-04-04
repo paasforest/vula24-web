@@ -1,18 +1,21 @@
-import { NextResponse } from "next/server";
+import { NextResponse, NextRequest } from "next/server";
 import { prisma } from "@/lib/prisma";
 import {
   adminUnauthorizedResponse,
   verifyAdminPassword,
 } from "@/lib/admin-auth";
 
-type RouteContext = { params: { id: string } };
+type RouteContext = { params: Promise<{ id: string }> };
 
-export async function PATCH(request: Request, context: RouteContext) {
+export async function PATCH(
+  request: NextRequest,
+  context: RouteContext
+) {
   if (!verifyAdminPassword(request)) {
     return adminUnauthorizedResponse();
   }
 
-  const { id } = context.params;
+  const { id } = await context.params;
   if (!id) {
     return NextResponse.json({ error: "Missing id." }, { status: 400 });
   }
