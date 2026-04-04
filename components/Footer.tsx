@@ -10,10 +10,10 @@ export function Footer() {
 
   const footerLinks = {
     services: [
-      { label: 'Car lockout', href: '/#coverage' },
-      { label: 'House lockout', href: '/#coverage' },
-      { label: 'Key replacement', href: '/#coverage' },
-      { label: 'Lock change', href: '/#coverage' },
+      { label: 'Car lockout', href: '/#request' },
+      { label: 'House lockout', href: '/#request' },
+      { label: 'Request a locksmith', href: '/#request' },
+      { label: 'Coverage', href: '/coverage' },
     ],
     areas: [
       { label: 'Johannesburg', href: '/coverage' },
@@ -37,10 +37,10 @@ export function Footer() {
           <div className="lg:col-span-2">
             <Logo size="md" className="mb-4" />
             <p className="text-muted-foreground text-sm mb-4 max-w-xs">
-              The platform built for South African locksmiths.
+              Connecting customers with verified locksmiths across South Africa.
             </p>
             <p className="text-muted-foreground text-xs mb-6 max-w-md leading-relaxed">
-              Vula24 is a technology platform. Locksmiths on the platform are
+              Vula24 is a lead generation service. Locksmiths on the network are
               independent service providers.
             </p>
             <div className="flex flex-col gap-3">

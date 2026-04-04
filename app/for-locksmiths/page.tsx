@@ -6,9 +6,9 @@ import { PRICING } from '@/lib/constants'
 import { LocksmithApplicationForm } from './application-form'
 
 export const metadata: Metadata = {
-  title: 'Vula24 — For Locksmiths | Grow your business on the platform',
+  title: 'Vula24 — For Locksmiths | SMS lead generation',
   description:
-    'Vula24 is software for South African locksmiths: job requests, bookings and payments from your phone. Simple monthly plans.',
+    'Pay monthly to receive customer leads by SMS. No app — Vula24 connects you with jobs in Gauteng and Western Cape.',
 }
 
 export default function ForLocksmithsPage() {
@@ -23,9 +23,9 @@ export default function ForLocksmithsPage() {
             <span className="text-gold">On Vula24.</span>
           </h1>
           <p className="text-lg md:text-xl text-muted-foreground mb-8 max-w-2xl mx-auto text-pretty">
-            The platform connects you with customers in your area. You choose
-            your jobs, your prices and how you run your business — we provide the
-            software.
+            Vula24 is a lead generation service. Subscribe monthly to receive
+            customer contact details by SMS — you call them, quote the job and get
+            paid your way.
           </p>
           <GoldButton label="Join as a Locksmith" href="#apply" size="lg" />
         </div>
@@ -37,8 +37,8 @@ export default function ForLocksmithsPage() {
             Simple monthly plans. No hidden fees.
           </h2>
           <p className="text-muted-foreground text-center mb-12 max-w-2xl mx-auto">
-            Pay one flat monthly fee plus a 25% platform fee added on top of
-            each job. You always earn your full set price.
+            One flat monthly fee. We never take a cut from your jobs. You keep
+            100% of what you earn from every customer.
           </p>
 
           <div className="grid md:grid-cols-2 gap-8 max-w-3xl mx-auto mb-8">
@@ -109,7 +109,7 @@ export default function ForLocksmithsPage() {
               {
                 title: 'Jobs come to you',
                 description:
-                  'Customers in your area find you on the platform. You get notified and decide whether to accept.',
+                  'When a customer in your area needs a locksmith, we send their contact details straight to your phone via SMS. You decide whether to call them.',
                 icon: (
                   <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                     <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z" />
@@ -119,7 +119,7 @@ export default function ForLocksmithsPage() {
               {
                 title: 'Build your reputation',
                 description:
-                  'Your profile and reviews do the selling. The more you complete on the platform, the stronger your presence.',
+                  'Your profile, reviews and verified badge do the selling for you. The more jobs you complete, the more you earn.',
                 icon: (
                   <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                     <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
@@ -128,13 +128,12 @@ export default function ForLocksmithsPage() {
                 ),
               },
               {
-                title: 'Get paid faster',
+                title: 'Simple and transparent',
                 description:
-                  'Payments run through the platform so you spend less time chasing invoices.',
+                  'One flat monthly fee. No commission. No percentage taken from your jobs. What you earn is yours — always.',
                 icon: (
                   <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                    <rect x="2" y="5" width="20" height="14" rx="2" />
-                    <path d="M2 10h20" />
+                    <path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83" />
                   </svg>
                 ),
               },

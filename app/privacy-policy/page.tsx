@@ -52,7 +52,7 @@ export default function PrivacyPolicyPage() {
               <ul className="list-disc pl-6 space-y-2 text-muted-foreground">
                 <li>Operate the platform and connect end users with independent locksmiths who use our software</li>
                 <li>Communicate with you about your account, applications and support requests</li>
-                <li>Process subscriptions and platform fees for locksmith accounts</li>
+                <li>Process monthly subscriptions for locksmith lead-generation accounts</li>
                 <li>Improve our services and user experience</li>
                 <li>Meet legal and regulatory obligations under POPIA where applicable</li>
               </ul>

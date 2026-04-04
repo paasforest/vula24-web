@@ -34,7 +34,7 @@ export default function TermsPage() {
             <div className="space-y-4">
               <h2 className="font-heading font-bold text-xl">2. Description of the platform</h2>
               <p className="text-muted-foreground">
-                Vula24 provides software (including web and mobile applications) that connects end users who need locksmith services with independent locksmith professionals who subscribe to the platform. Vula24 is not a locksmith business, does not employ locksmiths, and does not guarantee response times or the outcome of any job.
+                Vula24 provides a lead generation service (including this website) that connects end users who need locksmith services with independent locksmith professionals who pay a monthly subscription to receive SMS leads. Vula24 is not a locksmith business, does not employ locksmiths, does not process job payments, and does not guarantee response times or the outcome of any job.
               </p>
             </div>
 
@@ -53,9 +53,9 @@ export default function TermsPage() {
             </div>
 
             <div className="space-y-4">
-              <h2 className="font-heading font-bold text-xl">5. Pricing, subscriptions and platform fees</h2>
+              <h2 className="font-heading font-bold text-xl">5. Pricing and subscriptions</h2>
               <p className="text-muted-foreground">
-                Locksmiths pay a monthly subscription and, where applicable, a platform fee on jobs as described at signup. Customer pricing for work performed is agreed between the customer and the locksmith. Vula24 may facilitate payments through the platform according to the product terms shown in the app; specific payment rules are set out in your account or order flow.
+                Locksmiths pay a monthly subscription as described at signup. We do not take a commission or percentage from what locksmiths earn from customers. Pricing for work performed is agreed between the customer and the locksmith directly — cash, EFT or otherwise. Vula24 does not provide a wallet, escrow or payment processing for locksmith services unless expressly stated in a separate written agreement.
               </p>
             </div>
 

@@ -4,9 +4,9 @@ import { Footer } from '@/components/Footer'
 import { GoldButton } from '@/components/GoldButton'
 
 export const metadata: Metadata = {
-  title: 'Vula24 — How It Works | Platform for locksmiths & customers',
+  title: 'Vula24 — How It Works | SMS leads for locksmiths',
   description:
-    'How Vula24 works: software for locksmiths to receive job requests and get paid. Customers find verified professionals on the platform.',
+    'How Vula24 works: monthly subscription, customer leads by SMS. No app — locksmiths contact customers directly.',
 }
 
 const locksmithSteps = [
@@ -18,15 +18,15 @@ const locksmithSteps = [
   },
   {
     step: '02',
-    title: 'Get job requests',
+    title: 'Get leads by SMS',
     description:
-      'When a customer near you needs a locksmith, you get notified on your phone. Accept or decline.',
+      'When a customer near you needs a locksmith, we send their contact details to your phone by SMS.',
   },
   {
     step: '03',
-    title: 'Complete and get paid',
+    title: 'Get the lead, close the deal',
     description:
-      'Do the job, get paid through the app. Your rating grows with every 5-star review.',
+      'We send you the customer contact details by SMS. You call them directly, do the job and get paid your way — cash, EFT, whatever works.',
   },
 ]
 
@@ -34,27 +34,27 @@ const faqs = [
   {
     question: 'Is Vula24 a locksmith company?',
     answer:
-      'No. Vula24 is a software platform. Locksmiths on the network are independent professionals who pay a monthly subscription to use the tools. We do not employ locksmiths or dispatch teams.',
+      'No. Vula24 is a lead generation service. Locksmiths on the network are independent professionals who pay a monthly subscription to receive SMS leads. We do not employ locksmiths.',
   },
   {
     question: 'How do customers find me?',
     answer:
-      'Customers use the Vula24 app or website to browse locksmiths in their area. Your profile, reviews and coverage settings determine when you appear in search.',
+      'Customers submit a request on our website. We match them with a verified locksmith in their area and share contact details by SMS so you can call them directly.',
   },
   {
-    question: 'What areas does the platform cover?',
+    question: 'What areas does Vula24 cover?',
     answer:
-      'The platform is currently live for locksmiths operating in Gauteng and Western Cape, with more provinces on the roadmap.',
+      'We currently operate in Gauteng and Western Cape, with more provinces planned.',
   },
   {
-    question: 'How does pricing work?',
+    question: 'How does pricing work for locksmiths?',
     answer:
-      'You pay a flat monthly subscription (Starter or Pro) plus a small platform fee on top of each job. You set your own rates — you always earn what you configure.',
+      'You pay a flat monthly subscription (Starter or Pro). We do not take a commission or percentage from what you earn from customers.',
   },
   {
-    question: 'Who is responsible for the quality of work?',
+    question: 'Do I need to install an app?',
     answer:
-      'Each locksmith on the platform is an independent service provider. Vula24 provides the technology to connect customers and professionals; workmanship is between you and the customer, supported by reviews on the platform.',
+      'No. Leads are delivered by SMS. You contact the customer by phone and arrange the job and payment directly.',
   },
 ]
 
@@ -69,8 +69,7 @@ export default function HowItWorksPage() {
             How Vula24 works
           </h1>
           <p className="text-lg md:text-xl text-muted-foreground mb-8 max-w-2xl mx-auto text-pretty">
-            Software for locksmiths. A simple way for customers to find verified
-            professionals on the platform.
+            Lead generation for locksmiths — SMS alerts, no app required.
           </p>
         </div>
       </section>
@@ -78,7 +77,7 @@ export default function HowItWorksPage() {
       <section className="py-16 md:py-24 px-4 bg-surface">
         <div className="max-w-4xl mx-auto">
           <h2 className="font-heading font-bold text-2xl md:text-3xl text-center mb-12">
-            For locksmiths on the platform
+            For locksmiths on the network
           </h2>
           <div className="space-y-12">
             {locksmithSteps.map((step, index) => (
@@ -131,10 +130,10 @@ export default function HowItWorksPage() {
       <section className="py-16 md:py-24 px-4 bg-surface">
         <div className="max-w-3xl mx-auto text-center">
           <h2 className="font-heading font-bold text-3xl md:text-4xl mb-4">
-            Ready to join the platform?
+            Ready to receive SMS leads?
           </h2>
           <p className="text-muted-foreground mb-8 text-lg">
-            Apply as a locksmith and start using Vula24 from your phone.
+            Apply as a locksmith and we will get you set up on WhatsApp.
           </p>
           <GoldButton label="Join as a Locksmith" href="/apply" size="lg" />
         </div>

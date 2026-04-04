@@ -3,39 +3,43 @@
 import { useState } from 'react'
 import { cn } from '@/lib/utils'
 import { GoldButton } from './GoldButton'
-import { SERVICES, CITIES } from '@/lib/constants'
+import { CITIES, CONTACT, CUSTOMER_JOB_SERVICES } from '@/lib/constants'
 
-type Urgency = 'asap' | '30min' | 'flexible'
-
-const URGENCY_API: Record<Urgency, string> = {
-  asap: 'ASAP',
-  '30min': '30 min',
-  flexible: 'Flexible',
-}
+const URGENCY_OPTIONS = [
+  { value: 'Right now — emergency', label: 'Right now — emergency' },
+  { value: 'Within the hour', label: 'Within the hour' },
+  { value: 'Today — flexible time', label: 'Today — flexible time' },
+] as const
 
 export function RequestForm() {
+  const [name, setName] = useState('')
   const [phone, setPhone] = useState('')
-  const [location, setLocation] = useState('')
-  const [service, setService] = useState('')
-  const [urgency, setUrgency] = useState<Urgency>('asap')
+  const [city, setCity] = useState('')
+  const [serviceType, setServiceType] = useState('')
+  const [urgency, setUrgency] = useState<string>(URGENCY_OPTIONS[0].value)
+  const [notes, setNotes] = useState('')
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [isSuccess, setIsSuccess] = useState(false)
+  const [successCity, setSuccessCity] = useState('')
   const [error, setError] = useState('')
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setError('')
 
-    // Validation
-    if (!phone || phone.length < 10) {
+    if (!name.trim()) {
+      setError('Please enter your name')
+      return
+    }
+    if (!phone || phone.replace(/\D/g, '').length < 9) {
       setError('Please enter a valid phone number')
       return
     }
-    if (!location) {
-      setError('Please select your location')
+    if (!city) {
+      setError('Please select your city')
       return
     }
-    if (!service) {
+    if (!serviceType) {
       setError('Please select a service')
       return
     }
@@ -43,25 +47,28 @@ export function RequestForm() {
     setIsSubmitting(true)
 
     try {
-      const res = await fetch('/api/requests', {
+      const res = await fetch('/api/jobs-website-request', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          phone,
-          location,
-          service,
-          urgency: URGENCY_API[urgency],
+          name: name.trim(),
+          phone: phone.trim(),
+          city,
+          serviceType,
+          urgency,
+          notes: notes.trim() || undefined,
         }),
       })
       const data = await res.json().catch(() => ({}))
       if (!res.ok) {
-        setError(typeof data.error === 'string' ? data.error : 'Something went wrong. Please try again.')
+        setError('Something went wrong. Please WhatsApp us directly.')
         setIsSubmitting(false)
         return
       }
+      setSuccessCity(city)
       setIsSuccess(true)
     } catch {
-      setError('Network error. Please check your connection and try again.')
+      setError('Something went wrong. Please WhatsApp us directly.')
     } finally {
       setIsSubmitting(false)
     }
@@ -86,117 +93,154 @@ export function RequestForm() {
           </svg>
         </div>
         <h3 className="font-heading font-bold text-xl text-foreground mb-2">
-          Request Received!
+          Request received!
         </h3>
-        <p className="text-muted-foreground">
-          We are connecting you to a locksmith now. Expect a call within 5 minutes.
+        <p className="text-muted-foreground text-sm leading-relaxed">
+          A locksmith in {successCity} will call you within 15 minutes. If you
+          do not hear back, WhatsApp us:{' '}
+          <a
+            href={`https://wa.me/${CONTACT.whatsapp}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-gold hover:underline"
+          >
+            {CONTACT.phone}
+          </a>
         </p>
       </div>
     )
   }
 
   return (
-    <form onSubmit={handleSubmit} className="bg-surface border border-border rounded-xl p-6 md:p-8">
-      <h3 className="font-heading font-bold text-xl text-foreground mb-6">
-        Get Help Now
-      </h3>
-
+    <form
+      onSubmit={handleSubmit}
+      className="bg-surface border border-border rounded-xl p-6 md:p-8"
+    >
       <div className="space-y-4">
-        {/* Phone */}
         <div>
-          <label htmlFor="phone" className="block text-sm font-medium text-muted-foreground mb-2">
-            Phone Number
+          <label htmlFor="cust-name" className="block text-sm font-medium text-muted-foreground mb-2">
+            Your Name
+          </label>
+          <input
+            type="text"
+            id="cust-name"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            required
+            autoComplete="name"
+            className="w-full px-4 py-3 bg-background border border-border rounded-lg text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-gold focus:border-transparent"
+          />
+        </div>
+
+        <div>
+          <label htmlFor="cust-phone" className="block text-sm font-medium text-muted-foreground mb-2">
+            Your Phone Number
           </label>
           <input
             type="tel"
-            id="phone"
+            id="cust-phone"
             value={phone}
             onChange={(e) => setPhone(e.target.value)}
+            required
+            autoComplete="tel"
             placeholder="0XX XXX XXXX"
             className="w-full px-4 py-3 bg-background border border-border rounded-lg text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-gold focus:border-transparent"
           />
         </div>
 
-        {/* Location */}
         <div>
-          <label htmlFor="location" className="block text-sm font-medium text-muted-foreground mb-2">
-            Your Location
+          <label htmlFor="cust-city" className="block text-sm font-medium text-muted-foreground mb-2">
+            Your City
           </label>
           <select
-            id="location"
-            value={location}
-            onChange={(e) => setLocation(e.target.value)}
+            id="cust-city"
+            value={city}
+            onChange={(e) => setCity(e.target.value)}
+            required
             className="w-full px-4 py-3 bg-background border border-border rounded-lg text-foreground focus:outline-none focus:ring-2 focus:ring-gold focus:border-transparent"
           >
             <option value="">Select your city</option>
             <optgroup label="Gauteng">
-              {CITIES.gauteng.map((city) => (
-                <option key={city} value={city}>{city}</option>
+              {CITIES.gauteng.map((c) => (
+                <option key={c} value={c}>{c}</option>
               ))}
             </optgroup>
             <optgroup label="Western Cape">
-              {CITIES.westernCape.map((city) => (
-                <option key={city} value={city}>{city}</option>
+              {CITIES.westernCape.map((c) => (
+                <option key={c} value={c}>{c}</option>
               ))}
             </optgroup>
           </select>
         </div>
 
-        {/* Service */}
         <div>
-          <label htmlFor="service" className="block text-sm font-medium text-muted-foreground mb-2">
+          <label htmlFor="cust-service" className="block text-sm font-medium text-muted-foreground mb-2">
             Service Needed
           </label>
           <select
-            id="service"
-            value={service}
-            onChange={(e) => setService(e.target.value)}
+            id="cust-service"
+            value={serviceType}
+            onChange={(e) => setServiceType(e.target.value)}
+            required
             className="w-full px-4 py-3 bg-background border border-border rounded-lg text-foreground focus:outline-none focus:ring-2 focus:ring-gold focus:border-transparent"
           >
             <option value="">Select a service</option>
-            {SERVICES.map((s) => (
+            {CUSTOMER_JOB_SERVICES.map((s) => (
               <option key={s} value={s}>{s}</option>
             ))}
           </select>
         </div>
 
-        {/* Urgency */}
         <div>
-          <label className="block text-sm font-medium text-muted-foreground mb-2">
+          <span className="block text-sm font-medium text-muted-foreground mb-3">
             How urgent?
-          </label>
-          <div className="grid grid-cols-3 gap-2">
-            {[
-              { value: 'asap', label: 'ASAP' },
-              { value: '30min', label: '30 min' },
-              { value: 'flexible', label: 'Flexible' },
-            ].map((option) => (
-              <button
-                key={option.value}
-                type="button"
-                onClick={() => setUrgency(option.value as Urgency)}
+          </span>
+          <div className="space-y-2">
+            {URGENCY_OPTIONS.map((opt) => (
+              <label
+                key={opt.value}
                 className={cn(
-                  'px-4 py-2 rounded-lg text-sm font-medium transition-all border',
-                  urgency === option.value
-                    ? 'bg-gold text-background border-gold'
-                    : 'bg-background text-muted-foreground border-border hover:border-gold'
+                  'flex items-center gap-3 px-4 py-3 rounded-lg border cursor-pointer transition-colors',
+                  urgency === opt.value
+                    ? 'border-gold bg-gold/10'
+                    : 'border-border bg-background hover:border-gold/50'
                 )}
               >
-                {option.label}
-              </button>
+                <input
+                  type="radio"
+                  name="urgency"
+                  value={opt.value}
+                  checked={urgency === opt.value}
+                  onChange={() => setUrgency(opt.value)}
+                  className="text-gold focus:ring-gold"
+                />
+                <span className="text-sm text-foreground">{opt.label}</span>
+              </label>
             ))}
           </div>
         </div>
 
-        {/* Error */}
+        <div>
+          <label htmlFor="cust-notes" className="block text-sm font-medium text-muted-foreground mb-2">
+            Any extra details? <span className="text-muted-foreground/70">(optional)</span>
+          </label>
+          <textarea
+            id="cust-notes"
+            value={notes}
+            onChange={(e) => setNotes(e.target.value)}
+            rows={3}
+            placeholder="e.g. Blue Toyota Corolla, outside Checkers Worcester"
+            className="w-full px-4 py-3 bg-background border border-border rounded-lg text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-gold focus:border-transparent resize-y min-h-[88px]"
+          />
+        </div>
+
         {error && (
           <p className="text-destructive text-sm">{error}</p>
         )}
 
-        {/* Submit */}
         <GoldButton
           type="submit"
-          label={isSubmitting ? 'Connecting...' : 'Get Help Now'}
+          label={isSubmitting ? 'Sending...' : 'Find Me a Locksmith'}
           size="lg"
           className="w-full mt-2"
           disabled={isSubmitting}

@@ -102,8 +102,8 @@ export function LocksmithApplicationForm() {
           Application received!
         </h3>
         <p className="text-muted-foreground">
-          We will review your details and contact you on WhatsApp within 24
-          hours.
+          We will review your details and contact you on WhatsApp within 24 hours
+          to activate your account and explain how leads work.
         </p>
       </div>
     )

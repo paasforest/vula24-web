@@ -4,9 +4,9 @@ import { Footer } from '@/components/Footer'
 import { LocksmithApplicationForm } from '../for-locksmiths/application-form'
 
 export const metadata: Metadata = {
-  title: 'Vula24 — Apply | Join the platform as a locksmith',
+  title: 'Vula24 — Apply | Join as a locksmith',
   description:
-    'Apply to join Vula24. Software for South African locksmiths to find customers and run bookings from their phone.',
+    'Apply to receive SMS customer leads. Lead generation for locksmiths in Gauteng and Western Cape.',
 }
 
 export default function ApplyPage() {

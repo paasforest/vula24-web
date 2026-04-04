@@ -4,16 +4,16 @@ import { Footer } from '@/components/Footer'
 import { GoldButton } from '@/components/GoldButton'
 
 export const metadata: Metadata = {
-  title: 'Vula24 — About | Software for South African locksmiths',
+  title: 'Vula24 — About | Lead generation for locksmiths',
   description:
-    'Vula24 is a technology platform built in South Africa. We help locksmiths run their businesses and help customers find verified professionals.',
+    'Vula24 connects customers with locksmiths through SMS leads. Built in South Africa for independent professionals.',
 }
 
 const values = [
   {
     title: 'Clarity',
     description:
-      'We are upfront that Vula24 is software — not a locksmith brand. Locksmiths on the platform are independent owners who use our tools.',
+      'We are upfront that Vula24 is a lead generation service — not a locksmith brand. Locksmiths on the network are independent owners who subscribe for SMS leads.',
     icon: (
       <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
         <circle cx="12" cy="12" r="10" />
@@ -56,9 +56,9 @@ export default function AboutPage() {
             <span className="text-gold">for South African locksmiths</span>
           </h1>
           <p className="text-lg md:text-xl text-muted-foreground mb-8 max-w-2xl mx-auto text-pretty">
-            Vula24 is a technology company. We build the platform that connects
-            customers who need a locksmith with independent professionals who use
-            our software to grow.
+            Vula24 is a lead generation service. We connect customers who need a
+            locksmith with independent professionals who subscribe to receive SMS
+            leads in their area.
           </p>
         </div>
       </section>
@@ -70,11 +70,11 @@ export default function AboutPage() {
               What we do
             </h2>
             <p className="text-lg text-muted-foreground text-center max-w-2xl mx-auto">
-              We provide subscription software so locksmiths can receive job
-              requests, manage bookings and get paid — similar to how other
-              platforms connect riders and drivers, or travellers and hosts. We
-              are not a locksmith employer and we do not guarantee how quickly
-              someone arrives on site.
+              Locksmiths pay a monthly fee to receive customer contact details by
+              SMS. There is no app, no wallet and no payment processing through
+              Vula24 — you agree the job and payment directly with the customer.
+              We are not a locksmith employer and we do not guarantee response
+              times.
             </p>
           </div>
         </div>
@@ -111,9 +111,9 @@ export default function AboutPage() {
               around access and opportunity.
             </p>
             <p>
-              The {'"24"'} reflects that the platform is built for real-world
-              urgency: customers often need help outside normal hours, and
-              locksmiths use the app when it suits their business.
+              The {'"24"'} reflects real-world urgency — many lockouts happen
+              outside normal hours, and SMS leads help locksmiths respond when
+              they are on the road.
             </p>
           </div>
         </div>

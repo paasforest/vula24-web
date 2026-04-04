@@ -21,20 +21,20 @@ export const metadata: Metadata = {
     template: '%s | Vula24',
   },
   description:
-    'Vula24 is the platform locksmiths use to find customers, manage bookings and get paid. Customers find verified professionals in Gauteng and Western Cape.',
+    'Vula24 is a lead generation service for locksmiths: monthly subscription, SMS customer leads in Gauteng and Western Cape. No app required.',
   keywords: [
-    'locksmith software',
+    'locksmith leads',
     'South Africa',
     'Johannesburg',
     'Cape Town',
-    'locksmith app',
+    'SMS leads',
     'Vula24',
   ],
   authors: [{ name: 'Vula24' }],
   openGraph: {
     title: 'Vula24 — Software for locksmiths',
     description:
-      'Subscription software for locksmith businesses. Connect with customers, manage jobs and grow your reputation on the platform.',
+      'Monthly subscription for SMS locksmith leads in South Africa. Independent professionals; customers request help on the web.',
     type: 'website',
     locale: 'en_ZA',
     siteName: 'Vula24',

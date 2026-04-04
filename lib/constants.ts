@@ -15,7 +15,7 @@ export const CONTACT = {
   email: process.env.NEXT_PUBLIC_EMAIL ?? "hello@vula24.co.za",
 };
 
-/** Locksmith app / dashboard login — set NEXT_PUBLIC_LOCKSMITH_LOGIN_URL in production */
+/** Locksmith web dashboard login URL — set NEXT_PUBLIC_LOCKSMITH_LOGIN_URL in production */
 export const LOCKSMITH_LOGIN_URL =
   process.env.NEXT_PUBLIC_LOCKSMITH_LOGIN_URL ?? "";
 
@@ -50,7 +50,8 @@ export const PRICING = [
     features: [
       "1 city coverage",
       "Up to 15 job requests per month",
-      "WhatsApp job notifications",
+      "SMS lead alerts to your phone",
+      "Customer contact details sent directly to you",
       "Basic verified profile",
       "Standard support",
     ],
@@ -65,7 +66,8 @@ export const PRICING = [
       "Unlimited job requests",
       "Priority listing in search",
       "PSIRA verified badge",
-      "WhatsApp + SMS + push notifications",
+      "Priority SMS lead alerts",
+      "First locksmith notified in your area",
       "Dedicated support",
       "Business account (add your team)",
     ],
@@ -91,11 +93,16 @@ export const HEARD_ABOUT_OPTIONS = [
   { value: "other", label: "Other" },
 ];
 
-export const SERVICES = [
+/** Customer request form — service types */
+export const CUSTOMER_JOB_SERVICES = [
   "Car Lockout",
   "House Lockout",
-  "Key Replacement",
-  "Lock Change",
+  "Key Duplication",
+  "Lock Replacement",
+  "Lock Repair",
   "Safe Opening",
   "Other",
 ];
+
+/** Legacy alias if needed elsewhere */
+export const SERVICES = CUSTOMER_JOB_SERVICES;

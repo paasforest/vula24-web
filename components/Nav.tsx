@@ -34,11 +34,11 @@ export function Nav() {
             >
               Locksmith Login
             </Link>
-            <GoldButton label="Find a Locksmith" href="/#coverage" size="sm" />
+            <GoldButton label="Find a Locksmith" href="/#request" size="sm" />
           </div>
 
           <div className="flex md:hidden items-center gap-3">
-            <GoldButton label="Find a Locksmith" href="/#coverage" size="sm" />
+            <GoldButton label="Find a Locksmith" href="/#request" size="sm" />
             <button
               onClick={() => setIsOpen(!isOpen)}
               className="p-2 text-foreground"

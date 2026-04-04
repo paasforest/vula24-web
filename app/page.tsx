@@ -1,6 +1,7 @@
 import { Nav } from '@/components/Nav'
 import { Footer } from '@/components/Footer'
 import { GoldButton } from '@/components/GoldButton'
+import { RequestForm } from '@/components/RequestForm'
 import { StickyMobileCTA } from '@/components/StickyMobileCTA'
 import { CITIES, PRICING } from '@/lib/constants'
 
@@ -17,7 +18,7 @@ export default function HomePage() {
               <div className="inline-flex items-center gap-2 bg-surface border border-border rounded-full px-4 py-2 mb-6">
                 <span className="w-2 h-2 bg-gold rounded-full animate-pulse" />
                 <span className="text-sm text-muted-foreground">
-                  Software for locksmith businesses — Gauteng & Western Cape
+                  Lead generation for locksmiths — Gauteng & Western Cape
                 </span>
               </div>
 
@@ -27,8 +28,9 @@ export default function HomePage() {
               </h1>
 
               <p className="text-lg md:text-xl text-muted-foreground mb-8 max-w-lg text-pretty">
-                Vula24 is the platform South African locksmiths use to find new
-                customers, manage bookings and get paid — all from their phone.
+                Vula24 is a lead generation service for South African locksmiths.
+                Pay monthly to receive customer leads by SMS — no app, no wallet,
+                no payment processing on our side.
               </p>
 
               <div className="flex flex-wrap gap-4 mb-8">
@@ -47,15 +49,15 @@ export default function HomePage() {
                 Built for owners, not corporates
               </h2>
               <p className="text-muted-foreground text-sm mb-6">
-                Vula24 is a monthly subscription tool. The platform connects
-                customers who need a locksmith with independent professionals on
-                the network — you stay in control of pricing, jobs and your
-                reputation.
+                Vula24 connects customers who need a locksmith with independent
+                professionals who subscribe to receive SMS leads. You stay in
+                control of pricing and how you get paid — cash, EFT, whatever
+                works for you.
               </p>
               <ul className="space-y-3 text-sm text-muted-foreground">
                 <li className="flex gap-2">
                   <span className="text-gold font-heading font-bold">→</span>
-                  You choose which job requests to accept.
+                  You choose which leads to follow up.
                 </li>
                 <li className="flex gap-2">
                   <span className="text-gold font-heading font-bold">→</span>
@@ -63,8 +65,7 @@ export default function HomePage() {
                 </li>
                 <li className="flex gap-2">
                   <span className="text-gold font-heading font-bold">→</span>
-                  One flat monthly fee plus a small platform fee on jobs — you
-                  set your rates.
+                  One flat monthly fee — we never take a cut from your jobs.
                 </li>
               </ul>
               <div className="mt-6">
@@ -84,14 +85,14 @@ export default function HomePage() {
       <section className="py-16 md:py-24 px-4 bg-surface">
         <div className="max-w-7xl mx-auto">
           <h2 className="font-heading font-bold text-3xl md:text-4xl text-center mb-12">
-            Why locksmiths choose the platform
+            Why locksmiths choose Vula24
           </h2>
 
           <div className="grid md:grid-cols-3 gap-8">
             {[
               {
                 title: 'Jobs come to you',
-                body: 'Customers in your area find you on Vula24. You get notified instantly and decide whether to accept.',
+                body: 'When a customer in your area needs a locksmith, we send their contact details straight to your phone via SMS. You decide whether to call them.',
                 icon: (
                   <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                     <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z" />
@@ -109,12 +110,11 @@ export default function HomePage() {
                 ),
               },
               {
-                title: 'Get paid faster',
-                body: 'Payments are handled through the platform. No more chasing cash or waiting to be paid.',
+                title: 'Simple and transparent',
+                body: 'One flat monthly fee. No commission. No percentage taken from your jobs. What you earn is yours — always.',
                 icon: (
                   <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                    <rect x="2" y="5" width="20" height="14" rx="2" />
-                    <path d="M2 10h20" />
+                    <path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83" />
                   </svg>
                 ),
               },
@@ -138,7 +138,7 @@ export default function HomePage() {
             How Vula24 works for locksmiths
           </h2>
           <p className="text-muted-foreground text-center mb-12 max-w-2xl mx-auto">
-            From sign-up to getting paid — built around your business.
+            From sign-up to closing the deal — built around SMS leads.
           </p>
 
           <div className="grid md:grid-cols-3 gap-8">
@@ -159,9 +159,9 @@ export default function HomePage() {
               },
               {
                 step: '02',
-                title: 'Get job requests',
+                title: 'Get leads by SMS',
                 description:
-                  'When a customer near you needs a locksmith, you get notified on your phone. Accept or decline.',
+                  'When a customer near you needs a locksmith, we send their contact details to your phone by SMS.',
                 icon: (
                   <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                     <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z" />
@@ -170,9 +170,9 @@ export default function HomePage() {
               },
               {
                 step: '03',
-                title: 'Complete and get paid',
+                title: 'Get the lead, close the deal',
                 description:
-                  'Do the job, get paid through the app. Your rating grows with every 5-star review.',
+                  'We send you the customer contact details by SMS. You call them directly, do the job and get paid your way — cash, EFT, whatever works.',
                 icon: (
                   <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                     <path d="M22 11.08V12a10 10 0 11-5.93-9.14" />
@@ -201,8 +201,8 @@ export default function HomePage() {
             Simple monthly plans. No hidden fees.
           </h2>
           <p className="text-muted-foreground text-center mb-4 max-w-2xl mx-auto">
-            Pay one flat monthly fee plus a 25% platform fee on top of each job.
-            You always earn your full set price.
+            One flat monthly fee. We never take a cut from your jobs. You keep
+            100% of what you earn from every customer.
           </p>
 
           <div className="grid md:grid-cols-2 gap-8 max-w-3xl mx-auto mb-8">
@@ -262,50 +262,47 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* For customers */}
+      {/* For customers — intro */}
       <section id="customers" className="py-16 md:py-24 px-4 scroll-mt-24">
         <div className="max-w-3xl mx-auto text-center">
           <h2 className="font-heading font-bold text-3xl md:text-4xl mb-4">
             Need a locksmith right now?
           </h2>
           <p className="text-muted-foreground mb-8 text-lg">
-            Vula24 connects you with verified, reviewed locksmiths in your area.
-            Download the app or browse locksmiths near you.
+            Tell us where you are and what you need. We find a verified locksmith
+            in your area and send them your details. They will contact you directly.
           </p>
-          <div className="flex flex-wrap justify-center gap-4 mb-8">
-            <GoldButton label="Download the App" href="#download" size="lg" />
-            <GoldButton
-              label="Browse Locksmiths"
-              href="#coverage"
-              size="lg"
-              variant="outline"
-            />
-          </div>
-          <p className="text-xs text-muted-foreground max-w-xl mx-auto leading-relaxed">
-            Vula24 is a platform that connects customers with independent locksmith
-            professionals. All locksmiths on the network are independent service
-            providers. Vula24 does not employ locksmiths or guarantee response times.
+          <GoldButton label="Request a Locksmith" href="#request" size="lg" />
+          <p className="text-xs text-muted-foreground max-w-xl mx-auto leading-relaxed mt-8">
+            Vula24 is a lead generation service that connects customers with
+            independent locksmith professionals. Locksmiths on the network are
+            independent service providers. Vula24 does not employ locksmiths or
+            guarantee response times.
           </p>
         </div>
       </section>
 
-      <section id="download" className="py-8 px-4 border-t border-border scroll-mt-24">
-        <div className="max-w-2xl mx-auto text-center">
-          <p className="text-sm text-muted-foreground">
-            Mobile apps for customers and locksmiths are rolling out across South Africa.
-            Follow us on WhatsApp for launch updates in your city.
+      {/* Customer request form */}
+      <section id="request" className="py-16 md:py-24 px-4 bg-surface scroll-mt-24">
+        <div className="max-w-xl mx-auto">
+          <h2 className="font-heading font-bold text-3xl md:text-4xl text-center mb-4">
+            Request a locksmith
+          </h2>
+          <p className="text-muted-foreground text-center mb-8">
+            Fill in your details and we will find a verified locksmith in your area.
           </p>
+          <RequestForm />
         </div>
       </section>
 
       {/* Coverage */}
-      <section id="coverage" className="py-16 md:py-24 px-4 bg-surface scroll-mt-24">
+      <section id="coverage" className="py-16 md:py-24 px-4 scroll-mt-24">
         <div className="max-w-7xl mx-auto">
           <h2 className="font-heading font-bold text-3xl md:text-4xl text-center mb-4">
             Where Vula24 locksmiths operate
           </h2>
           <p className="text-muted-foreground text-center mb-12 max-w-2xl mx-auto">
-            Our platform is live in Gauteng and Western Cape. More provinces coming soon.
+            Our service is live in Gauteng and Western Cape. More provinces coming soon.
           </p>
 
           <div className="grid md:grid-cols-2 gap-8">
@@ -353,7 +350,7 @@ export default function HomePage() {
             Ready to grow with Vula24?
           </h2>
           <p className="text-muted-foreground mb-8">
-            Join locksmiths on the platform — apply in minutes, get reviewed within 24 hours.
+            Join locksmiths receiving SMS leads — apply in minutes, hear back within 24 hours.
           </p>
           <GoldButton label="Join as a Locksmith" href="/apply" size="lg" />
         </div>
