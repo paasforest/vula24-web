@@ -1,23 +1,14 @@
-import { Suspense } from 'react'
 import { Metadata } from 'next'
+import Link from 'next/link'
 import { Nav } from '@/components/Nav'
 import { Footer } from '@/components/Footer'
 import { GoldButton } from '@/components/GoldButton'
-import { LocksmithPortal } from '@/components/LocksmithPortal'
-import { LOCKSMITH_SIGNUP_HREF } from '@/lib/constants'
+import { LOCKSMITH_PORTAL_HREF, LOCKSMITH_SIGNUP_HREF } from '@/lib/constants'
 
 export const metadata: Metadata = {
   title: 'Vula24 — For Locksmiths | SMS lead generation',
   description:
     'Pay monthly to receive customer leads by SMS. No app — Vula24 connects you with jobs in Gauteng and Western Cape.',
-}
-
-function PortalFallback() {
-  return (
-    <div className="max-w-2xl mx-auto py-12 text-center text-muted-foreground">
-      Loading…
-    </div>
-  )
 }
 
 export default function ForLocksmithsPage() {
@@ -37,9 +28,15 @@ export default function ForLocksmithsPage() {
             paid your way.
           </p>
           <div className="flex flex-wrap justify-center gap-4">
-            <GoldButton label="Join as a Locksmith" href={LOCKSMITH_SIGNUP_HREF} size="lg" />
+            <GoldButton label="Apply to join" href={LOCKSMITH_SIGNUP_HREF} size="lg" />
             <GoldButton label="View pricing" href="/pricing" size="lg" variant="outline" />
           </div>
+          <p className="mt-8 text-sm text-muted-foreground">
+            Already on the platform?{' '}
+            <Link href={LOCKSMITH_PORTAL_HREF} className="text-gold font-medium hover:underline">
+              Log in to your account
+            </Link>
+          </p>
         </div>
       </section>
 
@@ -95,10 +92,24 @@ export default function ForLocksmithsPage() {
         </div>
       </section>
 
-      <section className="py-16 md:py-24 px-4 bg-surface">
-        <Suspense fallback={<PortalFallback />}>
-          <LocksmithPortal />
-        </Suspense>
+      <section className="py-16 md:py-24 px-4 border-t border-border bg-surface/30">
+        <div className="max-w-2xl mx-auto text-center">
+          <h2 className="font-heading font-bold text-2xl md:text-3xl mb-4">
+            Ready for dashboard access?
+          </h2>
+          <p className="text-muted-foreground mb-8 leading-relaxed">
+            Log in and manage your leads on a dedicated account page — separate from this overview.
+          </p>
+          <div className="flex flex-wrap justify-center gap-4">
+            <GoldButton label="Open account page" href={LOCKSMITH_PORTAL_HREF} size="lg" />
+            <GoldButton
+              label="Apply to join"
+              href={LOCKSMITH_SIGNUP_HREF}
+              size="lg"
+              variant="outline"
+            />
+          </div>
+        </div>
       </section>
 
       <Footer />
