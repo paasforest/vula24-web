@@ -1,27 +1,75 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import 'tailwindcss';
+@import 'tw-animate-css';
 
+@custom-variant dark (&:is(.dark *));
+
+/* Vula24 Brand Colors - Dark Theme */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #111111;
+  --foreground: #FFFFFF;
+  --card: #1A1A1A;
+  --card-foreground: #FFFFFF;
+  --popover: #1A1A1A;
+  --popover-foreground: #FFFFFF;
+  --primary: #D4A017;
+  --primary-foreground: #111111;
+  --secondary: #1A1A1A;
+  --secondary-foreground: #FFFFFF;
+  --muted: #1A1A1A;
+  --muted-foreground: #AAAAAA;
+  --accent: #D4A017;
+  --accent-foreground: #111111;
+  --destructive: #E53935;
+  --destructive-foreground: #FFFFFF;
+  --border: #333333;
+  --input: #333333;
+  --ring: #D4A017;
+  --radius: 0.5rem;
+  
+  /* Custom Vula24 tokens */
+  --gold: #D4A017;
+  --surface: #1A1A1A;
+  --success: #43A047;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+@theme inline {
+  --font-sans: 'DM Sans', 'DM Sans Fallback', system-ui, sans-serif;
+  --font-heading: 'Syne', 'Syne Fallback', system-ui, sans-serif;
+  --font-mono: 'Geist Mono', 'Geist Mono Fallback', monospace;
+  
+  --color-background: #111111;
+  --color-foreground: #FFFFFF;
+  --color-card: #1A1A1A;
+  --color-card-foreground: #FFFFFF;
+  --color-popover: #1A1A1A;
+  --color-popover-foreground: #FFFFFF;
+  --color-primary: #D4A017;
+  --color-primary-foreground: #111111;
+  --color-secondary: #1A1A1A;
+  --color-secondary-foreground: #FFFFFF;
+  --color-muted: #1A1A1A;
+  --color-muted-foreground: #AAAAAA;
+  --color-accent: #D4A017;
+  --color-accent-foreground: #111111;
+  --color-destructive: #E53935;
+  --color-destructive-foreground: #FFFFFF;
+  --color-border: #333333;
+  --color-input: #333333;
+  --color-ring: #D4A017;
+  --color-gold: #D4A017;
+  --color-surface: #1A1A1A;
+  --color-success: #43A047;
+  --radius-sm: 0.375rem;
+  --radius-md: 0.25rem;
+  --radius-lg: 0.5rem;
+  --radius-xl: 0.75rem;
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
   }
-}
-
-body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
-}
-
-@layer utilities {
-  .text-balance {
-    text-wrap: balance;
+  body {
+    @apply bg-background text-foreground;
   }
 }

@@ -1,6 +1,8 @@
 # Vula24 Web
 
-Next.js application for **Vula24** emergency locksmith services. This repository includes the API layer backed by PostgreSQL (Prisma) for customer requests, locksmith applications, and contact messages.
+Next.js application for **Vula24** emergency locksmith services: dark, mobile-first marketing pages (Syne + DM Sans, gold accent) plus a PostgreSQL-backed API (Prisma) for customer requests, locksmith applications, and contact messages.
+
+Run `npm run dev` and open [http://localhost:3000](http://localhost:3000) to view the site.
 
 ## Prerequisites
 
