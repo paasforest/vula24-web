@@ -2,7 +2,7 @@ import { Metadata } from 'next'
 import { Nav } from '@/components/Nav'
 import { Footer } from '@/components/Footer'
 import { GoldButton } from '@/components/GoldButton'
-import { LOCKSMITH_SIGNUP_HREF } from '@/lib/constants'
+import { LOCKSMITH_PORTAL_HREF } from '@/lib/constants'
 
 export const metadata: Metadata = {
   title: 'Vula24 — About | Lead generation for locksmiths',
@@ -128,7 +128,7 @@ export default function AboutPage() {
           <p className="text-muted-foreground mb-8 text-lg">
             Apply in a few minutes. We review and get back to you on WhatsApp.
           </p>
-          <GoldButton label="Join as a Locksmith" href={LOCKSMITH_SIGNUP_HREF} size="lg" />
+          <GoldButton label="Join as a Locksmith" href={LOCKSMITH_PORTAL_HREF} size="lg" />
         </div>
       </section>
 

@@ -3,7 +3,7 @@ import Link from 'next/link'
 import { Nav } from '@/components/Nav'
 import { Footer } from '@/components/Footer'
 import { GoldButton } from '@/components/GoldButton'
-import { LOCKSMITH_PORTAL_HREF, LOCKSMITH_SIGNUP_HREF } from '@/lib/constants'
+import { LOCKSMITH_PORTAL_HREF } from '@/lib/constants'
 
 export const metadata: Metadata = {
   title: 'Vula24 — For Locksmiths | SMS lead generation',
@@ -28,7 +28,7 @@ export default function ForLocksmithsPage() {
             paid your way.
           </p>
           <div className="flex flex-wrap justify-center gap-4">
-            <GoldButton label="Apply to join" href={LOCKSMITH_SIGNUP_HREF} size="lg" />
+            <GoldButton label="Apply to join" href={LOCKSMITH_PORTAL_HREF} size="lg" />
             <GoldButton label="View pricing" href="/pricing" size="lg" variant="outline" />
           </div>
           <p className="mt-8 text-sm text-muted-foreground">
@@ -104,7 +104,7 @@ export default function ForLocksmithsPage() {
             <GoldButton label="Open account page" href={LOCKSMITH_PORTAL_HREF} size="lg" />
             <GoldButton
               label="Apply to join"
-              href={LOCKSMITH_SIGNUP_HREF}
+              href={LOCKSMITH_PORTAL_HREF}
               size="lg"
               variant="outline"
             />

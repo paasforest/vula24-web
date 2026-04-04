@@ -3,7 +3,7 @@ import { Footer } from '@/components/Footer'
 import { GoldButton } from '@/components/GoldButton'
 import { RequestForm } from '@/components/RequestForm'
 import { StickyMobileCTA } from '@/components/StickyMobileCTA'
-import { CITIES, LOCKSMITH_SIGNUP_HREF } from '@/lib/constants'
+import { CITIES, LOCKSMITH_PORTAL_HREF } from '@/lib/constants'
 
 export default function HomePage() {
   return (
@@ -34,7 +34,7 @@ export default function HomePage() {
               </p>
 
               <div className="flex flex-wrap gap-4 mb-8">
-                <GoldButton label="Join as a Locksmith" href={LOCKSMITH_SIGNUP_HREF} size="lg" />
+                <GoldButton label="Join as a Locksmith" href={LOCKSMITH_PORTAL_HREF} size="lg" />
                 <GoldButton
                   label="See How It Works"
                   href="#how-it-works"

@@ -15,13 +15,8 @@ export const CONTACT = {
   email: process.env.NEXT_PUBLIC_EMAIL ?? "hello@vula24.co.za",
 };
 
-/** Locksmith web dashboard login URL — set NEXT_PUBLIC_LOCKSMITH_LOGIN_URL in production */
-export const LOCKSMITH_LOGIN_URL =
-  process.env.NEXT_PUBLIC_LOCKSMITH_LOGIN_URL ?? "";
-
-/** Dedicated account page: dashboard login + application form */
+/** Locksmith apply page */
 export const LOCKSMITH_PORTAL_HREF = "/for-locksmiths/account";
-export const LOCKSMITH_SIGNUP_HREF = "/for-locksmiths/account?signup=1";
 
 export const CITIES = {
   gauteng: [
@@ -78,15 +73,6 @@ export const PRICING = [
     cta: "Go Pro",
     featured: true,
   },
-];
-
-export const HEARD_ABOUT_OPTIONS = [
-  { value: "", label: "Select an option" },
-  { value: "google", label: "Google" },
-  { value: "whatsapp", label: "WhatsApp" },
-  { value: "referral", label: "Referred by another locksmith" },
-  { value: "social", label: "Social media" },
-  { value: "other", label: "Other" },
 ];
 
 /** Customer request form — service types */

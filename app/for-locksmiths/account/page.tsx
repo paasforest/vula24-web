@@ -1,4 +1,3 @@
-import { Suspense } from 'react'
 import Link from 'next/link'
 import { Metadata } from 'next'
 import { Nav } from '@/components/Nav'
@@ -6,17 +5,9 @@ import { Footer } from '@/components/Footer'
 import { LocksmithPortal } from '@/components/LocksmithPortal'
 
 export const metadata: Metadata = {
-  title: 'Vula24 — Locksmith account | Log in or apply',
+  title: 'Vula24 — Join as a Locksmith',
   description:
-    'Log in to your locksmith dashboard or apply to receive SMS leads in Gauteng and Western Cape.',
-}
-
-function PortalFallback() {
-  return (
-    <div className="min-h-[24rem] flex items-center justify-center text-muted-foreground text-sm">
-      Loading…
-    </div>
-  )
+    'Apply to join the Vula24 network. Receive SMS leads from customers in your area. Gauteng and Western Cape.',
 }
 
 export default function LocksmithAccountPage() {
@@ -38,14 +29,14 @@ export default function LocksmithAccountPage() {
               <span className="mx-2 text-border" aria-hidden>
                 /
               </span>
-              <span className="text-foreground font-medium">Account</span>
+              <span className="text-foreground font-medium">Apply</span>
             </nav>
             <h1 className="font-heading font-bold text-3xl md:text-4xl tracking-tight mb-3">
-              Locksmith account
+              Join Vula24 as a Locksmith
             </h1>
             <p className="text-muted-foreground text-base md:text-lg max-w-xl leading-relaxed">
-              Access your dashboard or submit an application to join the network. One place for
-              members and new applicants.
+              Fill in your details below and we will review your application within 24 hours. We
+              will contact you on WhatsApp to activate your account.
             </p>
           </div>
         </section>
@@ -54,9 +45,7 @@ export default function LocksmithAccountPage() {
       <section className="px-4 py-10 md:py-14">
         <div className="max-w-3xl mx-auto">
           <div className="rounded-2xl border border-border bg-surface/40 p-6 md:p-10 shadow-[0_24px_48px_-24px_rgba(0,0,0,0.45)]">
-            <Suspense fallback={<PortalFallback />}>
-              <LocksmithPortal variant="page" />
-            </Suspense>
+            <LocksmithPortal />
           </div>
           <p className="text-center text-sm text-muted-foreground mt-8">
             <Link href="/for-locksmiths" className="text-gold hover:underline">

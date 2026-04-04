@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import { GoldButton } from '@/components/GoldButton'
-import { CITIES, CONTACT, HEARD_ABOUT_OPTIONS } from '@/lib/constants'
+import { CITIES, CONTACT } from '@/lib/constants'
 import { generateRandomPassword } from '@/lib/generate-password'
 
 export function LocksmithApplicationForm() {
@@ -11,8 +11,6 @@ export function LocksmithApplicationForm() {
   const [email, setEmail] = useState('')
   const [city, setCity] = useState('')
   const [accountType, setAccountType] = useState<'individual' | 'business'>('individual')
-  const [psira, setPsira] = useState<'yes' | 'no' | ''>('')
-  const [heardAbout, setHeardAbout] = useState('')
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [error, setError] = useState('')
   const [isSuccess, setIsSuccess] = useState(false)
@@ -37,14 +35,6 @@ export function LocksmithApplicationForm() {
       setError('Please select your city or area')
       return
     }
-    if (!psira) {
-      setError('Please tell us if you have PSIRA registration')
-      return
-    }
-    if (!heardAbout) {
-      setError('Please tell us how you heard about Vula24')
-      return
-    }
 
     setIsSubmitting(true)
 
@@ -64,7 +54,7 @@ export function LocksmithApplicationForm() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload),
       })
-      const data = await res.json().catch(() => ({}))
+      await res.json().catch(() => ({}))
       if (!res.ok) {
         setError(
           'Something went wrong. Please try again or WhatsApp us directly.'
@@ -209,54 +199,6 @@ export function LocksmithApplicationForm() {
               Business with a team
             </button>
           </div>
-        </div>
-
-        <div>
-          <span className="block text-sm font-medium text-muted-foreground mb-2">
-            Do you have PSIRA registration?
-          </span>
-          <div className="grid grid-cols-2 gap-2">
-            <button
-              type="button"
-              onClick={() => setPsira('yes')}
-              className={`px-4 py-3 rounded-lg text-sm font-medium border transition-colors ${
-                psira === 'yes'
-                  ? 'bg-gold text-background border-gold'
-                  : 'bg-surface text-muted-foreground border-border hover:border-gold'
-              }`}
-            >
-              Yes
-            </button>
-            <button
-              type="button"
-              onClick={() => setPsira('no')}
-              className={`px-4 py-3 rounded-lg text-sm font-medium border transition-colors ${
-                psira === 'no'
-                  ? 'bg-gold text-background border-gold'
-                  : 'bg-surface text-muted-foreground border-border hover:border-gold'
-              }`}
-            >
-              No
-            </button>
-          </div>
-        </div>
-
-        <div>
-          <label htmlFor="heard" className="block text-sm font-medium text-muted-foreground mb-2">
-            How did you hear about Vula24?
-          </label>
-          <select
-            id="heard"
-            value={heardAbout}
-            onChange={(e) => setHeardAbout(e.target.value)}
-            className="w-full px-4 py-3 bg-surface border border-border rounded-lg text-foreground focus:outline-none focus:ring-2 focus:ring-gold focus:border-transparent"
-          >
-            {HEARD_ABOUT_OPTIONS.map((o) => (
-              <option key={o.value || 'empty'} value={o.value}>
-                {o.label}
-              </option>
-            ))}
-          </select>
         </div>
 
         {error && (
