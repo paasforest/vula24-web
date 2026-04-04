@@ -37,9 +37,10 @@ export default function PrivacyPolicyPage() {
               </p>
               <ul className="list-disc pl-6 space-y-2 text-muted-foreground">
                 <li>Contact information (phone number, email address)</li>
-                <li>Location information (city or area where you need service)</li>
-                <li>Service request details (type of service needed, urgency)</li>
-                <li>For locksmiths: professional information (experience, vehicle availability)</li>
+                <li>Location or coverage information (city or area)</li>
+                <li>Account and application data when you register on the platform</li>
+                <li>Service request details when you submit a request as an end user (where applicable)</li>
+                <li>For locksmith accounts: business profile, subscription and billing data processed through the platform</li>
               </ul>
             </div>
 
@@ -49,11 +50,11 @@ export default function PrivacyPolicyPage() {
                 We use the information we collect to:
               </p>
               <ul className="list-disc pl-6 space-y-2 text-muted-foreground">
-                <li>Connect you with locksmith service providers in your area</li>
-                <li>Communicate with you about your service requests</li>
-                <li>Process locksmith applications</li>
-                <li>Improve our services and customer experience</li>
-                <li>Respond to your inquiries and support requests</li>
+                <li>Operate the platform and connect end users with independent locksmiths who use our software</li>
+                <li>Communicate with you about your account, applications and support requests</li>
+                <li>Process subscriptions and platform fees for locksmith accounts</li>
+                <li>Improve our services and user experience</li>
+                <li>Meet legal and regulatory obligations under POPIA where applicable</li>
               </ul>
             </div>
 
@@ -63,8 +64,8 @@ export default function PrivacyPolicyPage() {
                 We may share your information with:
               </p>
               <ul className="list-disc pl-6 space-y-2 text-muted-foreground">
-                <li>Locksmith service providers to fulfill your service request</li>
-                <li>Service providers who assist us in operating our business</li>
+                <li>Independent locksmiths on the platform where needed to fulfil a connection or booking initiated through the service</li>
+                <li>Hosting, payments and technology partners who assist us in operating the platform</li>
                 <li>Law enforcement or government agencies when required by law</li>
               </ul>
               <p className="text-muted-foreground font-medium">

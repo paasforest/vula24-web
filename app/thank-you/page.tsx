@@ -4,8 +4,8 @@ import { Footer } from '@/components/Footer'
 import { GoldButton } from '@/components/GoldButton'
 
 export const metadata: Metadata = {
-  title: 'Vula24 — Thank You',
-  description: 'Thank you for your application. We will be in touch soon.',
+  title: 'Vula24 — Thank you',
+  description: 'Your application was received. We will contact you on WhatsApp.',
 }
 
 export default function ThankYouPage() {
@@ -38,7 +38,7 @@ export default function ThankYouPage() {
           </h1>
           
           <p className="text-muted-foreground text-lg mb-8">
-            {`We'll`} be in touch within 24 hours.
+            We will review your details and contact you on WhatsApp within 24 hours.
           </p>
 
           <GoldButton label="Back to Home" href="/" size="md" />

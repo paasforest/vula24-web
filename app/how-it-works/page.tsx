@@ -4,48 +4,57 @@ import { Footer } from '@/components/Footer'
 import { GoldButton } from '@/components/GoldButton'
 
 export const metadata: Metadata = {
-  title: 'Vula24 — How It Works | Emergency Locksmith Services',
-  description: 'Learn how Vula24 connects you with verified locksmiths in minutes. Simple 3-step process for emergency locksmith services.',
+  title: 'Vula24 — How It Works | Platform for locksmiths & customers',
+  description:
+    'How Vula24 works: software for locksmiths to receive job requests and get paid. Customers find verified professionals on the platform.',
 }
 
-const steps = [
+const locksmithSteps = [
   {
     step: '01',
-    title: 'Submit Your Request',
-    description: 'Fill out our simple form with your phone number, location, and what service you need. It takes less than 30 seconds. You can also call us directly or send a WhatsApp message.',
+    title: 'Sign up',
+    description:
+      'Create your profile, set your services and coverage area. Takes less than 10 minutes.',
   },
   {
     step: '02',
-    title: 'Get Matched',
-    description: 'We immediately connect you with a verified locksmith in your area. They will call you within minutes to confirm your location and provide an estimated arrival time.',
+    title: 'Get job requests',
+    description:
+      'When a customer near you needs a locksmith, you get notified on your phone. Accept or decline.',
   },
   {
     step: '03',
-    title: 'Problem Solved',
-    description: 'Your locksmith arrives, assesses the situation, and gets the job done. Payment is made directly to the locksmith once the work is complete.',
+    title: 'Complete and get paid',
+    description:
+      'Do the job, get paid through the app. Your rating grows with every 5-star review.',
   },
 ]
 
 const faqs = [
   {
-    question: 'How fast will a locksmith arrive?',
-    answer: 'Our average response time is 15 minutes. Depending on your location and the time of day, a locksmith can arrive within 10-30 minutes.',
+    question: 'Is Vula24 a locksmith company?',
+    answer:
+      'No. Vula24 is a software platform. Locksmiths on the network are independent professionals who pay a monthly subscription to use the tools. We do not employ locksmiths or dispatch teams.',
   },
   {
-    question: 'Are your locksmiths verified?',
-    answer: 'Yes. Every locksmith in our network goes through a verification process. We check their credentials, experience, and reviews before they can receive jobs through Vula24.',
+    question: 'How do customers find me?',
+    answer:
+      'Customers use the Vula24 app or website to browse locksmiths in their area. Your profile, reviews and coverage settings determine when you appear in search.',
   },
   {
-    question: 'What areas do you cover?',
-    answer: 'We currently cover Gauteng (including Johannesburg, Pretoria, Sandton, and surrounding areas) and Western Cape (including Cape Town, Stellenbosch, and surrounding areas). We are expanding to more areas soon.',
+    question: 'What areas does the platform cover?',
+    answer:
+      'The platform is currently live for locksmiths operating in Gauteng and Western Cape, with more provinces on the roadmap.',
   },
   {
-    question: 'What services do you offer?',
-    answer: 'Our locksmiths handle car lockouts, house lockouts, key replacements, lock changes, safe opening, and other locksmith services. If you are unsure, just ask — we will connect you with someone who can help.',
+    question: 'How does pricing work?',
+    answer:
+      'You pay a flat monthly subscription (Starter or Pro) plus a small platform fee on top of each job. You set your own rates — you always earn what you configure.',
   },
   {
-    question: 'Is there a call-out fee?',
-    answer: 'Call-out fees vary by locksmith and location. The locksmith will provide you with a quote before they start any work, so there are no surprises.',
+    question: 'Who is responsible for the quality of work?',
+    answer:
+      'Each locksmith on the platform is an independent service provider. Vula24 provides the technology to connect customers and professionals; workmanship is between you and the customer, supported by reviews on the platform.',
   },
 ]
 
@@ -54,23 +63,25 @@ export default function HowItWorksPage() {
     <main className="min-h-screen bg-background">
       <Nav />
 
-      {/* Hero Section */}
       <section className="pt-24 pb-16 md:pt-32 md:pb-24 px-4">
         <div className="max-w-4xl mx-auto text-center">
           <h1 className="font-heading font-bold text-4xl md:text-5xl lg:text-6xl leading-tight mb-6 text-balance">
-            How It Works
+            How Vula24 works
           </h1>
           <p className="text-lg md:text-xl text-muted-foreground mb-8 max-w-2xl mx-auto text-pretty">
-            Getting help is simple. Here is exactly what happens when you reach out.
+            Software for locksmiths. A simple way for customers to find verified
+            professionals on the platform.
           </p>
         </div>
       </section>
 
-      {/* Steps Section */}
       <section className="py-16 md:py-24 px-4 bg-surface">
         <div className="max-w-4xl mx-auto">
+          <h2 className="font-heading font-bold text-2xl md:text-3xl text-center mb-12">
+            For locksmiths on the platform
+          </h2>
           <div className="space-y-12">
-            {steps.map((step, index) => (
+            {locksmithSteps.map((step, index) => (
               <div key={step.step} className="flex gap-6 md:gap-8">
                 <div className="flex-shrink-0">
                   <div className="w-12 h-12 md:w-16 md:h-16 bg-gold/10 rounded-full flex items-center justify-center">
@@ -78,7 +89,7 @@ export default function HowItWorksPage() {
                       {step.step}
                     </span>
                   </div>
-                  {index < steps.length - 1 && (
+                  {index < locksmithSteps.length - 1 && (
                     <div className="w-px h-12 bg-border mx-auto mt-4" />
                   )}
                 </div>
@@ -96,11 +107,10 @@ export default function HowItWorksPage() {
         </div>
       </section>
 
-      {/* FAQ Section */}
       <section className="py-16 md:py-24 px-4">
         <div className="max-w-3xl mx-auto">
           <h2 className="font-heading font-bold text-3xl md:text-4xl text-center mb-12">
-            Frequently Asked Questions
+            Frequently asked questions
           </h2>
 
           <div className="space-y-6">
@@ -118,16 +128,15 @@ export default function HowItWorksPage() {
         </div>
       </section>
 
-      {/* CTA Section */}
       <section className="py-16 md:py-24 px-4 bg-surface">
         <div className="max-w-3xl mx-auto text-center">
           <h2 className="font-heading font-bold text-3xl md:text-4xl mb-4">
-            Ready to get help?
+            Ready to join the platform?
           </h2>
           <p className="text-muted-foreground mb-8 text-lg">
-            Get connected to a verified locksmith in your area within minutes.
+            Apply as a locksmith and start using Vula24 from your phone.
           </p>
-          <GoldButton label="Get Help Now" href="/#request" size="lg" />
+          <GoldButton label="Join as a Locksmith" href="/apply" size="lg" />
         </div>
       </section>
 

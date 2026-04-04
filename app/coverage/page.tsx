@@ -5,8 +5,9 @@ import { GoldButton } from '@/components/GoldButton'
 import { CITIES } from '@/lib/constants'
 
 export const metadata: Metadata = {
-  title: 'Vula24 — Coverage Areas | Emergency Locksmith Services',
-  description: 'Vula24 emergency locksmith services available across Gauteng and Western Cape. Johannesburg, Pretoria, Cape Town, and more.',
+  title: 'Vula24 — Coverage | Where locksmiths on the platform operate',
+  description:
+    'Vula24 is live in Gauteng and Western Cape. Browse areas where locksmiths on the platform operate.',
 }
 
 export default function CoveragePage() {
@@ -14,20 +15,18 @@ export default function CoveragePage() {
     <main className="min-h-screen bg-background">
       <Nav />
 
-      {/* Hero Section */}
       <section className="pt-24 pb-16 md:pt-32 md:pb-24 px-4">
         <div className="max-w-4xl mx-auto text-center">
           <h1 className="font-heading font-bold text-4xl md:text-5xl lg:text-6xl leading-tight mb-6 text-balance">
-            Available Across{' '}
-            <span className="text-gold">South Africa</span>
+            Where{' '}
+            <span className="text-gold">Vula24 locksmiths</span> operate
           </h1>
           <p className="text-lg md:text-xl text-muted-foreground mb-8 max-w-2xl mx-auto text-pretty">
-            We are currently operating in Gauteng and Western Cape, with more provinces coming soon.
+            Our platform is live in Gauteng and Western Cape. More provinces coming soon.
           </p>
         </div>
       </section>
 
-      {/* Gauteng Section */}
       <section className="py-16 md:py-24 px-4 bg-surface">
         <div className="max-w-5xl mx-auto">
           <div className="flex items-center gap-3 mb-8">
@@ -50,7 +49,6 @@ export default function CoveragePage() {
         </div>
       </section>
 
-      {/* Western Cape Section */}
       <section className="py-16 md:py-24 px-4">
         <div className="max-w-5xl mx-auto">
           <div className="flex items-center gap-3 mb-8">
@@ -73,29 +71,16 @@ export default function CoveragePage() {
         </div>
       </section>
 
-      {/* Coming Soon Section */}
       <section className="py-16 md:py-24 px-4 bg-surface">
         <div className="max-w-3xl mx-auto text-center">
           <h2 className="font-heading font-bold text-2xl md:text-3xl mb-4">
-            More Cities Coming Soon
+            More provinces coming soon
           </h2>
           <p className="text-muted-foreground mb-8">
-            We are expanding to KwaZulu-Natal, Eastern Cape, and more provinces. Want us in your area? Let us know.
+            We are expanding where locksmiths on the platform can operate. Join
+            the waitlist or apply as a locksmith to hear first.
           </p>
-          <GoldButton label="Contact Us" href="/contact" size="md" variant="outline" />
-        </div>
-      </section>
-
-      {/* CTA Section */}
-      <section className="py-16 md:py-24 px-4">
-        <div className="max-w-3xl mx-auto text-center">
-          <h2 className="font-heading font-bold text-3xl md:text-4xl mb-4">
-            Need a locksmith now?
-          </h2>
-          <p className="text-muted-foreground mb-8 text-lg">
-            If you are in one of our coverage areas, we can have someone to you in minutes.
-          </p>
-          <GoldButton label="Get Help Now" href="/#request" size="lg" />
+          <GoldButton label="Join as a Locksmith" href="/apply" size="lg" />
         </div>
       </section>
 

@@ -4,7 +4,8 @@ import { Footer } from '@/components/Footer'
 
 export const metadata: Metadata = {
   title: 'Vula24 — Terms of Service',
-  description: 'Vula24 Terms of Service. Read our terms and conditions for using our emergency locksmith services.',
+  description:
+    'Terms of using the Vula24 platform. Software for locksmiths; independent professionals on the network.',
 }
 
 export default function TermsPage() {
@@ -31,47 +32,37 @@ export default function TermsPage() {
             </div>
 
             <div className="space-y-4">
-              <h2 className="font-heading font-bold text-xl">2. Description of Service</h2>
+              <h2 className="font-heading font-bold text-xl">2. Description of the platform</h2>
               <p className="text-muted-foreground">
-                Vula24 provides emergency locksmith services across South Africa. We connect customers who need locksmith assistance with verified locksmith professionals in their area.
+                Vula24 provides software (including web and mobile applications) that connects end users who need locksmith services with independent locksmith professionals who subscribe to the platform. Vula24 is not a locksmith business, does not employ locksmiths, and does not guarantee response times or the outcome of any job.
               </p>
             </div>
 
             <div className="space-y-4">
-              <h2 className="font-heading font-bold text-xl">3. Service Availability</h2>
+              <h2 className="font-heading font-bold text-xl">3. Availability and coverage</h2>
               <p className="text-muted-foreground">
-                While we strive to provide 24/7 service coverage, availability may vary based on your location and the availability of locksmith professionals in your area. We do not guarantee that a locksmith will be available at all times in all locations.
+                Features and coverage depend on your region, network connectivity and whether independent professionals are active on the platform in your area. Nothing on this website promises that a locksmith will be available at a given time or location.
               </p>
             </div>
 
             <div className="space-y-4">
-              <h2 className="font-heading font-bold text-xl">4. User Responsibilities</h2>
+              <h2 className="font-heading font-bold text-xl">4. User responsibilities</h2>
               <p className="text-muted-foreground">
-                When using our services, you agree to:
-              </p>
-              <ul className="list-disc pl-6 space-y-2 text-muted-foreground">
-                <li>Provide accurate contact and location information</li>
-                <li>Be available to receive calls from our team or the assigned locksmith</li>
-                <li>Provide proof of ownership or authorisation when requested</li>
-                <li>Pay the locksmith directly for services rendered</li>
-                <li>Treat our staff and locksmith partners with respect</li>
-              </ul>
-            </div>
-
-            <div className="space-y-4">
-              <h2 className="font-heading font-bold text-xl">5. Pricing and Payment</h2>
-              <p className="text-muted-foreground">
-                Service pricing is determined by the individual locksmith based on the type of service, time of day, and location. The locksmith will provide you with a quote before starting any work. Payment is made directly to the locksmith upon completion of the service.
-              </p>
-              <p className="text-muted-foreground">
-                Vula24 does not process payments for locksmith services and is not responsible for any pricing disputes between you and the locksmith.
+                When using the platform, you agree to provide accurate information, treat other users professionally, and comply with applicable law. End users are responsible for verifying identity and access rights where relevant. Locksmiths on the platform are responsible for their workmanship, pricing they offer customers, and compliance with their own regulatory obligations (including PSIRA where applicable).
               </p>
             </div>
 
             <div className="space-y-4">
-              <h2 className="font-heading font-bold text-xl">6. Locksmith Verification</h2>
+              <h2 className="font-heading font-bold text-xl">5. Pricing, subscriptions and platform fees</h2>
               <p className="text-muted-foreground">
-                We verify all locksmiths in our network, but we do not employ them directly. Locksmiths are independent service providers. While we take reasonable steps to verify their credentials, we cannot guarantee the quality of their work.
+                Locksmiths pay a monthly subscription and, where applicable, a platform fee on jobs as described at signup. Customer pricing for work performed is agreed between the customer and the locksmith. Vula24 may facilitate payments through the platform according to the product terms shown in the app; specific payment rules are set out in your account or order flow.
+              </p>
+            </div>
+
+            <div className="space-y-4">
+              <h2 className="font-heading font-bold text-xl">6. Independent professionals</h2>
+              <p className="text-muted-foreground">
+                Locksmiths on the platform are independent service providers, not employees or agents of Vula24. Reviews and verification badges are tools to help customers choose; they do not constitute a guarantee of service quality or timing.
               </p>
             </div>
 

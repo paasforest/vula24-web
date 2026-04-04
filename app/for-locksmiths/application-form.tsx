@@ -1,77 +1,117 @@
 'use client'
 
 import { useState } from 'react'
-import { useRouter } from 'next/navigation'
 import { GoldButton } from '@/components/GoldButton'
-import { CITIES } from '@/lib/constants'
+import { CITIES, CONTACT, HEARD_ABOUT_OPTIONS } from '@/lib/constants'
+import { generateRandomPassword } from '@/lib/generate-password'
 
 export function LocksmithApplicationForm() {
-  const router = useRouter()
   const [name, setName] = useState('')
   const [phone, setPhone] = useState('')
+  const [email, setEmail] = useState('')
   const [city, setCity] = useState('')
-  const [experience, setExperience] = useState('')
-  const [vehicle, setVehicle] = useState('')
+  const [accountType, setAccountType] = useState<'individual' | 'business'>('individual')
+  const [psira, setPsira] = useState<'yes' | 'no' | ''>('')
+  const [heardAbout, setHeardAbout] = useState('')
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [error, setError] = useState('')
+  const [isSuccess, setIsSuccess] = useState(false)
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setError('')
 
-    // Validation
     if (!name.trim()) {
-      setError('Please enter your name')
+      setError('Please enter your full name')
       return
     }
-    if (!phone || phone.length < 10) {
+    if (!phone || phone.replace(/\D/g, '').length < 9) {
       setError('Please enter a valid phone number')
       return
     }
+    if (!email.trim() || !email.includes('@')) {
+      setError('Please enter a valid email address')
+      return
+    }
     if (!city) {
-      setError('Please select your city')
+      setError('Please select your city or area')
       return
     }
-    if (!experience) {
-      setError('Please select your experience level')
+    if (!psira) {
+      setError('Please tell us if you have PSIRA registration')
       return
     }
-    if (!vehicle) {
-      setError('Please indicate if you have a vehicle')
+    if (!heardAbout) {
+      setError('Please tell us how you heard about Vula24')
       return
     }
 
     setIsSubmitting(true)
 
+    const password = generateRandomPassword(8)
+    const payload = {
+      name: name.trim(),
+      phone: phone.trim(),
+      email: email.trim(),
+      password,
+      accountType: accountType === 'business' ? 'BUSINESS' : 'INDIVIDUAL',
+      businessName: city,
+    }
+
     try {
-      const res = await fetch('/api/applications', {
+      const res = await fetch('/api/locksmith-register', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          name: name.trim(),
-          phone,
-          city,
-          experience,
-          vehicle,
-        }),
+        body: JSON.stringify(payload),
       })
       const data = await res.json().catch(() => ({}))
       if (!res.ok) {
-        setError(typeof data.error === 'string' ? data.error : 'Something went wrong. Please try again.')
+        setError(
+          'Something went wrong. Please try again or WhatsApp us directly.'
+        )
         setIsSubmitting(false)
         return
       }
-      router.push('/thank-you')
+      setIsSuccess(true)
     } catch {
-      setError('Network error. Please check your connection and try again.')
+      setError(
+        'Something went wrong. Please try again or WhatsApp us directly.'
+      )
+    } finally {
       setIsSubmitting(false)
     }
+  }
+
+  if (isSuccess) {
+    return (
+      <div className="bg-background border border-border rounded-xl p-6 md:p-8 text-center">
+        <div className="w-16 h-16 bg-gold/10 rounded-full flex items-center justify-center mx-auto mb-4">
+          <svg
+            width="32"
+            height="32"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            className="text-gold"
+          >
+            <path d="M20 6L9 17l-5-5" />
+          </svg>
+        </div>
+        <h3 className="font-heading font-bold text-xl text-foreground mb-2">
+          Application received!
+        </h3>
+        <p className="text-muted-foreground">
+          We will review your details and contact you on WhatsApp within 24
+          hours.
+        </p>
+      </div>
+    )
   }
 
   return (
     <form onSubmit={handleSubmit} className="bg-background border border-border rounded-xl p-6 md:p-8">
       <div className="space-y-4">
-        {/* Name */}
         <div>
           <label htmlFor="name" className="block text-sm font-medium text-muted-foreground mb-2">
             Full Name
@@ -82,11 +122,11 @@ export function LocksmithApplicationForm() {
             value={name}
             onChange={(e) => setName(e.target.value)}
             placeholder="John Smith"
+            autoComplete="name"
             className="w-full px-4 py-3 bg-surface border border-border rounded-lg text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-gold focus:border-transparent"
           />
         </div>
 
-        {/* Phone */}
         <div>
           <label htmlFor="phone" className="block text-sm font-medium text-muted-foreground mb-2">
             Phone Number
@@ -97,14 +137,29 @@ export function LocksmithApplicationForm() {
             value={phone}
             onChange={(e) => setPhone(e.target.value)}
             placeholder="0XX XXX XXXX"
+            autoComplete="tel"
             className="w-full px-4 py-3 bg-surface border border-border rounded-lg text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-gold focus:border-transparent"
           />
         </div>
 
-        {/* City */}
+        <div>
+          <label htmlFor="email" className="block text-sm font-medium text-muted-foreground mb-2">
+            Email Address
+          </label>
+          <input
+            type="email"
+            id="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            placeholder="you@example.com"
+            autoComplete="email"
+            className="w-full px-4 py-3 bg-surface border border-border rounded-lg text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-gold focus:border-transparent"
+          />
+        </div>
+
         <div>
           <label htmlFor="city" className="block text-sm font-medium text-muted-foreground mb-2">
-            Your City
+            City / Area you operate in
           </label>
           <select
             id="city"
@@ -126,55 +181,107 @@ export function LocksmithApplicationForm() {
           </select>
         </div>
 
-        {/* Experience */}
         <div>
-          <label htmlFor="experience" className="block text-sm font-medium text-muted-foreground mb-2">
-            Years of Experience
+          <span className="block text-sm font-medium text-muted-foreground mb-2">
+            Account type
+          </span>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+            <button
+              type="button"
+              onClick={() => setAccountType('individual')}
+              className={`px-4 py-3 rounded-lg text-sm font-medium border transition-colors ${
+                accountType === 'individual'
+                  ? 'bg-gold text-background border-gold'
+                  : 'bg-surface text-muted-foreground border-border hover:border-gold'
+              }`}
+            >
+              Individual locksmith
+            </button>
+            <button
+              type="button"
+              onClick={() => setAccountType('business')}
+              className={`px-4 py-3 rounded-lg text-sm font-medium border transition-colors ${
+                accountType === 'business'
+                  ? 'bg-gold text-background border-gold'
+                  : 'bg-surface text-muted-foreground border-border hover:border-gold'
+              }`}
+            >
+              Business with a team
+            </button>
+          </div>
+        </div>
+
+        <div>
+          <span className="block text-sm font-medium text-muted-foreground mb-2">
+            Do you have PSIRA registration?
+          </span>
+          <div className="grid grid-cols-2 gap-2">
+            <button
+              type="button"
+              onClick={() => setPsira('yes')}
+              className={`px-4 py-3 rounded-lg text-sm font-medium border transition-colors ${
+                psira === 'yes'
+                  ? 'bg-gold text-background border-gold'
+                  : 'bg-surface text-muted-foreground border-border hover:border-gold'
+              }`}
+            >
+              Yes
+            </button>
+            <button
+              type="button"
+              onClick={() => setPsira('no')}
+              className={`px-4 py-3 rounded-lg text-sm font-medium border transition-colors ${
+                psira === 'no'
+                  ? 'bg-gold text-background border-gold'
+                  : 'bg-surface text-muted-foreground border-border hover:border-gold'
+              }`}
+            >
+              No
+            </button>
+          </div>
+        </div>
+
+        <div>
+          <label htmlFor="heard" className="block text-sm font-medium text-muted-foreground mb-2">
+            How did you hear about Vula24?
           </label>
           <select
-            id="experience"
-            value={experience}
-            onChange={(e) => setExperience(e.target.value)}
+            id="heard"
+            value={heardAbout}
+            onChange={(e) => setHeardAbout(e.target.value)}
             className="w-full px-4 py-3 bg-surface border border-border rounded-lg text-foreground focus:outline-none focus:ring-2 focus:ring-gold focus:border-transparent"
           >
-            <option value="">Select experience</option>
-            <option value="0-1">Less than 1 year</option>
-            <option value="1-3">1-3 years</option>
-            <option value="3-5">3-5 years</option>
-            <option value="5+">5+ years</option>
+            {HEARD_ABOUT_OPTIONS.map((o) => (
+              <option key={o.value || 'empty'} value={o.value}>
+                {o.label}
+              </option>
+            ))}
           </select>
         </div>
 
-        {/* Vehicle */}
-        <div>
-          <label htmlFor="vehicle" className="block text-sm font-medium text-muted-foreground mb-2">
-            Do you have your own vehicle?
-          </label>
-          <select
-            id="vehicle"
-            value={vehicle}
-            onChange={(e) => setVehicle(e.target.value)}
-            className="w-full px-4 py-3 bg-surface border border-border rounded-lg text-foreground focus:outline-none focus:ring-2 focus:ring-gold focus:border-transparent"
-          >
-            <option value="">Select an option</option>
-            <option value="yes">Yes</option>
-            <option value="no">No</option>
-          </select>
-        </div>
-
-        {/* Error */}
         {error && (
           <p className="text-destructive text-sm">{error}</p>
         )}
 
-        {/* Submit */}
         <GoldButton
           type="submit"
-          label={isSubmitting ? 'Submitting...' : 'Submit Application'}
+          label={isSubmitting ? 'Submitting...' : 'Apply to Join Vula24'}
           size="lg"
           className="w-full mt-2"
           disabled={isSubmitting}
         />
+
+        <p className="text-xs text-muted-foreground text-center pt-2">
+          Need help?{' '}
+          <a
+            href={`https://wa.me/${CONTACT.whatsapp}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-gold hover:underline"
+          >
+            WhatsApp us
+          </a>
+        </p>
       </div>
     </form>
   )

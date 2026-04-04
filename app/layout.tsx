@@ -16,13 +16,25 @@ const dmSans = DM_Sans({
 })
 
 export const metadata: Metadata = {
-  title: 'Vula24 — Emergency Locksmith Services | 24/7 South Africa',
-  description: '24/7 emergency locksmith services across South Africa. Verified professionals, fast response, no surprises. Available in Gauteng and Western Cape.',
-  keywords: ['locksmith', 'emergency locksmith', 'car lockout', 'house lockout', 'South Africa', 'Johannesburg', 'Cape Town', '24/7'],
+  title: {
+    default: 'Vula24 — Software platform for South African locksmiths',
+    template: '%s | Vula24',
+  },
+  description:
+    'Vula24 is the platform locksmiths use to find customers, manage bookings and get paid. Customers find verified professionals in Gauteng and Western Cape.',
+  keywords: [
+    'locksmith software',
+    'South Africa',
+    'Johannesburg',
+    'Cape Town',
+    'locksmith app',
+    'Vula24',
+  ],
   authors: [{ name: 'Vula24' }],
   openGraph: {
-    title: 'Vula24 — Emergency Locksmith Services',
-    description: '24/7 emergency locksmith services across South Africa. Verified professionals, fast response.',
+    title: 'Vula24 — Software for locksmiths',
+    description:
+      'Subscription software for locksmith businesses. Connect with customers, manage jobs and grow your reputation on the platform.',
     type: 'website',
     locale: 'en_ZA',
     siteName: 'Vula24',

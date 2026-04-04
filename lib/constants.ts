@@ -15,6 +15,10 @@ export const CONTACT = {
   email: process.env.NEXT_PUBLIC_EMAIL ?? "hello@vula24.co.za",
 };
 
+/** Locksmith app / dashboard login — set NEXT_PUBLIC_LOCKSMITH_LOGIN_URL in production */
+export const LOCKSMITH_LOGIN_URL =
+  process.env.NEXT_PUBLIC_LOCKSMITH_LOGIN_URL ?? "";
+
 export const CITIES = {
   gauteng: [
     "Johannesburg",
@@ -45,11 +49,12 @@ export const PRICING = [
     period: "month",
     features: [
       "1 city coverage",
-      "Up to 15 jobs per month",
-      "WhatsApp notifications",
-      "Basic listing",
+      "Up to 15 job requests per month",
+      "WhatsApp job notifications",
+      "Basic verified profile",
+      "Standard support",
     ],
-    cta: "Get Started",
+    cta: "Start with Starter",
   },
   {
     name: "Pro",
@@ -57,10 +62,12 @@ export const PRICING = [
     period: "month",
     features: [
       "Full province coverage",
-      "Unlimited jobs",
-      "Verified badge",
-      "Priority listing",
-      "WhatsApp + SMS notifications",
+      "Unlimited job requests",
+      "Priority listing in search",
+      "PSIRA verified badge",
+      "WhatsApp + SMS + push notifications",
+      "Dedicated support",
+      "Business account (add your team)",
     ],
     cta: "Go Pro",
     featured: true,
@@ -73,6 +80,15 @@ export const NAV_LINKS = [
   { label: "For Locksmiths", href: "/for-locksmiths" },
   { label: "About", href: "/about" },
   { label: "Contact", href: "/contact" },
+];
+
+export const HEARD_ABOUT_OPTIONS = [
+  { value: "", label: "Select an option" },
+  { value: "google", label: "Google" },
+  { value: "whatsapp", label: "WhatsApp" },
+  { value: "referral", label: "Referred by another locksmith" },
+  { value: "social", label: "Social media" },
+  { value: "other", label: "Other" },
 ];
 
 export const SERVICES = [

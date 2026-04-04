@@ -2,12 +2,13 @@ import { Metadata } from 'next'
 import { Nav } from '@/components/Nav'
 import { Footer } from '@/components/Footer'
 import { GoldButton } from '@/components/GoldButton'
-import { PRICING, CITIES } from '@/lib/constants'
+import { PRICING } from '@/lib/constants'
 import { LocksmithApplicationForm } from './application-form'
 
 export const metadata: Metadata = {
-  title: 'Vula24 — For Locksmiths | Join Our Network',
-  description: 'Get more jobs with Vula24. We send you real jobs in your area. Founder pricing locked in for your first 3 months.',
+  title: 'Vula24 — For Locksmiths | Grow your business on the platform',
+  description:
+    'Vula24 is software for South African locksmiths: job requests, bookings and payments from your phone. Simple monthly plans.',
 }
 
 export default function ForLocksmithsPage() {
@@ -15,31 +16,32 @@ export default function ForLocksmithsPage() {
     <main className="min-h-screen bg-background">
       <Nav />
 
-      {/* Hero Section */}
       <section className="pt-24 pb-16 md:pt-32 md:pb-24 px-4">
         <div className="max-w-4xl mx-auto text-center">
           <h1 className="font-heading font-bold text-4xl md:text-5xl lg:text-6xl leading-tight mb-6 text-balance">
-            Get more jobs with{' '}
-            <span className="text-gold">Vula24</span>
+            More jobs. Less admin.{' '}
+            <span className="text-gold">On Vula24.</span>
           </h1>
           <p className="text-lg md:text-xl text-muted-foreground mb-8 max-w-2xl mx-auto text-pretty">
-            We send you real jobs in your area. Founder pricing — locked in for your first 3 months.
+            The platform connects you with customers in your area. You choose
+            your jobs, your prices and how you run your business — we provide the
+            software.
           </p>
-          <GoldButton label="Apply Now" href="#apply" size="lg" />
+          <GoldButton label="Join as a Locksmith" href="#apply" size="lg" />
         </div>
       </section>
 
-      {/* Pricing Section */}
       <section className="py-16 md:py-24 px-4 bg-surface">
         <div className="max-w-5xl mx-auto">
           <h2 className="font-heading font-bold text-3xl md:text-4xl text-center mb-4">
-            Simple, Transparent Pricing
+            Simple monthly plans. No hidden fees.
           </h2>
           <p className="text-muted-foreground text-center mb-12 max-w-2xl mx-auto">
-            Choose the plan that works for your business
+            Pay one flat monthly fee plus a small platform fee added on top of
+            each job. You always earn what you set.
           </p>
 
-          <div className="grid md:grid-cols-2 gap-8 max-w-3xl mx-auto">
+          <div className="grid md:grid-cols-2 gap-8 max-w-3xl mx-auto mb-8">
             {PRICING.map((plan) => (
               <div
                 key={plan.name}
@@ -89,45 +91,50 @@ export default function ForLocksmithsPage() {
               </div>
             ))}
           </div>
+
+          <p className="text-center text-sm text-muted-foreground max-w-lg mx-auto">
+            All plans include a 14-day free trial. No credit card required to start.
+          </p>
         </div>
       </section>
 
-      {/* Benefits Section */}
       <section className="py-16 md:py-24 px-4">
         <div className="max-w-7xl mx-auto">
           <h2 className="font-heading font-bold text-3xl md:text-4xl text-center mb-12">
-            Why Join Vula24
+            Built for locksmith business owners
           </h2>
 
           <div className="grid md:grid-cols-3 gap-8">
             {[
               {
-                title: 'Only Pay for Real Leads',
-                description: 'No wasted money on fake inquiries. Every job request is from a real customer who needs help.',
+                title: 'Jobs come to you',
+                description:
+                  'Customers in your area find you on the platform. You get notified and decide whether to accept.',
                 icon: (
                   <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                    <circle cx="12" cy="12" r="10" />
-                    <path d="M16 8h-6a2 2 0 100 4h4a2 2 0 110 4H8" />
-                    <path d="M12 18V6" />
+                    <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z" />
                   </svg>
                 ),
               },
               {
-                title: 'Jobs in Your Area',
-                description: 'We only send you jobs that are within your coverage area. No long drives for nothing.',
+                title: 'Build your reputation',
+                description:
+                  'Your profile and reviews do the selling. The more you complete on the platform, the stronger your presence.',
                 icon: (
                   <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                    <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z" />
-                    <circle cx="12" cy="10" r="3" />
+                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+                    <path d="M9 12l2 2 4-4" />
                   </svg>
                 ),
               },
               {
-                title: 'Build Your Reputation',
-                description: 'Get verified status and build trust with customers. Stand out from the competition.',
+                title: 'Get paid faster',
+                description:
+                  'Payments run through the platform so you spend less time chasing invoices.',
                 icon: (
                   <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                    <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
+                    <rect x="2" y="5" width="20" height="14" rx="2" />
+                    <path d="M2 10h20" />
                   </svg>
                 ),
               },
@@ -144,14 +151,13 @@ export default function ForLocksmithsPage() {
         </div>
       </section>
 
-      {/* Application Form Section */}
       <section id="apply" className="py-16 md:py-24 px-4 bg-surface scroll-mt-24">
         <div className="max-w-2xl mx-auto">
           <h2 className="font-heading font-bold text-3xl md:text-4xl text-center mb-4">
-            Apply to Join
+            Join Vula24 as a locksmith
           </h2>
           <p className="text-muted-foreground text-center mb-8">
-            Fill out the form below and we will be in touch within 24 hours.
+            Apply takes 2 minutes. We review and activate your account within 24 hours.
           </p>
           <LocksmithApplicationForm />
         </div>
