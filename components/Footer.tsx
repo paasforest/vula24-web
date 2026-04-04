@@ -2,11 +2,10 @@
 
 import Link from 'next/link'
 import { Logo } from './Logo'
-import { CONTACT, LOCKSMITH_LOGIN_URL } from '@/lib/constants'
+import { CONTACT } from '@/lib/constants'
 
 export function Footer() {
   const currentYear = new Date().getFullYear()
-  const loginHref = LOCKSMITH_LOGIN_URL || '#'
 
   const footerLinks = {
     services: [
@@ -22,7 +21,6 @@ export function Footer() {
       { label: 'All areas', href: '/coverage' },
     ],
     company: [
-      { label: 'Locksmith Login', href: loginHref },
       { label: 'About', href: '/about' },
       { label: 'For locksmiths', href: '/for-locksmiths' },
       { label: 'Privacy Policy', href: '/privacy-policy' },

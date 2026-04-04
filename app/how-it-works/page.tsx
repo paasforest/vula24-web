@@ -2,6 +2,7 @@ import { Metadata } from 'next'
 import { Nav } from '@/components/Nav'
 import { Footer } from '@/components/Footer'
 import { GoldButton } from '@/components/GoldButton'
+import { LOCKSMITH_SIGNUP_HREF } from '@/lib/constants'
 
 export const metadata: Metadata = {
   title: 'Vula24 — How It Works | SMS leads for locksmiths',
@@ -135,7 +136,7 @@ export default function HowItWorksPage() {
           <p className="text-muted-foreground mb-8 text-lg">
             Apply as a locksmith and we will get you set up on WhatsApp.
           </p>
-          <GoldButton label="Join as a Locksmith" href="/apply" size="lg" />
+          <GoldButton label="Join as a Locksmith" href={LOCKSMITH_SIGNUP_HREF} size="lg" />
         </div>
       </section>
 

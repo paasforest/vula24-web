@@ -19,6 +19,10 @@ export const CONTACT = {
 export const LOCKSMITH_LOGIN_URL =
   process.env.NEXT_PUBLIC_LOCKSMITH_LOGIN_URL ?? "";
 
+/** For Locksmiths page: marketing + log in / sign up in one place */
+export const LOCKSMITH_PORTAL_HREF = "/for-locksmiths";
+export const LOCKSMITH_SIGNUP_HREF = "/for-locksmiths?signup=1";
+
 export const CITIES = {
   gauteng: [
     "Johannesburg",

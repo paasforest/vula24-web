@@ -1,5 +1,5 @@
 import { GoldButton } from '@/components/GoldButton'
-import { PRICING } from '@/lib/constants'
+import { LOCKSMITH_SIGNUP_HREF, PRICING } from '@/lib/constants'
 
 /** Full Starter / Pro tier cards — used on /pricing only. */
 export function PricingTiers() {
@@ -65,7 +65,7 @@ export function PricingTiers() {
             </ul>
             <GoldButton
               label={plan.cta}
-              href="/apply"
+              href={LOCKSMITH_SIGNUP_HREF}
               size="md"
               variant={plan.featured ? 'solid' : 'outline'}
               className="w-full mt-auto"

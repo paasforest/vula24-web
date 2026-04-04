@@ -2,7 +2,7 @@ import { Metadata } from 'next'
 import { Nav } from '@/components/Nav'
 import { Footer } from '@/components/Footer'
 import { GoldButton } from '@/components/GoldButton'
-import { CITIES } from '@/lib/constants'
+import { CITIES, LOCKSMITH_SIGNUP_HREF } from '@/lib/constants'
 
 export const metadata: Metadata = {
   title: 'Vula24 — Coverage | Where locksmiths on the platform operate',
@@ -80,7 +80,7 @@ export default function CoveragePage() {
             We are expanding where locksmiths on the platform can operate. Join
             the waitlist or apply as a locksmith to hear first.
           </p>
-          <GoldButton label="Join as a Locksmith" href="/apply" size="lg" />
+          <GoldButton label="Join as a Locksmith" href={LOCKSMITH_SIGNUP_HREF} size="lg" />
         </div>
       </section>
 

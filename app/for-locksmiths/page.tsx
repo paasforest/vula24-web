@@ -1,13 +1,23 @@
+import { Suspense } from 'react'
 import { Metadata } from 'next'
 import { Nav } from '@/components/Nav'
 import { Footer } from '@/components/Footer'
 import { GoldButton } from '@/components/GoldButton'
-import { LocksmithApplicationForm } from './application-form'
+import { LocksmithPortal } from '@/components/LocksmithPortal'
+import { LOCKSMITH_SIGNUP_HREF } from '@/lib/constants'
 
 export const metadata: Metadata = {
   title: 'Vula24 — For Locksmiths | SMS lead generation',
   description:
     'Pay monthly to receive customer leads by SMS. No app — Vula24 connects you with jobs in Gauteng and Western Cape.',
+}
+
+function PortalFallback() {
+  return (
+    <div className="max-w-2xl mx-auto py-12 text-center text-muted-foreground">
+      Loading…
+    </div>
+  )
 }
 
 export default function ForLocksmithsPage() {
@@ -27,7 +37,7 @@ export default function ForLocksmithsPage() {
             paid your way.
           </p>
           <div className="flex flex-wrap justify-center gap-4">
-            <GoldButton label="Join as a Locksmith" href="#apply" size="lg" />
+            <GoldButton label="Join as a Locksmith" href={LOCKSMITH_SIGNUP_HREF} size="lg" />
             <GoldButton label="View pricing" href="/pricing" size="lg" variant="outline" />
           </div>
         </div>
@@ -85,16 +95,10 @@ export default function ForLocksmithsPage() {
         </div>
       </section>
 
-      <section id="apply" className="py-16 md:py-24 px-4 bg-surface scroll-mt-24">
-        <div className="max-w-2xl mx-auto">
-          <h2 className="font-heading font-bold text-3xl md:text-4xl text-center mb-4">
-            Join Vula24 as a locksmith
-          </h2>
-          <p className="text-muted-foreground text-center mb-8">
-            Apply takes 2 minutes. We review and activate your account within 24 hours.
-          </p>
-          <LocksmithApplicationForm />
-        </div>
+      <section className="py-16 md:py-24 px-4 bg-surface">
+        <Suspense fallback={<PortalFallback />}>
+          <LocksmithPortal />
+        </Suspense>
       </section>
 
       <Footer />

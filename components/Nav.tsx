@@ -5,7 +5,6 @@ import Link from 'next/link'
 import { cn } from '@/lib/utils'
 import { Logo } from './Logo'
 import { GoldButton } from './GoldButton'
-import { LOCKSMITH_LOGIN_URL } from '@/lib/constants'
 
 /** Main site header links — keep in sync with routes under `app/` */
 const NAV_LINKS = [
@@ -19,8 +18,6 @@ const NAV_LINKS = [
 
 export function Nav() {
   const [isOpen, setIsOpen] = useState(false)
-
-  const loginHref = LOCKSMITH_LOGIN_URL || '#'
 
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 bg-background/90 backdrop-blur-md border-b border-border">
@@ -38,12 +35,6 @@ export function Nav() {
                 {link.label}
               </Link>
             ))}
-            <Link
-              href={loginHref}
-              className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
-            >
-              Locksmith Login
-            </Link>
             <GoldButton label="Find a Locksmith" href="/#request" size="sm" />
           </div>
 
@@ -92,13 +83,6 @@ export function Nav() {
               {link.label}
             </Link>
           ))}
-          <Link
-            href={loginHref}
-            onClick={() => setIsOpen(false)}
-            className="block text-foreground font-medium py-2"
-          >
-            Locksmith Login
-          </Link>
         </div>
       </div>
     </nav>

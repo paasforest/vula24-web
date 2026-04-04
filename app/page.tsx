@@ -3,7 +3,7 @@ import { Footer } from '@/components/Footer'
 import { GoldButton } from '@/components/GoldButton'
 import { RequestForm } from '@/components/RequestForm'
 import { StickyMobileCTA } from '@/components/StickyMobileCTA'
-import { CITIES } from '@/lib/constants'
+import { CITIES, LOCKSMITH_SIGNUP_HREF } from '@/lib/constants'
 
 export default function HomePage() {
   return (
@@ -34,7 +34,7 @@ export default function HomePage() {
               </p>
 
               <div className="flex flex-wrap gap-4 mb-8">
-                <GoldButton label="Join as a Locksmith" href="#apply" size="lg" />
+                <GoldButton label="Join as a Locksmith" href={LOCKSMITH_SIGNUP_HREF} size="lg" />
                 <GoldButton
                   label="See How It Works"
                   href="#how-it-works"
@@ -272,19 +272,6 @@ export default function HomePage() {
               </div>
             </div>
           </div>
-        </div>
-      </section>
-
-      {/* Apply CTA */}
-      <section id="apply" className="py-16 md:py-24 px-4 scroll-mt-24">
-        <div className="max-w-2xl mx-auto text-center">
-          <h2 className="font-heading font-bold text-3xl md:text-4xl mb-4">
-            Ready to grow with Vula24?
-          </h2>
-          <p className="text-muted-foreground mb-8">
-            Join locksmiths receiving SMS leads — apply in minutes, hear back within 24 hours.
-          </p>
-          <GoldButton label="Join as a Locksmith" href="/apply" size="lg" />
         </div>
       </section>
 
