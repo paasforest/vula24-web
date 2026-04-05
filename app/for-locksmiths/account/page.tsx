@@ -34,8 +34,8 @@ export default function LocksmithAccountPage() {
               Join Vula24 as a Locksmith
             </h1>
             <p className="text-muted-foreground text-base md:text-lg max-w-xl leading-relaxed">
-              Fill in your details and choose a password. After approval you will receive an SMS with
-              your customer code and a link to complete payment — that is how you open your portal.
+              Fill in your details below. We will review your application and contact you on WhatsApp
+              within 24 hours.
             </p>
           </div>
         </section>

@@ -193,19 +193,9 @@ export function LocksmithApplicationForm() {
         <h3 className="font-heading font-bold text-xl text-foreground mb-2">
           Application received!
         </h3>
-        <p className="text-muted-foreground text-left leading-relaxed space-y-3">
-          <span className="block">
-            We will review your application and contact you on WhatsApp within 24 hours.
-          </span>
-          <span className="block">
-            <strong className="text-foreground">After approval</strong> you will get an SMS with your{' '}
-            <strong className="text-foreground">customer code</strong>, bank details, and a link to your
-            payment portal. You do not log in with email yet — open the link in the SMS or go to the
-            payment page and enter your code.
-          </span>
-          <span className="block text-sm">
-            Keep the password you chose: we store it for your account (e.g. support or future sign-in).
-          </span>
+        <p className="text-muted-foreground text-left leading-relaxed">
+          We will review your details and contact you on WhatsApp within 24 hours to activate your
+          account.
         </p>
       </div>
     )
@@ -264,8 +254,7 @@ export function LocksmithApplicationForm() {
             Password <span className="text-destructive" aria-hidden>*</span>
           </label>
           <p className="text-xs text-muted-foreground mb-2">
-            Choose a password for this account (min. 6 characters). Save it — you will need your{' '}
-            <strong className="text-foreground">customer code</strong> from the approval SMS to open the payment portal.
+            Choose a password for your account. Minimum 6 characters.
           </p>
           <input
             type="password"
