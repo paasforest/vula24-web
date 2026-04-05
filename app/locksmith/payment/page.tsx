@@ -165,6 +165,12 @@ export default function LocksmithPaymentPage() {
       <h1 className="font-heading text-2xl font-bold text-foreground">
         Payment & proof
       </h1>
+      <p className="text-sm text-muted-foreground">
+        <Link href="/locksmith/login" className="text-gold hover:underline">
+          Sign in with email and password
+        </Link>{' '}
+        if you do not have your customer code handy.
+      </p>
 
       {step === 1 && (
         <form onSubmit={lookup} className="space-y-4">

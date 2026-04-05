@@ -1,6 +1,6 @@
 'use client'
 
-import { useSearchParams } from 'next/navigation'
+import { useRouter, useSearchParams } from 'next/navigation'
 import { Suspense, useCallback, useEffect, useState } from 'react'
 import { Copy, Check } from 'lucide-react'
 import { Toaster, toast } from 'sonner'
@@ -8,6 +8,10 @@ import { GoldButton } from '@/components/GoldButton'
 import { CONTACT } from '@/lib/constants'
 import { API_SERVICE_OPTIONS } from '@/lib/api-services'
 import { cn } from '@/lib/utils'
+import {
+  clearLocksmithToken,
+  LOCKSMITH_TOKEN_KEY,
+} from '@/lib/locksmith-auth-storage'
 
 const SERVICE_LABELS: Record<string, string> = Object.fromEntries(
   API_SERVICE_OPTIONS.map((o) => [o.value, o.label])
@@ -283,16 +287,24 @@ function ProofUploadSection({
 }
 
 function DashboardBody() {
+  const router = useRouter()
   const searchParams = useSearchParams()
-  const code = searchParams.get('code')?.trim() ?? ''
+  const codeFromUrl = searchParams.get('code')?.trim() ?? ''
   const base = apiBase()
 
+  const [token, setToken] = useState<string | null>(null)
+  const [authReady, setAuthReady] = useState(false)
   const [data, setData] = useState<DashboardData | null>(null)
   const [bank, setBank] = useState<BankDetails | null>(null)
   const [error, setError] = useState('')
-  const [loading, setLoading] = useState(false)
+  const [loading, setLoading] = useState(true)
   const [notFound, setNotFound] = useState(false)
   const [copied, setCopied] = useState(false)
+
+  useEffect(() => {
+    setToken(localStorage.getItem(LOCKSMITH_TOKEN_KEY))
+    setAuthReady(true)
+  }, [])
 
   const loadBank = useCallback(async () => {
     const res = await fetch('/api/bank-details')
@@ -301,16 +313,32 @@ function DashboardBody() {
   }, [])
 
   const loadDash = useCallback(async () => {
-    if (!base || !code) return
+    if (!base) return
+    if (!codeFromUrl && !token) return
     setLoading(true)
     setError('')
     setNotFound(false)
     try {
-      const res = await fetch(
-        `${base}/api/locksmith/dashboard/${encodeURIComponent(code)}`
-      )
+      let res: Response
+      if (codeFromUrl) {
+        res = await fetch(
+          `${base}/api/locksmith/dashboard/${encodeURIComponent(codeFromUrl)}`
+        )
+      } else {
+        res = await fetch(`${base}/api/locksmith/me`, {
+          headers: { Authorization: `Bearer ${token}` },
+        })
+      }
+
       if (res.status === 404) {
         setNotFound(true)
+        setData(null)
+        return
+      }
+      if (res.status === 401) {
+        clearLocksmithToken()
+        setToken(null)
+        setError('Session expired. Please sign in again.')
         setData(null)
         return
       }
@@ -327,16 +355,21 @@ function DashboardBody() {
     } finally {
       setLoading(false)
     }
-  }, [base, code])
+  }, [base, codeFromUrl, token])
 
   useEffect(() => {
     void loadBank()
   }, [loadBank])
 
   useEffect(() => {
-    if (!code || !base) return
+    if (!authReady || !base) return
+    if (!codeFromUrl && !token) {
+      setLoading(false)
+      setData(null)
+      return
+    }
     void loadDash()
-  }, [code, base, loadDash])
+  }, [authReady, base, codeFromUrl, token, loadDash])
 
   const copyCode = async (c: string) => {
     try {
@@ -357,11 +390,39 @@ function DashboardBody() {
     )
   }
 
-  if (!code) {
+  if (authReady && !codeFromUrl && !token) {
     return (
-      <p className="text-destructive text-sm max-w-md">
-        No account code provided. Check your activation SMS.
-      </p>
+      <div className="rounded-xl border border-border bg-surface p-8 text-center space-y-4 max-w-md mx-auto">
+        <p className="font-heading font-semibold text-foreground text-lg">
+          Sign in to your portal
+        </p>
+        <p className="text-sm text-muted-foreground leading-relaxed">
+          Use the email and password you created when you applied. You can stay signed in on this
+          device for 30 days.
+        </p>
+        <GoldButton
+          type="button"
+          label="Sign in"
+          className="w-full"
+          onClick={() => router.push('/locksmith/login')}
+        />
+        <p className="text-xs text-muted-foreground pt-2 border-t border-border">
+          Or open the link from your SMS, or go to{' '}
+          <a href="/locksmith/payment" className="text-gold hover:underline">
+            Payment & proof
+          </a>{' '}
+          and enter your customer code.
+        </p>
+      </div>
+    )
+  }
+
+  if (!authReady) {
+    return (
+      <div className="space-y-4 animate-pulse">
+        <div className="h-10 bg-muted rounded-lg max-w-md" />
+        <div className="h-40 bg-muted rounded-xl" />
+      </div>
     )
   }
 
@@ -393,7 +454,7 @@ function DashboardBody() {
 
   const st = statusPresentation(data.status)
   const tierInfo = tierAmountLabel(data.tier)
-  const codeStr = data.customer_code ?? code
+  const codeStr = data.customer_code ?? codeFromUrl
   const days = data.days_remaining ?? null
   const barPct =
     days != null ? Math.min(100, Math.max(0, (days / 30) * 100)) : 0
@@ -417,9 +478,25 @@ function DashboardBody() {
   return (
     <div className="space-y-10">
       <section className="space-y-3">
-        <h1 className="font-heading text-2xl md:text-3xl font-bold text-foreground">
-          Welcome, {data.name ?? 'locksmith'}
-        </h1>
+        <div className="flex flex-wrap items-center justify-between gap-2">
+          <h1 className="font-heading text-2xl md:text-3xl font-bold text-foreground">
+            Welcome, {data.name ?? 'locksmith'}
+          </h1>
+          {token ? (
+            <button
+              type="button"
+              onClick={() => {
+                clearLocksmithToken()
+                setToken(null)
+                setData(null)
+                router.push('/locksmith/login')
+              }}
+              className="text-sm text-muted-foreground hover:text-foreground underline"
+            >
+              Sign out
+            </button>
+          ) : null}
+        </div>
         <div className="flex flex-wrap items-center gap-2">
           <span className="font-heading text-3xl md:text-4xl font-bold text-gold tracking-tight">
             {codeStr}

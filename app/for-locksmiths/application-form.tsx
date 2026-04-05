@@ -4,7 +4,6 @@ import { useState } from 'react'
 import { GoldButton } from '@/components/GoldButton'
 import { CONTACT } from '@/lib/constants'
 import { API_SERVICE_OPTIONS, SUBURBS } from '@/lib/api-services'
-import { generateRandomPassword } from '@/lib/generate-password'
 import { getVula24ApiBase } from '@/lib/vula24-api'
 
 type Province = 'GP' | 'WC'
@@ -23,6 +22,8 @@ export function LocksmithApplicationForm() {
   const [coverageAreas, setCoverageAreas] = useState<string[]>([])
   const [accountType, setAccountType] = useState<'individual' | 'business'>('individual')
   const [services, setServices] = useState<string[]>([])
+  const [password, setPassword] = useState('')
+  const [confirmPassword, setConfirmPassword] = useState('')
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [error, setError] = useState('')
   const [isSuccess, setIsSuccess] = useState(false)
@@ -72,6 +73,14 @@ export function LocksmithApplicationForm() {
       setError('Please enter a valid email address')
       return
     }
+    if (password.length < 6) {
+      setError('Password must be at least 6 characters.')
+      return
+    }
+    if (password !== confirmPassword) {
+      setError('Passwords do not match.')
+      return
+    }
     if (!baseAddress.trim()) {
       setError('Please enter your base address (street or area)')
       return
@@ -95,7 +104,6 @@ export function LocksmithApplicationForm() {
 
     setIsSubmitting(true)
 
-    const password = generateRandomPassword(12)
     const resolvedBusiness =
       accountType === 'business'
         ? businessName.trim()
@@ -160,9 +168,19 @@ export function LocksmithApplicationForm() {
         <h3 className="font-heading font-bold text-xl text-foreground mb-2">
           Application received!
         </h3>
-        <p className="text-muted-foreground">
-          We will review your details and contact you on WhatsApp within 24 hours
-          to activate your account and explain how leads work.
+        <p className="text-muted-foreground text-left leading-relaxed space-y-3">
+          <span className="block">
+            We will review your application and contact you on WhatsApp within 24 hours.
+          </span>
+          <span className="block">
+            <strong className="text-foreground">After approval</strong> you will get an SMS with your{' '}
+            <strong className="text-foreground">customer code</strong>, bank details, and a link to your
+            payment portal. You do not log in with email yet — open the link in the SMS or go to the
+            payment page and enter your code.
+          </span>
+          <span className="block text-sm">
+            Keep the password you chose: we store it for your account (e.g. support or future sign-in).
+          </span>
         </p>
       </div>
     )
@@ -212,6 +230,40 @@ export function LocksmithApplicationForm() {
             onChange={(e) => setEmail(e.target.value)}
             placeholder="you@example.com"
             autoComplete="email"
+            className="w-full px-4 py-3 bg-surface border border-border rounded-lg text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-gold focus:border-transparent"
+          />
+        </div>
+
+        <div>
+          <label htmlFor="accountPassword" className="block text-sm font-medium text-muted-foreground mb-2">
+            Password <span className="text-destructive" aria-hidden>*</span>
+          </label>
+          <p className="text-xs text-muted-foreground mb-2">
+            Choose a password for this account (min. 6 characters). Save it — you will need your{' '}
+            <strong className="text-foreground">customer code</strong> from the approval SMS to open the payment portal.
+          </p>
+          <input
+            type="password"
+            id="accountPassword"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            autoComplete="new-password"
+            minLength={6}
+            className="w-full px-4 py-3 bg-surface border border-border rounded-lg text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-gold focus:border-transparent"
+          />
+        </div>
+
+        <div>
+          <label htmlFor="confirmPassword" className="block text-sm font-medium text-muted-foreground mb-2">
+            Confirm password <span className="text-destructive" aria-hidden>*</span>
+          </label>
+          <input
+            type="password"
+            id="confirmPassword"
+            value={confirmPassword}
+            onChange={(e) => setConfirmPassword(e.target.value)}
+            autoComplete="new-password"
+            minLength={6}
             className="w-full px-4 py-3 bg-surface border border-border rounded-lg text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-gold focus:border-transparent"
           />
         </div>

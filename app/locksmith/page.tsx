@@ -1,6 +1,6 @@
 import { redirect } from 'next/navigation'
 
-/** Legacy URL — redirects to apply page. */
+/** Locksmith portal entry — sign in (apply lives under /for-locksmiths/account). */
 export default function LocksmithLegacyRedirect() {
-  redirect('/for-locksmiths/account')
+  redirect('/locksmith/login')
 }

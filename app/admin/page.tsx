@@ -205,12 +205,10 @@ export default function AdminPage() {
         toast.error(j.error ?? 'Approve failed.')
         return
       }
-      let msg = 'Approved.'
-      if (j.customer_code) {
-        msg += ` Code: ${j.customer_code}.`
-      }
-      msg +=
-        ' SMS is sent by the Railway API when SMSPortal/env is configured there.'
+      const msg =
+        j.customer_code != null && j.customer_code !== ''
+          ? `Approved. Code: ${j.customer_code}.`
+          : 'Approved.'
       toast.success(msg)
       setPending((prev) => prev.filter((p) => p.id !== id))
     } catch {
