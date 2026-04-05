@@ -67,7 +67,13 @@
           "a": "Yes — including student-heavy blocks where verification and access rules matter."
         }
       ],
-      "localSeoLine": "Fast locksmith response across Joburg’s busy corridors — CBD, Rosebank, Sandton and Midrand are all regular dispatch routes."
+      "localSeoLine": "Fast locksmith response across Joburg’s busy corridors — CBD, Rosebank, Sandton and Midrand are all regular dispatch routes.",
+      "intentBullets": [
+        "Locked out in Sandton or Rosebank during peak traffic — keys visible in the car at an office park",
+        "Lost car keys at Eastgate-area retail or a CBD parking basement",
+        "Emergency lock change after a break-in in Melville or Braamfontein",
+        "Late-night apartment or student-complex lockout in Auckland Park or Parktown"
+      ]
     },
     {
       "slug": "sandton",
@@ -136,7 +142,13 @@
           "a": "Yes — including late exits when access cards fail."
         }
       ],
-      "localSeoLine": "Premium-area call-outs for Rivonia, Bryanston and Morningside — malls, estates and office towers where access control slows everyone else down."
+      "localSeoLine": "Premium-area call-outs for Rivonia, Bryanston and Morningside — malls, estates and office towers where access control slows everyone else down.",
+      "intentBullets": [
+        "Estate gate or intercom failure in Bryanston or Morningside",
+        "Sandton City or mall basement parking lockout with keys on the seat",
+        "Remote or smart key failed after a meeting at a Rivonia office park",
+        "After-hours call at a cluster home in Paulshof, Sunninghill or Woodmead"
+      ]
     },
     {
       "slug": "pretoria",
@@ -205,7 +217,13 @@
           "a": "Yes — we regularly assist students and landlords after hours."
         }
       ],
-      "localSeoLine": "Student-side Hatfield, government Arcadia and Menlyn retail — locksmiths who know Tshwane traffic patterns and campus-adjacent complexes."
+      "localSeoLine": "Student-side Hatfield, government Arcadia and Menlyn retail — locksmiths who know Tshwane traffic patterns and campus-adjacent complexes.",
+      "intentBullets": [
+        "Hatfield student or shared-flat lockout near campus",
+        "Menlyn or Brooklyn retail lockout — keys in the boot after shopping",
+        "Government or embassy precinct access delays — cylinder or access card issues",
+        "Late-night lockout in Arcadia, Sunnyside or high-density flat blocks"
+      ]
     },
     {
       "slug": "midrand",
@@ -272,7 +290,13 @@
           "a": "Describe the estate — many use standard cylinders; some need specialist hardware."
         }
       ],
-      "localSeoLine": "Halfway between metros: Kyalami, Carlswald and Halfway House — ideal for fast routing, with estate boom gates and mall basements on the daily list."
+      "localSeoLine": "Halfway between metros: Kyalami, Carlswald and Halfway House — ideal for fast routing, with estate boom gates and mall basements on the daily list.",
+      "intentBullets": [
+        "Halfway House or Boulders retail parking — keys locked with kids in the car",
+        "Kyalami or Carlswald estate boom gate stuck or visitor pass expired",
+        "Office park in Vorna Valley after hours — mortice or glass door fault",
+        "Grand Central area — delivery or courier van lockout on the N1 corridor"
+      ]
     },
     {
       "slug": "centurion",
@@ -338,7 +362,13 @@
           "a": "Many jobs are standard locks; some need a specialist — describe the system."
         }
       ],
-      "localSeoLine": "Family Irene, Lyttelton and Centurion Mall jobs — clear quotes before touching patio glass or office cylinders."
+      "localSeoLine": "Family Irene, Lyttelton and Centurion Mall jobs — clear quotes before touching patio glass or office cylinders.",
+      "intentBullets": [
+        "Irene smallholding or long driveway — padlock or gate motor interlock fault",
+        "Lyttelton or Eldoraigne family home — patio slider or security gate jammed",
+        "Centurion Mall or strip-mall parking — car unlock without damage",
+        "Wierda Park office cottage — after-hours cylinder failure"
+      ]
     },
     {
       "slug": "randburg",
@@ -405,7 +435,13 @@
           "a": "Often — describe whether it is a manual door or motorised system."
         }
       ],
-      "localSeoLine": "Ferndale, Northcliff and Cresta — freestanding homes and townhouse clusters where boom gates and shared driveways shape every arrival."
+      "localSeoLine": "Ferndale, Northcliff and Cresta — freestanding homes and townhouse clusters where boom gates and shared driveways shape every arrival.",
+      "intentBullets": [
+        "Ferndale or Northcliff — side gate padlock seized or keys left inside",
+        "Cresta or retail strip parking — transponder or remote failure",
+        "Townhouse complex shared driveway — intercom-linked deadbolt issues",
+        "Early-morning house lockout before school run in Bordeaux or Robindale"
+      ]
     },
     {
       "slug": "roodepoort",
@@ -472,7 +508,13 @@
           "a": "Yes — mention single vs double gate and motor type."
         }
       ],
-      "localSeoLine": "Florida to Little Falls — older stock and newer clusters; rusted gates and weathered front doors are everyday fixes on the West Rand."
+      "localSeoLine": "Florida to Little Falls — older stock and newer clusters; rusted gates and weathered front doors are everyday fixes on the West Rand.",
+      "intentBullets": [
+        "Florida or Constantia Kloof — rusted gate latch or sliding door off track",
+        "Wilgeheuwel shopping run — keys in ignition at undercover parking",
+        "Horizon estate — visitor access and cylinder upgrade after attempted break-in",
+        "Little Falls ridge roads — ETA-sensitive evening lockout"
+      ]
     },
     {
       "slug": "soweto",
@@ -538,7 +580,13 @@
           "a": "Ask for repair-first options where the lock allows."
         }
       ],
-      "localSeoLine": "Diepkloof to Protea Glen — respectful service, upfront pricing, and locksmiths who know the area’s streets and complexes."
+      "localSeoLine": "Diepkloof to Protea Glen — respectful service, upfront pricing, and locksmiths who know the area’s streets and complexes.",
+      "intentBullets": [
+        "Diepkloof or Orlando evening return — keys misplaced after taxi or event",
+        "Meadowlands or Dobsonville — security door multi-lock or padlock failure",
+        "Protea Glen new-build — handover rekey or tenant lock change",
+        "Weekend family visit — gate lock or rim cylinder stuck"
+      ]
     },
     {
       "slug": "boksburg",
@@ -603,7 +651,13 @@
           "a": "Often — describe roller-shutter vs standard door."
         }
       ],
-      "localSeoLine": "East Rand Mall to Dawn Park — retail lockouts, shift workers and industrial strips along the R21 corridor."
+      "localSeoLine": "East Rand Mall to Dawn Park — retail lockouts, shift workers and industrial strips along the R21 corridor.",
+      "intentBullets": [
+        "East Rand Mall loading zone or basement — retail lockout",
+        "Dawn Park shift worker — night mortice or gate failure",
+        "Boksburg North industrial roller door or personnel door fault",
+        "Benoni-adjacent call — shared East Rand routing from Boksburg"
+      ]
     },
     {
       "slug": "germiston",
@@ -668,7 +722,13 @@
           "a": "Depends on time and job — always confirm scope first."
         }
       ],
-      "localSeoLine": "Eastgate-adjacent Edenvale and Bedfordview — peak-hour retail and estates where intercoms and loading zones matter."
+      "localSeoLine": "Eastgate-adjacent Edenvale and Bedfordview — peak-hour retail and estates where intercoms and loading zones matter.",
+      "intentBullets": [
+        "Edenvale near Eastgate — peak traffic car lockout in the mall grid",
+        "Bedfordview estate — high-security cylinder after crowbar attempt",
+        "Germiston or Primrose — late factory-area lockout",
+        "Lambton workshop — fleet van keys locked at the yard"
+      ]
     },
     {
       "slug": "fourways",
@@ -735,7 +795,13 @@
           "a": "Varies by lock type — mortice vs cylinder changes the job."
         }
       ],
-      "localSeoLine": "Fourways Mall, Lonehill and Dainfern — smart cars, biometrics and estate rules; we match locksmiths who speak that language."
+      "localSeoLine": "Fourways Mall, Lonehill and Dainfern — smart cars, biometrics and estate rules; we match locksmiths who speak that language.",
+      "intentBullets": [
+        "Fourways Mall or Crossing basement — SUV keys on the back seat",
+        "Lonehill estate — biometrics flat after load-shedding",
+        "Dainfern or Broadacres — intercom fault at the guard house",
+        "Chartwell or Douglasdale — after-hours home office lockout"
+      ]
     },
     {
       "slug": "kempton-park",
@@ -802,7 +868,13 @@
           "a": "Yes — describe loading bay access."
         }
       ],
-      "localSeoLine": "OR Tambo, Birchleigh and logistics parks — odd-hour arrivals, rental returns and estate boom gates near the airport belt."
+      "localSeoLine": "OR Tambo, Birchleigh and logistics parks — odd-hour arrivals, rental returns and estate boom gates near the airport belt.",
+      "intentBullets": [
+        "OR Tambo rental return or long-stay parking — keys in boot",
+        "Birchleigh or Edleen — night shift worker house lockout",
+        "Bredell logistics hub — fleet or courier vehicle unlock",
+        "Norkem Park — humidity-jammed deadbolt after summer storm"
+      ]
     },
     {
       "slug": "alberton",
@@ -867,7 +939,13 @@
           "a": "Yes — weekends are busy for family lockouts."
         }
       ],
-      "localSeoLine": "Brackenhurst, Meyersdal and Alberton City — family estates and retail strips across the South Rand."
+      "localSeoLine": "Brackenhurst, Meyersdal and Alberton City — family estates and retail strips across the South Rand.",
+      "intentBullets": [
+        "Brackenhurst estate — dogs audible inside, fast entry priority",
+        "Alberton City undercover — car keys left during grocery run",
+        "Meyersdal ridge — steep driveway access for gate motor issues",
+        "Verwoerdpark — rental rekey between tenants"
+      ]
     },
     {
       "slug": "benoni",
@@ -933,7 +1011,13 @@
           "a": "Yes — morning peaks are common."
         }
       ],
-      "localSeoLine": "Northmead to Daveyton — wide East Rand spread; honest ETAs across Rynfield and Crystal Park matter here."
+      "localSeoLine": "Northmead to Daveyton — wide East Rand spread; honest ETAs across Rynfield and Crystal Park matter here.",
+      "intentBullets": [
+        "Northmead Square or retail strip — visible keys on the dash",
+        "Rynfield Sunday — gate remote flat, manual gate override needed",
+        "Daveyton or Crystal Park — evening family lockout",
+        "Lakefield or Benoni CBD — shopfront latch after bump attempt"
+      ]
     },
     {
       "slug": "tembisa",
@@ -997,7 +1081,13 @@
           "a": "Ask for repair-first options where safe."
         }
       ],
-      "localSeoLine": "Ivory Park and Tswelopele — clear communication and fair quotes on every home and car lockout."
+      "localSeoLine": "Ivory Park and Tswelopele — clear communication and fair quotes on every home and car lockout.",
+      "intentBullets": [
+        "Ivory Park informal and formal housing — clear address and landmark",
+        "Tswelopele — padlock or security gate after hours",
+        "Birch Acres — taxi-rank stop car unlock",
+        "Late request — wait in a lit area until the tech arrives"
+      ]
     },
     {
       "slug": "mamelodi",
@@ -1060,7 +1150,13 @@
           "a": "Say so immediately — dispatch prioritises welfare."
         }
       ],
-      "localSeoLine": "East of Pretoria — patient routing on Silverton-linked roads; locksmiths who quote before they drill."
+      "localSeoLine": "East of Pretoria — patient routing on Silverton-linked roads; locksmiths who quote before they drill.",
+      "intentBullets": [
+        "Mamelodi East — furniture move or bakkie lockout",
+        "Silverton handover — landlord full rekey for new tenants",
+        "Evening return — snapped key in padlock hasp",
+        "Dennilton-linked travel — confirm pin for rural access roads"
+      ]
     }
   ],
   "westernCape": [
@@ -1131,7 +1227,13 @@
           "a": "Often — older hardware may need specialist parts."
         }
       ],
-      "localSeoLine": "Reliable locksmiths across coastal and CBD pockets — Sea Point, Green Point and the Waterfront, plus tight parking and estate security."
+      "localSeoLine": "Reliable locksmiths across coastal and CBD pockets — Sea Point, Green Point and the Waterfront, plus tight parking and estate security.",
+      "intentBullets": [
+        "Locked out near Sea Point, Green Point or CBD apartments",
+        "Airbnb or short-stay guest lock issues — host or guest access",
+        "Lost keys during travel or tourism near the V&A Waterfront",
+        "Coastal salt spray on balcony sliders, gates or outdoor cylinders"
+      ]
     },
     {
       "slug": "bellville",
@@ -1197,7 +1299,13 @@
           "a": "Yes — especially Friday evenings."
         }
       ],
-      "localSeoLine": "Northern suburbs intensity — Tygervalley, Parow and Goodwood mean mall basements and dense family streets in one run."
+      "localSeoLine": "Northern suburbs intensity — Tygervalley, Parow and Goodwood mean mall basements and dense family streets in one run.",
+      "intentBullets": [
+        "Tygervalley or Willowbridge basement — colour-zone parking lockout",
+        "Parow or Goodwood flats — mortice or security gate failure",
+        "Boston or Oakdale — older home rim lock after damp season",
+        "Northern suburbs retail evening — after-hours shop unlock coordination"
+      ]
     },
     {
       "slug": "stellenbosch",
@@ -1263,7 +1371,13 @@
           "a": "Expect higher traffic — ETAs may stretch."
         }
       ],
-      "localSeoLine": "Winelands timing — campus digs, guest houses and farm roads; ETAs flex around events and harvest traffic."
+      "localSeoLine": "Winelands timing — campus digs, guest houses and farm roads; ETAs flex around events and harvest traffic.",
+      "intentBullets": [
+        "Campus-adjacent dig or res — keys left at a social",
+        "Die Boord or Idas Valley — wine-route guest house lockout",
+        "Kayamandi or Cloetesville — describe street and access",
+        "Brandwacht farm road — pin the gate; last mile can be slow"
+      ]
     },
     {
       "slug": "paarl",
@@ -1328,7 +1442,13 @@
           "a": "Pin the gate — long driveways affect ETA."
         }
       ],
-      "localSeoLine": "Berg River Valley — Wellington to Huguenot heritage homes, agricultural gates and town-centre shops in one mix."
+      "localSeoLine": "Berg River Valley — Wellington to Huguenot heritage homes, agricultural gates and town-centre shops in one mix.",
+      "intentBullets": [
+        "Wellington farm gate — padlock cut and replaced same day",
+        "Paarl CBD shop — roller shutter or glass door fault",
+        "Huguenot or Windmeul — heritage door hardware specialist needed",
+        "Dal Josafat industrial — workshop or yard lockout"
+      ]
     },
     {
       "slug": "worcester",
@@ -1393,7 +1513,13 @@
           "a": "Often — sometimes lubrication; sometimes replacement."
         }
       ],
-      "localSeoLine": "Breede Valley heat and cold — retail strips, Avian Park and rural lanes; rust and expansion joints on outdoor hardware."
+      "localSeoLine": "Breede Valley heat and cold — retail strips, Avian Park and rural lanes; rust and expansion joints on outdoor hardware.",
+      "intentBullets": [
+        "Breede Valley retail — Checkers or mall run car lockout",
+        "De Bron or Zwelethemba — security gate stuck halfway",
+        "Avian Park — describe door type for correct tools",
+        "Heatwave expansion — sticky deadbolt on exterior doors"
+      ]
     },
     {
       "slug": "franschhoek",
@@ -1455,7 +1581,13 @@
           "a": "Safety first — wait in a visible spot; share pin."
         }
       ],
-      "localSeoLine": "Valley guesthouses and wine farms — scenic last miles; we set realistic ETAs for tourists and hosts."
+      "localSeoLine": "Valley guesthouses and wine farms — scenic last miles; we set realistic ETAs for tourists and hosts.",
+      "intentBullets": [
+        "Guesthouse host key left in town — tourist lockout",
+        "La Motte or estate road — hire car keys in boot at tasting",
+        "Narrow valley traffic — realistic ETA for wine-farm access",
+        "Night-time farm road — safety-first; share WhatsApp pin"
+      ]
     },
     {
       "slug": "somerset-west",
@@ -1519,7 +1651,13 @@
           "a": "Replacement is common — ask for marine-grade options."
         }
       ],
-      "localSeoLine": "Helderberg coast — Somerset Mall, Strand sea spray and Gordon’s Bay wind; salt air on locks and busy summer weekends."
+      "localSeoLine": "Helderberg coast — Somerset Mall, Strand sea spray and Gordon’s Bay wind; salt air on locks and busy summer weekends.",
+      "intentBullets": [
+        "Somerset Mall rooftop — weekend retail car lockout",
+        "Strand beachfront flat — sliding door lock corroded by sea spray",
+        "Gordon’s Bay harbour area — one-way streets and tight parking",
+        "Firgrove or Raithby — family home cylinder after storm wind damage"
+      ]
     },
     {
       "slug": "george",
@@ -1584,7 +1722,13 @@
           "a": "After-hours fees may apply — confirm first."
         }
       ],
-      "localSeoLine": "Garden Route pace — mall runs, Pacaltsdorp and Thembalethu; humidity and distance between suburbs shape every job."
+      "localSeoLine": "Garden Route pace — mall runs, Pacaltsdorp and Thembalethu; humidity and distance between suburbs shape every job.",
+      "intentBullets": [
+        "Garden Route Mall rental — keys in boot after coastal drive",
+        "Loerie Park — humidity cylinder failure",
+        "Pacaltsdorp or Thembalethu — confirm landmark for routing",
+        "Heather Park — new home perimeter rekey after move-in"
+      ]
     },
     {
       "slug": "sea-point",
@@ -1649,7 +1793,13 @@
           "a": "Mention it — electronic locks behave differently."
         }
       ],
-      "localSeoLine": "Atlantic Seaboard density — promenade blocks, basement parking and strict body corporates; quiet entry methods first."
+      "localSeoLine": "Atlantic Seaboard density — promenade blocks, basement parking and strict body corporates; quiet entry methods first.",
+      "intentBullets": [
+        "Promenade block — baby monitor on, fast non-destructive entry",
+        "Mouille Point or Three Anchor Bay — tourist rental lockout",
+        "Fresnaye or Bantry Bay — penthouse electronic lock intermittent",
+        "Load-shedding — smart lock app failed; manual override needed"
+      ]
     },
     {
       "slug": "claremont",
@@ -1715,7 +1865,13 @@
           "a": "Ask for minimum-invasion options first."
         }
       ],
-      "localSeoLine": "Southern suburbs crossroads — Cavendish, Newlands and Rondebosch; students, Victorian doors and retail lockouts in one belt."
+      "localSeoLine": "Southern suburbs crossroads — Cavendish, Newlands and Rondebosch; students, Victorian doors and retail lockouts in one belt.",
+      "intentBullets": [
+        "Cavendish parking pay station — keys locked in car",
+        "Newlands or Rondebosch student house — damaged striker after event",
+        "Kenilworth or Lansdowne — shared entrance flats",
+        "UCT-adjacent — weekday traffic affects ETA on Main Road"
+      ]
     },
     {
       "slug": "tygervalley",
@@ -1780,7 +1936,13 @@
           "a": "Wait near security booths when possible."
         }
       ],
-      "localSeoLine": "Willowbridge and Panorama — hillside estates and retail parking levels; we ask for colour zones when you’re stuck in a basement."
+      "localSeoLine": "Willowbridge and Panorama — hillside estates and retail parking levels; we ask for colour zones when you’re stuck in a basement.",
+      "intentBullets": [
+        "Willowbridge colour zone — basement find for faster unlock",
+        "Panorama townhouse — failed smart cylinder",
+        "Welgemoed estate — intercom brand and error code if known",
+        "Bellville North retail evening — wait near security booth"
+      ]
     },
     {
       "slug": "brackenfell",
@@ -1845,7 +2007,13 @@
           "a": "Describe sliding vs swing gate."
         }
       ],
-      "localSeoLine": "Kuils River sprawl and Kraaifontein links — mixed-age housing and workshop yards; multipoint doors are common."
+      "localSeoLine": "Kuils River sprawl and Kraaifontein links — mixed-age housing and workshop yards; multipoint doors are common.",
+      "intentBullets": [
+        "Kuils River — UPVC multipoint door failure",
+        "Blackheath workshop — fleet bakkie keys inside",
+        "Kraaifontein — attempted break-in; temporary secure then full repair",
+        "Protea Heights — sectional-title rekey"
+      ]
     },
     {
       "slug": "mitchells-plain",
@@ -1910,7 +2078,13 @@
           "a": "Yes — say what is fitted now."
         }
       ],
-      "localSeoLine": "Tafelsig to Rocklands — community-focused service; upfront scope on security doors and family homes."
+      "localSeoLine": "Tafelsig to Rocklands — community-focused service; upfront scope on security doors and family homes.",
+      "intentBullets": [
+        "Tafelsig or Westridge — security door chain jammed",
+        "Rocklands school run — keys inside at takeaway",
+        "Lentegeur clinic area — describe side street",
+        "Evening call — wait in a lit, visible spot"
+      ]
     },
     {
       "slug": "durbanville",
@@ -1975,7 +2149,13 @@
           "a": "Pin the access road — some are steep."
         }
       ],
-      "localSeoLine": "Wine-adjacent Pinehurst and Langeberg Ridge — long driveways and estate rules; ETAs reflect access roads."
+      "localSeoLine": "Wine-adjacent Pinehurst and Langeberg Ridge — long driveways and estate rules; ETAs reflect access roads.",
+      "intentBullets": [
+        "Durbanville Hills or wine route — tasting visit car lockout",
+        "Pinehurst estate — biometrics flat after power dip",
+        "Vierlanden new estate — full perimeter rekey",
+        "Sonstraal smallholding — gravel access may add minutes"
+      ]
     },
     {
       "slug": "constantia",
@@ -2040,7 +2220,13 @@
           "a": "Mention brand — some have manual override steps."
         }
       ],
-      "localSeoLine": "Southern suburbs premium stock — Tokai, Bergvliet and wine-estate cottages; heavy doors and high-spec hardware."
+      "localSeoLine": "Southern suburbs premium stock — Tokai, Bergvliet and wine-estate cottages; heavy doors and high-spec hardware.",
+      "intentBullets": [
+        "Tokai equestrian or smallholding — gate type matters",
+        "Wine estate cottage — heavy timber door hardware",
+        "Bergvliet family home — safe opening with proof of ownership",
+        "Meadowridge — smart lock brand for correct override steps"
+      ]
     },
     {
       "slug": "wynberg",
@@ -2105,7 +2291,13 @@
           "a": "Say so immediately for dispatch priority."
         }
       ],
-      "localSeoLine": "Maynard Mall to Retreat — school runs, flats and older mortice locks along the M5 corridor."
+      "localSeoLine": "Maynard Mall to Retreat — school runs, flats and older mortice locks along the M5 corridor.",
+      "intentBullets": [
+        "Maynard Mall school-week shop — car lockout",
+        "Plumstead — security gate latch failed in damp season",
+        "Retreat or Ottery flats — multiple locks on one visit",
+        "Diep River — child inside; say so for dispatch priority"
+      ]
     },
     {
       "slug": "strand",
@@ -2168,7 +2360,13 @@
           "a": "Replacement is common — ask for corrosion-resistant options."
         }
       ],
-      "localSeoLine": "Beach lets and Macassar wind — holiday peaks, sea spray on gates and weekend lockouts."
+      "localSeoLine": "Beach lets and Macassar wind — holiday peaks, sea spray on gates and weekend lockouts.",
+      "intentBullets": [
+        "Holiday let cleaner locked out — spare key inside",
+        "Gordon’s Bay rental — keys in boot near harbour",
+        "Lwandle or Macassar — new door after break-in attempt",
+        "Long weekend — expect longer ETAs on coastal roads"
+      ]
     },
     {
       "slug": "parow",
@@ -2233,7 +2431,13 @@
           "a": "Say so — we prioritise safe entry methods."
         }
       ],
-      "localSeoLine": "Parow Centre to Elsies River — dense retail, older mortice stock and mixed flats; shop shutters after hours."
+      "localSeoLine": "Parow Centre to Elsies River — dense retail, older mortice stock and mixed flats; shop shutters after hours.",
+      "intentBullets": [
+        "Parow Centre groceries — keys on seat after shop run",
+        "Goodwood evening — security gate halfway stuck",
+        "Elsies River — burglary repair board then cylinder",
+        "Parow North — single exit flat; non-destructive entry first"
+      ]
     },
     {
       "slug": "kuils-river",
@@ -2297,7 +2501,13 @@
           "a": "Ask for repair-first scope."
         }
       ],
-      "localSeoLine": "Blackheath industry and Kleinvlei homes — R300 traffic splits routes; we dispatch whoever is closest."
+      "localSeoLine": "Blackheath industry and Kleinvlei homes — R300 traffic splits routes; we dispatch whoever is closest.",
+      "intentBullets": [
+        "Kuils River sliding door — off track and locked",
+        "Blackheath yard — fleet van lockout",
+        "Kleinvlei — padlock hasp after wind damage",
+        "Mfuleni — night safety; lit waiting point"
+      ]
     },
     {
       "slug": "retreat",
@@ -2362,7 +2572,13 @@
           "a": "Say so immediately — dispatch prioritises."
         }
       ],
-      "localSeoLine": "M5 Cape Flats corridor — Steenberg to Grassy Park; fair quotes and fast response when security doors fail."
+      "localSeoLine": "M5 Cape Flats corridor — Steenberg to Grassy Park; fair quotes and fast response when security doors fail.",
+      "intentBullets": [
+        "Steenberg new tenants — full flat rekey",
+        "Lavender Hill — evening security door failure",
+        "Grassy Park takeaway — keys inside at collection",
+        "Pelikan Park — child welfare urgent entry; say so immediately"
+      ]
     }
   ]
 }

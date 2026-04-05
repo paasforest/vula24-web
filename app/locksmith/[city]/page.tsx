@@ -164,22 +164,9 @@ export default async function CityPage({ params }: Props) {
             When you might need a locksmith in {location.name}
           </h2>
           <ul className="list-disc pl-5 space-y-2 text-muted-foreground text-[15px] leading-relaxed">
-            <li>
-              You are locked out of your car, or keys are visible inside the
-              vehicle
-            </li>
-            <li>
-              House or apartment keys are lost, stolen, or left inside the
-              property
-            </li>
-            <li>
-              A lock is jammed, damaged after a break-in attempt, or a key has
-              snapped in the cylinder
-            </li>
-            <li>
-              You need a spare key cut, a remote programmed, or a safe opened
-              by a verified professional
-            </li>
+            {location.intentBullets.map((line, i) => (
+              <li key={i}>{line}</li>
+            ))}
           </ul>
         </div>
       </section>

@@ -16,6 +16,8 @@ export interface LocationData {
   provinceSlug: string
   /** Unique local hook for SEO (not shared template copy). */
   localSeoLine: string
+  /** Per-city scenarios for long-tail intent (geo + behaviour). */
+  intentBullets: string[]
   tagline: string
   description: string
   suburbs: string[]

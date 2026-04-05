@@ -5,6 +5,8 @@ from __future__ import annotations
 import json
 from pathlib import Path
 
+from intent_bullets_data import INTENT_BULLETS
+
 ROOT = Path(__file__).resolve().parents[1]
 OUT = ROOT / "lib" / "locations-data.json"
 
@@ -942,6 +944,9 @@ def main() -> None:
             if slug not in LOCAL_SEO_LINES:
                 raise KeyError(f"Missing LOCAL_SEO_LINES for slug: {slug}")
             loc["localSeoLine"] = LOCAL_SEO_LINES[slug]
+            if slug not in INTENT_BULLETS:
+                raise KeyError(f"Missing INTENT_BULLETS for slug: {slug}")
+            loc["intentBullets"] = INTENT_BULLETS[slug]
 
     data = {"gauteng": GAUTENG, "westernCape": WESTERN_CAPE}
     OUT.parent.mkdir(parents=True, exist_ok=True)
