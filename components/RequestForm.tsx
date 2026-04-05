@@ -16,6 +16,7 @@ export function RequestForm() {
   const [phone, setPhone] = useState('')
   const [city, setCity] = useState('')
   const [suburb, setSuburb] = useState('')
+  const [address, setAddress] = useState('')
   const [serviceType, setServiceType] = useState('')
   const [urgency, setUrgency] = useState<CustomerUrgencyKey>(
     CUSTOMER_URGENCY_OPTIONS[0].value
@@ -24,6 +25,7 @@ export function RequestForm() {
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [isSuccess, setIsSuccess] = useState(false)
   const [successCity, setSuccessCity] = useState('')
+  const [successSuburb, setSuccessSuburb] = useState('')
   const [error, setError] = useState('')
 
   const provinceForCity = city ? CITY_PROVINCE[city] ?? 'GP' : null
@@ -67,6 +69,7 @@ export function RequestForm() {
           phone: phone.trim(),
           city,
           suburb: suburb.trim(),
+          address: address.trim() || undefined,
           serviceType,
           urgency,
           notes: notes.trim() || undefined,
@@ -79,6 +82,7 @@ export function RequestForm() {
         return
       }
       setSuccessCity(city)
+      setSuccessSuburb(suburb)
       setIsSuccess(true)
     } catch {
       setError('Something went wrong. Please WhatsApp us directly.')
@@ -109,8 +113,8 @@ export function RequestForm() {
           Request received!
         </h3>
         <p className="text-muted-foreground text-sm leading-relaxed">
-          A locksmith in {successCity} will call you within 15 minutes. If you
-          do not hear back, WhatsApp us:{' '}
+          A locksmith near {successSuburb} will contact you within 15 minutes. If
+          you do not hear back, WhatsApp us:{' '}
           <a
             href={`https://wa.me/${CONTACT.whatsapp}`}
             target="_blank"
@@ -208,6 +212,29 @@ export function RequestForm() {
               </option>
             ))}
           </select>
+        </div>
+
+        <div>
+          <label
+            htmlFor="cust-address"
+            className="block text-sm font-medium text-muted-foreground mb-2"
+          >
+            Street address or nearest landmark
+          </label>
+          <input
+            type="text"
+            id="cust-address"
+            value={address}
+            onChange={(e) => setAddress(e.target.value)}
+            placeholder={`e.g. Corner Rivonia Rd and Sandton Dr,
+       near Sandton City mall`}
+            className="w-full px-4 py-3 bg-background border border-border rounded-lg text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-gold focus:border-transparent"
+          />
+          <p className="text-xs text-muted-foreground mt-1">
+            This helps the locksmith find you faster.
+            <br />
+            Not required but recommended.
+          </p>
         </div>
 
         <div>

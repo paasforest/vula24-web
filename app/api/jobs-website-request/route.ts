@@ -18,13 +18,27 @@ export async function POST(request: Request) {
   const upstreamUrl = `${apiBase()}/api/jobs/website/request`;
 
   try {
-    const body = await request.text();
+    const bodyText = await request.text();
+    let forwardBody = bodyText;
+    try {
+      const parsed = JSON.parse(bodyText) as Record<string, unknown>;
+      if (parsed && typeof parsed === "object" && !Array.isArray(parsed)) {
+        if (typeof parsed.address === "string") {
+          const t = parsed.address.trim();
+          if (t) parsed.address = t;
+          else delete parsed.address;
+        }
+        forwardBody = JSON.stringify(parsed);
+      }
+    } catch {
+      // forward raw body if not JSON
+    }
     const upstream = await fetch(upstreamUrl, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body,
+      body: forwardBody,
     });
 
     const text = await upstream.text();
