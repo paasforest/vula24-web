@@ -99,6 +99,11 @@ export default function LocksmithLoginPage() {
           className="w-full"
           disabled={busy}
         />
+        <p className="text-center text-sm">
+          <Link href="/locksmith/forgot-password" className="text-gold hover:underline">
+            Forgot password?
+          </Link>
+        </p>
       </form>
 
       <p className="text-center text-sm text-muted-foreground">
