@@ -75,16 +75,27 @@ export const PRICING = [
   },
 ];
 
-/** Customer request form — service types */
+/**
+ * Services customers can request — keep in sync with locksmith signup offerings.
+ * Locksmiths select a subset via checkboxes on /for-locksmiths.
+ */
 export const CUSTOMER_JOB_SERVICES = [
+  "Emergency / 24-hour",
   "Car Lockout",
   "House Lockout",
+  "Commercial / office",
   "Key Duplication",
   "Lock Replacement",
   "Lock Repair",
   "Safe Opening",
+  "Security & access control",
+  "Gate & garage",
+  "Onsite / mobile",
   "Other",
-];
+] as const;
+
+/** Same list for locksmith application — multi-select all they offer */
+export const LOCKSMITH_SERVICE_OPTIONS = CUSTOMER_JOB_SERVICES;
 
 /** Legacy alias if needed elsewhere */
 export const SERVICES = CUSTOMER_JOB_SERVICES;

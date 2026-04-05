@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import { GoldButton } from '@/components/GoldButton'
-import { CITIES, CONTACT } from '@/lib/constants'
+import { CITIES, CONTACT, LOCKSMITH_SERVICE_OPTIONS } from '@/lib/constants'
 import { generateRandomPassword } from '@/lib/generate-password'
 
 export function LocksmithApplicationForm() {
@@ -11,6 +11,7 @@ export function LocksmithApplicationForm() {
   const [email, setEmail] = useState('')
   const [city, setCity] = useState('')
   const [accountType, setAccountType] = useState<'individual' | 'business'>('individual')
+  const [services, setServices] = useState<string[]>([])
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [error, setError] = useState('')
   const [isSuccess, setIsSuccess] = useState(false)
@@ -35,6 +36,10 @@ export function LocksmithApplicationForm() {
       setError('Please select your city or area')
       return
     }
+    if (services.length === 0) {
+      setError('Select at least one service you offer')
+      return
+    }
 
     setIsSubmitting(true)
 
@@ -46,6 +51,7 @@ export function LocksmithApplicationForm() {
       password,
       accountType: accountType === 'business' ? 'BUSINESS' : 'INDIVIDUAL',
       businessName: city,
+      services,
     }
 
     try {
@@ -169,6 +175,45 @@ export function LocksmithApplicationForm() {
               ))}
             </optgroup>
           </select>
+        </div>
+
+        <div>
+          <span className="block text-sm font-medium text-muted-foreground mb-2">
+            Services you offer{' '}
+            <span className="text-destructive" aria-hidden>
+              *
+            </span>
+          </span>
+          <p className="text-xs text-muted-foreground mb-3">
+            Tick everything you can take — we match you to customers who need these jobs.
+          </p>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 max-h-[min(280px,50vh)] overflow-y-auto rounded-lg border border-border bg-surface/50 p-3">
+            {LOCKSMITH_SERVICE_OPTIONS.map((label) => {
+              const checked = services.includes(label)
+              return (
+                <label
+                  key={label}
+                  className={`flex cursor-pointer items-start gap-2 rounded-md px-2 py-2 text-sm transition-colors hover:bg-background/80 ${
+                    checked ? 'text-foreground' : 'text-muted-foreground'
+                  }`}
+                >
+                  <input
+                    type="checkbox"
+                    checked={checked}
+                    onChange={() => {
+                      setServices((prev) =>
+                        checked
+                          ? prev.filter((s) => s !== label)
+                          : [...prev, label]
+                      )
+                    }}
+                    className="mt-0.5 h-4 w-4 shrink-0 rounded border-border text-gold focus:ring-gold"
+                  />
+                  <span>{label}</span>
+                </label>
+              )
+            })}
+          </div>
         </div>
 
         <div>
