@@ -180,7 +180,8 @@ export default function AdminPage() {
     router.refresh()
   }
 
-  const approve = async (id: number, tier: 'starter' | 'pro') => {
+  /** Railway API expects Pascal case: "Starter" | "Pro" (not lowercase). */
+  const approve = async (id: number, tier: 'Starter' | 'Pro') => {
     setActionKey(`approve-${id}-${tier}`)
     try {
       const res = await fetch(RW(`approve/${id}`), {
@@ -435,7 +436,7 @@ export default function AdminPage() {
                             label="Approve Starter — R499"
                             size="sm"
                             disabled={!!actionKey}
-                            onClick={() => void approve(row.id, 'starter')}
+                            onClick={() => void approve(row.id, 'Starter')}
                           />
                           <GoldButton
                             type="button"
@@ -443,7 +444,7 @@ export default function AdminPage() {
                             size="sm"
                             variant="outline"
                             disabled={!!actionKey}
-                            onClick={() => void approve(row.id, 'pro')}
+                            onClick={() => void approve(row.id, 'Pro')}
                           />
                         </div>
                       </td>
