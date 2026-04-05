@@ -5,20 +5,19 @@ import { Nav } from '@/components/Nav'
 import { GoldButton } from '@/components/GoldButton'
 import { RequestForm } from '@/components/RequestForm'
 import { StickyMobileCTA } from '@/components/StickyMobileCTA'
-import { SERVICE_PAGES } from '@/lib/locations'
+import {
+  GAUTENG_LOCATIONS,
+  SERVICE_PAGES,
+  WESTERN_CAPE_LOCATIONS,
+} from '@/lib/locations'
 import { CONTACT } from '@/lib/constants'
 
 const SITE = 'https://www.vula24.co.za'
 
 const SLUGS = SERVICE_PAGES.map((s) => s.slug)
 
-/** Internal links to money pages — same service, local intent. */
-const AVAILABLE_IN_CITIES = [
-  { slug: 'johannesburg', label: 'Johannesburg' },
-  { slug: 'cape-town', label: 'Cape Town' },
-  { slug: 'pretoria', label: 'Pretoria' },
-  { slug: 'sandton', label: 'Sandton' },
-] as const
+const cityLinkClass =
+  'inline-flex items-center rounded-md border border-border bg-background px-3 py-1.5 text-sm text-foreground hover:border-primary/40 hover:bg-primary/5 transition-colors'
 
 const COPY: Record<
   string,
@@ -159,22 +158,46 @@ export default async function ServicePage({ params }: Props) {
         >
           <h2
             id="available-in-heading"
-            className="font-heading font-semibold text-base text-foreground mb-3"
+            className="font-heading font-semibold text-base text-foreground mb-4"
           >
             Available in
           </h2>
-          <ul className="flex flex-wrap gap-2">
-            {AVAILABLE_IN_CITIES.map(({ slug, label }) => (
-              <li key={slug}>
-                <Link
-                  href={`/locksmith-${slug}`}
-                  className="inline-flex items-center rounded-md border border-border bg-background px-3 py-1.5 text-sm text-foreground hover:border-primary/40 hover:bg-primary/5 transition-colors"
-                >
-                  {label}
-                </Link>
-              </li>
-            ))}
-          </ul>
+          <div className="space-y-5">
+            <div>
+              <h3 className="text-xs font-semibold uppercase tracking-wide text-muted-foreground mb-2">
+                Gauteng
+              </h3>
+              <ul className="flex flex-wrap gap-2">
+                {GAUTENG_LOCATIONS.map((loc) => (
+                  <li key={loc.slug}>
+                    <Link
+                      href={`/locksmith-${loc.slug}`}
+                      className={cityLinkClass}
+                    >
+                      {loc.name}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+            <div>
+              <h3 className="text-xs font-semibold uppercase tracking-wide text-muted-foreground mb-2">
+                Western Cape
+              </h3>
+              <ul className="flex flex-wrap gap-2">
+                {WESTERN_CAPE_LOCATIONS.map((loc) => (
+                  <li key={loc.slug}>
+                    <Link
+                      href={`/locksmith-${loc.slug}`}
+                      className={cityLinkClass}
+                    >
+                      {loc.name}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
         </section>
 
         <div className="flex flex-wrap gap-4">
