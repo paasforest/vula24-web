@@ -12,6 +12,9 @@ interface Props {
   params: Promise<{ city: string }>
 }
 
+/** Only slugs from generateStaticParams resolve — avoids thin catch-all pages. */
+export const dynamicParams = false
+
 export async function generateStaticParams() {
   return ALL_LOCATIONS.map((loc) => ({
     city: loc.slug,
@@ -45,6 +48,23 @@ export async function generateMetadata({
       url: `https://www.vula24.co.za/locksmith-${location.slug}`,
     },
   }
+}
+
+function suburbCoverageParagraph(location: {
+  name: string
+  suburbs: string[]
+  nearbyAreas: string[]
+}) {
+  const top = location.suburbs.slice(0, 6).join(', ')
+  const near = location.nearbyAreas.join(', ')
+  return (
+    <p className="text-muted-foreground leading-relaxed text-[15px]">
+      We provide locksmith services across {location.name}, including {top}
+      {location.suburbs.length > 6 ? ', and other suburbs' : ''}. We also
+      regularly assist in nearby areas such as {near}. Not listed? Request a
+      call-back — we confirm coverage for your street or complex.
+    </p>
+  )
 }
 
 export default async function CityPage({ params }: Props) {
@@ -105,8 +125,43 @@ export default async function CityPage({ params }: Props) {
             />
           </div>
           <p className="text-sm text-muted-foreground">
-            🔒 Verified locksmiths · ⚡ Fast response · 📞 Available 24/7
+            Verified locksmiths · Fast response · Available 24/7
           </p>
+        </div>
+      </section>
+
+      <section className="py-12 px-4 bg-surface border-y border-border">
+        <div className="max-w-3xl mx-auto">
+          <h2 className="font-heading font-bold text-xl md:text-2xl mb-3 text-center">
+            Covering {location.name} and surrounding areas
+          </h2>
+          {suburbCoverageParagraph(location)}
+        </div>
+      </section>
+
+      <section className="py-12 px-4">
+        <div className="max-w-3xl mx-auto">
+          <h2 className="font-heading font-bold text-xl md:text-2xl mb-4 text-center">
+            When you might need a locksmith in {location.name}
+          </h2>
+          <ul className="list-disc pl-5 space-y-2 text-muted-foreground text-[15px] leading-relaxed">
+            <li>
+              You are locked out of your car, or keys are visible inside the
+              vehicle
+            </li>
+            <li>
+              House or apartment keys are lost, stolen, or left inside the
+              property
+            </li>
+            <li>
+              A lock is jammed, damaged after a break-in attempt, or a key has
+              snapped in the cylinder
+            </li>
+            <li>
+              You need a spare key cut, a remote programmed, or a safe opened
+              by a verified professional
+            </li>
+          </ul>
         </div>
       </section>
 
@@ -117,42 +172,48 @@ export default async function CityPage({ params }: Props) {
           </h2>
           <p className="text-muted-foreground text-center mb-10">
             Our locksmiths in {location.name} handle all types of lock and key
-            emergencies
+            emergencies — tap a service for more detail.
           </p>
           <div className="grid md:grid-cols-3 gap-6">
             {[
               {
                 title: 'Car lockout',
+                slug: 'car-lockout' as const,
                 desc: `Locked out of your car in ${location.name}? We dispatch a locksmith to your exact location fast.`,
                 icon: '🚗',
                 urgency: 'Emergency',
               },
               {
                 title: 'House lockout',
+                slug: 'house-lockout' as const,
                 desc: `Locked out of your home in ${location.name}? Our locksmiths are available 24/7 including nights and weekends.`,
                 icon: '🏠',
                 urgency: 'Emergency',
               },
               {
                 title: 'Lost car key replacement',
+                slug: 'lost-car-key' as const,
                 desc: `Lost your car keys in ${location.name}? We cut and programme replacement keys on site.`,
                 icon: '🔑',
                 urgency: 'Urgent',
               },
               {
                 title: 'Lock repair and replacement',
+                slug: 'lock-repair' as const,
                 desc: `Broken or damaged lock in ${location.name}? We repair and replace all lock types same day.`,
                 icon: '🔧',
                 urgency: 'Flexible',
               },
               {
                 title: 'Safe opening',
+                slug: 'safe-opening' as const,
                 desc: `Forgotten your safe combination in ${location.name}? Our specialists can open and reset it.`,
                 icon: '🔐',
                 urgency: 'Urgent',
               },
               {
                 title: '24/7 emergency service',
+                slug: null,
                 desc: `Emergency locksmith in ${location.name} available any time — midnight, weekends, public holidays.`,
                 icon: '⚡',
                 urgency: 'Emergency',
@@ -176,9 +237,17 @@ export default async function CityPage({ params }: Props) {
                     {s.urgency}
                   </span>
                 </div>
-                <h3 className="font-heading font-bold text-lg mb-2">
-                  {s.title}
-                </h3>
+                {s.slug ? (
+                  <Link href={`/services/${s.slug}`} className="group block">
+                    <h3 className="font-heading font-bold text-lg mb-2 group-hover:text-gold transition-colors">
+                      {s.title} →
+                    </h3>
+                  </Link>
+                ) : (
+                  <h3 className="font-heading font-bold text-lg mb-2">
+                    {s.title}
+                  </h3>
+                )}
                 <p className="text-muted-foreground text-sm">{s.desc}</p>
               </div>
             ))}
@@ -194,7 +263,7 @@ export default async function CityPage({ params }: Props) {
           <p className="text-muted-foreground text-center mb-10">
             Real jobs completed by Vula24 locksmiths in {location.name}
           </p>
-          <div className="grid md:grid-cols-3 gap-4">
+          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
             {location.recentJobs.map((job, i) => (
               <div
                 key={`${job.suburb}-${i}`}
