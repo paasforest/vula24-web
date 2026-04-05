@@ -66,7 +66,8 @@
           "q": "Is Melville or Braamfontein covered?",
           "a": "Yes — including student-heavy blocks where verification and access rules matter."
         }
-      ]
+      ],
+      "localSeoLine": "Fast locksmith response across Joburg’s busy corridors — CBD, Rosebank, Sandton and Midrand are all regular dispatch routes."
     },
     {
       "slug": "sandton",
@@ -134,7 +135,8 @@
           "q": "Do you cover Rivonia office parks after hours?",
           "a": "Yes — including late exits when access cards fail."
         }
-      ]
+      ],
+      "localSeoLine": "Premium-area call-outs for Rivonia, Bryanston and Morningside — malls, estates and office towers where access control slows everyone else down."
     },
     {
       "slug": "pretoria",
@@ -202,7 +204,8 @@
           "q": "Is Hatfield covered at night during term time?",
           "a": "Yes — we regularly assist students and landlords after hours."
         }
-      ]
+      ],
+      "localSeoLine": "Student-side Hatfield, government Arcadia and Menlyn retail — locksmiths who know Tshwane traffic patterns and campus-adjacent complexes."
     },
     {
       "slug": "midrand",
@@ -268,7 +271,8 @@
           "q": "What if I am locked out at Waterfall or similar new developments?",
           "a": "Describe the estate — many use standard cylinders; some need specialist hardware."
         }
-      ]
+      ],
+      "localSeoLine": "Halfway between metros: Kyalami, Carlswald and Halfway House — ideal for fast routing, with estate boom gates and mall basements on the daily list."
     },
     {
       "slug": "centurion",
@@ -333,7 +337,8 @@
           "q": "Can you help with access control at office parks in Highveld?",
           "a": "Many jobs are standard locks; some need a specialist — describe the system."
         }
-      ]
+      ],
+      "localSeoLine": "Family Irene, Lyttelton and Centurion Mall jobs — clear quotes before touching patio glass or office cylinders."
     },
     {
       "slug": "randburg",
@@ -399,7 +404,8 @@
           "q": "Can you replace garage-door locks in Randburg?",
           "a": "Often — describe whether it is a manual door or motorised system."
         }
-      ]
+      ],
+      "localSeoLine": "Ferndale, Northcliff and Cresta — freestanding homes and townhouse clusters where boom gates and shared driveways shape every arrival."
     },
     {
       "slug": "roodepoort",
@@ -465,7 +471,8 @@
           "q": "Can you fix gate locks at West Rand complexes?",
           "a": "Yes — mention single vs double gate and motor type."
         }
-      ]
+      ],
+      "localSeoLine": "Florida to Little Falls — older stock and newer clusters; rusted gates and weathered front doors are everyday fixes on the West Rand."
     },
     {
       "slug": "soweto",
@@ -530,7 +537,8 @@
           "q": "What if I cannot afford premium hardware?",
           "a": "Ask for repair-first options where the lock allows."
         }
-      ]
+      ],
+      "localSeoLine": "Diepkloof to Protea Glen — respectful service, upfront pricing, and locksmiths who know the area’s streets and complexes."
     },
     {
       "slug": "boksburg",
@@ -594,7 +602,8 @@
           "q": "Can you help at industrial sites in Boksburg North?",
           "a": "Often — describe roller-shutter vs standard door."
         }
-      ]
+      ],
+      "localSeoLine": "East Rand Mall to Dawn Park — retail lockouts, shift workers and industrial strips along the R21 corridor."
     },
     {
       "slug": "germiston",
@@ -658,7 +667,8 @@
           "q": "What does a night unlock cost near the N12?",
           "a": "Depends on time and job — always confirm scope first."
         }
-      ]
+      ],
+      "localSeoLine": "Eastgate-adjacent Edenvale and Bedfordview — peak-hour retail and estates where intercoms and loading zones matter."
     },
     {
       "slug": "fourways",
@@ -724,7 +734,8 @@
           "q": "How much is a typical house lockout in Chartwell?",
           "a": "Varies by lock type — mortice vs cylinder changes the job."
         }
-      ]
+      ],
+      "localSeoLine": "Fourways Mall, Lonehill and Dainfern — smart cars, biometrics and estate rules; we match locksmiths who speak that language."
     },
     {
       "slug": "kempton-park",
@@ -790,7 +801,8 @@
           "q": "Can you help with fleet vans locked at logistics parks?",
           "a": "Yes — describe loading bay access."
         }
-      ]
+      ],
+      "localSeoLine": "OR Tambo, Birchleigh and logistics parks — odd-hour arrivals, rental returns and estate boom gates near the airport belt."
     },
     {
       "slug": "alberton",
@@ -854,7 +866,8 @@
           "q": "Is Sunday service available in Alberton?",
           "a": "Yes — weekends are busy for family lockouts."
         }
-      ]
+      ],
+      "localSeoLine": "Brackenhurst, Meyersdal and Alberton City — family estates and retail strips across the South Rand."
     },
     {
       "slug": "benoni",
@@ -919,7 +932,8 @@
           "q": "Can you help with school-run lockouts near Northmead?",
           "a": "Yes — morning peaks are common."
         }
-      ]
+      ],
+      "localSeoLine": "Northmead to Daveyton — wide East Rand spread; honest ETAs across Rynfield and Crystal Park matter here."
     },
     {
       "slug": "tembisa",
@@ -982,7 +996,8 @@
           "q": "What if I need a cheap fix only?",
           "a": "Ask for repair-first options where safe."
         }
-      ]
+      ],
+      "localSeoLine": "Ivory Park and Tswelopele — clear communication and fair quotes on every home and car lockout."
     },
     {
       "slug": "mamelodi",
@@ -1044,7 +1059,8 @@
           "q": "What if I need a child-safe unlock?",
           "a": "Say so immediately — dispatch prioritises welfare."
         }
-      ]
+      ],
+      "localSeoLine": "East of Pretoria — patient routing on Silverton-linked roads; locksmiths who quote before they drill."
     }
   ],
   "westernCape": [
@@ -1114,7 +1130,8 @@
           "q": "Can you help with Bo-Kaap heritage doors?",
           "a": "Often — older hardware may need specialist parts."
         }
-      ]
+      ],
+      "localSeoLine": "Reliable locksmiths across coastal and CBD pockets — Sea Point, Green Point and the Waterfront, plus tight parking and estate security."
     },
     {
       "slug": "bellville",
@@ -1179,7 +1196,8 @@
           "q": "Are night call-outs common near Parow retail?",
           "a": "Yes — especially Friday evenings."
         }
-      ]
+      ],
+      "localSeoLine": "Northern suburbs intensity — Tygervalley, Parow and Goodwood mean mall basements and dense family streets in one run."
     },
     {
       "slug": "stellenbosch",
@@ -1244,7 +1262,8 @@
           "q": "What if I need help after a festival?",
           "a": "Expect higher traffic — ETAs may stretch."
         }
-      ]
+      ],
+      "localSeoLine": "Winelands timing — campus digs, guest houses and farm roads; ETAs flex around events and harvest traffic."
     },
     {
       "slug": "paarl",
@@ -1308,7 +1327,8 @@
           "q": "What if I am locked out on a Berg River smallholding?",
           "a": "Pin the gate — long driveways affect ETA."
         }
-      ]
+      ],
+      "localSeoLine": "Berg River Valley — Wellington to Huguenot heritage homes, agricultural gates and town-centre shops in one mix."
     },
     {
       "slug": "worcester",
@@ -1372,7 +1392,8 @@
           "q": "Can you fix heat-stuck locks after heatwaves?",
           "a": "Often — sometimes lubrication; sometimes replacement."
         }
-      ]
+      ],
+      "localSeoLine": "Breede Valley heat and cold — retail strips, Avian Park and rural lanes; rust and expansion joints on outdoor hardware."
     },
     {
       "slug": "franschhoek",
@@ -1433,7 +1454,8 @@
           "q": "What if I am stuck on a farm road at night?",
           "a": "Safety first — wait in a visible spot; share pin."
         }
-      ]
+      ],
+      "localSeoLine": "Valley guesthouses and wine farms — scenic last miles; we set realistic ETAs for tourists and hosts."
     },
     {
       "slug": "somerset-west",
@@ -1496,7 +1518,8 @@
           "q": "What if my lock rusted from sea spray?",
           "a": "Replacement is common — ask for marine-grade options."
         }
-      ]
+      ],
+      "localSeoLine": "Helderberg coast — Somerset Mall, Strand sea spray and Gordon’s Bay wind; salt air on locks and busy summer weekends."
     },
     {
       "slug": "george",
@@ -1560,7 +1583,8 @@
           "q": "Are night rates higher on the Garden Route?",
           "a": "After-hours fees may apply — confirm first."
         }
-      ]
+      ],
+      "localSeoLine": "Garden Route pace — mall runs, Pacaltsdorp and Thembalethu; humidity and distance between suburbs shape every job."
     },
     {
       "slug": "sea-point",
@@ -1624,7 +1648,8 @@
           "q": "What if I am locked out during load-shedding?",
           "a": "Mention it — electronic locks behave differently."
         }
-      ]
+      ],
+      "localSeoLine": "Atlantic Seaboard density — promenade blocks, basement parking and strict body corporates; quiet entry methods first."
     },
     {
       "slug": "claremont",
@@ -1689,7 +1714,8 @@
           "q": "What does a student budget lockout cost?",
           "a": "Ask for minimum-invasion options first."
         }
-      ]
+      ],
+      "localSeoLine": "Southern suburbs crossroads — Cavendish, Newlands and Rondebosch; students, Victorian doors and retail lockouts in one belt."
     },
     {
       "slug": "tygervalley",
@@ -1753,7 +1779,8 @@
           "q": "Are night unlocks safe in retail parking?",
           "a": "Wait near security booths when possible."
         }
-      ]
+      ],
+      "localSeoLine": "Willowbridge and Panorama — hillside estates and retail parking levels; we ask for colour zones when you’re stuck in a basement."
     },
     {
       "slug": "brackenfell",
@@ -1817,7 +1844,8 @@
           "q": "What if I need a weekend gate fix?",
           "a": "Describe sliding vs swing gate."
         }
-      ]
+      ],
+      "localSeoLine": "Kuils River sprawl and Kraaifontein links — mixed-age housing and workshop yards; multipoint doors are common."
     },
     {
       "slug": "mitchells-plain",
@@ -1881,7 +1909,8 @@
           "q": "Can you work with RDP upgrades and extra security?",
           "a": "Yes — say what is fitted now."
         }
-      ]
+      ],
+      "localSeoLine": "Tafelsig to Rocklands — community-focused service; upfront scope on security doors and family homes."
     },
     {
       "slug": "durbanville",
@@ -1945,7 +1974,8 @@
           "q": "What if I am locked out on Langeberg Ridge?",
           "a": "Pin the access road — some are steep."
         }
-      ]
+      ],
+      "localSeoLine": "Wine-adjacent Pinehurst and Langeberg Ridge — long driveways and estate rules; ETAs reflect access roads."
     },
     {
       "slug": "constantia",
@@ -2009,7 +2039,8 @@
           "q": "What if my smart lock app failed?",
           "a": "Mention brand — some have manual override steps."
         }
-      ]
+      ],
+      "localSeoLine": "Southern suburbs premium stock — Tokai, Bergvliet and wine-estate cottages; heavy doors and high-spec hardware."
     },
     {
       "slug": "wynberg",
@@ -2073,7 +2104,8 @@
           "q": "What if I need a child-safe entry?",
           "a": "Say so immediately for dispatch priority."
         }
-      ]
+      ],
+      "localSeoLine": "Maynard Mall to Retreat — school runs, flats and older mortice locks along the M5 corridor."
     },
     {
       "slug": "strand",
@@ -2135,7 +2167,8 @@
           "q": "What if sea spray seized my gate lock?",
           "a": "Replacement is common — ask for corrosion-resistant options."
         }
-      ]
+      ],
+      "localSeoLine": "Beach lets and Macassar wind — holiday peaks, sea spray on gates and weekend lockouts."
     },
     {
       "slug": "parow",
@@ -2199,7 +2232,8 @@
           "q": "What if my flat has only one exit door?",
           "a": "Say so — we prioritise safe entry methods."
         }
-      ]
+      ],
+      "localSeoLine": "Parow Centre to Elsies River — dense retail, older mortice stock and mixed flats; shop shutters after hours."
     },
     {
       "slug": "kuils-river",
@@ -2262,7 +2296,8 @@
           "q": "What if I need the cheapest fix?",
           "a": "Ask for repair-first scope."
         }
-      ]
+      ],
+      "localSeoLine": "Blackheath industry and Kleinvlei homes — R300 traffic splits routes; we dispatch whoever is closest."
     },
     {
       "slug": "retreat",
@@ -2326,7 +2361,8 @@
           "q": "What if I need urgent entry for a child inside?",
           "a": "Say so immediately — dispatch prioritises."
         }
-      ]
+      ],
+      "localSeoLine": "M5 Cape Flats corridor — Steenberg to Grassy Park; fair quotes and fast response when security doors fail."
     }
   ]
 }

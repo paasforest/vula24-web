@@ -14,6 +14,8 @@ export interface LocationData {
   name: string
   province: Province
   provinceSlug: string
+  /** Unique local hook for SEO (not shared template copy). */
+  localSeoLine: string
   tagline: string
   description: string
   suburbs: string[]

@@ -786,8 +786,163 @@ WESTERN_CAPE = [
 ]
 # fmt: on
 
+# One unique local hook per city (SEO differentiation — not template filler).
+LOCAL_SEO_LINES: dict[str, str] = {
+    "johannesburg": (
+        "Fast locksmith response across Joburg’s busy corridors — CBD, Rosebank, "
+        "Sandton and Midrand are all regular dispatch routes."
+    ),
+    "sandton": (
+        "Premium-area call-outs for Rivonia, Bryanston and Morningside — malls, "
+        "estates and office towers where access control slows everyone else down."
+    ),
+    "pretoria": (
+        "Student-side Hatfield, government Arcadia and Menlyn retail — locksmiths "
+        "who know Tshwane traffic patterns and campus-adjacent complexes."
+    ),
+    "midrand": (
+        "Halfway between metros: Kyalami, Carlswald and Halfway House — ideal for "
+        "fast routing, with estate boom gates and mall basements on the daily list."
+    ),
+    "centurion": (
+        "Family Irene, Lyttelton and Centurion Mall jobs — clear quotes before "
+        "touching patio glass or office cylinders."
+    ),
+    "randburg": (
+        "Ferndale, Northcliff and Cresta — freestanding homes and townhouse clusters "
+        "where boom gates and shared driveways shape every arrival."
+    ),
+    "roodepoort": (
+        "Florida to Little Falls — older stock and newer clusters; rusted gates "
+        "and weathered front doors are everyday fixes on the West Rand."
+    ),
+    "soweto": (
+        "Diepkloof to Protea Glen — respectful service, upfront pricing, and "
+        "locksmiths who know the area’s streets and complexes."
+    ),
+    "boksburg": (
+        "East Rand Mall to Dawn Park — retail lockouts, shift workers and "
+        "industrial strips along the R21 corridor."
+    ),
+    "germiston": (
+        "Eastgate-adjacent Edenvale and Bedfordview — peak-hour retail and "
+        "estates where intercoms and loading zones matter."
+    ),
+    "fourways": (
+        "Fourways Mall, Lonehill and Dainfern — smart cars, biometrics and "
+        "estate rules; we match locksmiths who speak that language."
+    ),
+    "kempton-park": (
+        "OR Tambo, Birchleigh and logistics parks — odd-hour arrivals, rental "
+        "returns and estate boom gates near the airport belt."
+    ),
+    "alberton": (
+        "Brackenhurst, Meyersdal and Alberton City — family estates and retail "
+        "strips across the South Rand."
+    ),
+    "benoni": (
+        "Northmead to Daveyton — wide East Rand spread; honest ETAs across Rynfield "
+        "and Crystal Park matter here."
+    ),
+    "tembisa": (
+        "Ivory Park and Tswelopele — clear communication and fair quotes on every "
+        "home and car lockout."
+    ),
+    "mamelodi": (
+        "East of Pretoria — patient routing on Silverton-linked roads; locksmiths "
+        "who quote before they drill."
+    ),
+    "cape-town": (
+        "Reliable locksmiths across coastal and CBD pockets — Sea Point, Green Point "
+        "and the Waterfront, plus tight parking and estate security."
+    ),
+    "bellville": (
+        "Northern suburbs intensity — Tygervalley, Parow and Goodwood mean mall "
+        "basements and dense family streets in one run."
+    ),
+    "stellenbosch": (
+        "Winelands timing — campus digs, guest houses and farm roads; ETAs flex "
+        "around events and harvest traffic."
+    ),
+    "paarl": (
+        "Berg River Valley — Wellington to Huguenot heritage homes, agricultural "
+        "gates and town-centre shops in one mix."
+    ),
+    "worcester": (
+        "Breede Valley heat and cold — retail strips, Avian Park and rural lanes; "
+        "rust and expansion joints on outdoor hardware."
+    ),
+    "franschhoek": (
+        "Valley guesthouses and wine farms — scenic last miles; we set realistic "
+        "ETAs for tourists and hosts."
+    ),
+    "somerset-west": (
+        "Helderberg coast — Somerset Mall, Strand sea spray and Gordon’s Bay wind; "
+        "salt air on locks and busy summer weekends."
+    ),
+    "george": (
+        "Garden Route pace — mall runs, Pacaltsdorp and Thembalethu; humidity and "
+        "distance between suburbs shape every job."
+    ),
+    "sea-point": (
+        "Atlantic Seaboard density — promenade blocks, basement parking and "
+        "strict body corporates; quiet entry methods first."
+    ),
+    "claremont": (
+        "Southern suburbs crossroads — Cavendish, Newlands and Rondebosch; students, "
+        "Victorian doors and retail lockouts in one belt."
+    ),
+    "tygervalley": (
+        "Willowbridge and Panorama — hillside estates and retail parking levels; "
+        "we ask for colour zones when you’re stuck in a basement."
+    ),
+    "brackenfell": (
+        "Kuils River sprawl and Kraaifontein links — mixed-age housing and "
+        "workshop yards; multipoint doors are common."
+    ),
+    "mitchells-plain": (
+        "Tafelsig to Rocklands — community-focused service; upfront scope on "
+        "security doors and family homes."
+    ),
+    "durbanville": (
+        "Wine-adjacent Pinehurst and Langeberg Ridge — long driveways and estate "
+        "rules; ETAs reflect access roads."
+    ),
+    "constantia": (
+        "Southern suburbs premium stock — Tokai, Bergvliet and wine-estate cottages; "
+        "heavy doors and high-spec hardware."
+    ),
+    "wynberg": (
+        "Maynard Mall to Retreat — school runs, flats and older mortice locks along "
+        "the M5 corridor."
+    ),
+    "strand": (
+        "Beach lets and Macassar wind — holiday peaks, sea spray on gates and "
+        "weekend lockouts."
+    ),
+    "parow": (
+        "Parow Centre to Elsies River — dense retail, older mortice stock and "
+        "mixed flats; shop shutters after hours."
+    ),
+    "kuils-river": (
+        "Blackheath industry and Kleinvlei homes — R300 traffic splits routes; "
+        "we dispatch whoever is closest."
+    ),
+    "retreat": (
+        "M5 Cape Flats corridor — Steenberg to Grassy Park; fair quotes and fast "
+        "response when security doors fail."
+    ),
+}
+
 
 def main() -> None:
+    for region in (GAUTENG, WESTERN_CAPE):
+        for loc in region:
+            slug = loc["slug"]
+            if slug not in LOCAL_SEO_LINES:
+                raise KeyError(f"Missing LOCAL_SEO_LINES for slug: {slug}")
+            loc["localSeoLine"] = LOCAL_SEO_LINES[slug]
+
     data = {"gauteng": GAUTENG, "westernCape": WESTERN_CAPE}
     OUT.parent.mkdir(parents=True, exist_ok=True)
     OUT.write_text(json.dumps(data, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")

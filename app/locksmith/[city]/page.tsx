@@ -29,7 +29,7 @@ export async function generateMetadata({
   if (!location) return {}
   return {
     title: `Locksmith ${location.name} | 24/7 Emergency Locksmith Services`,
-    description: `Need a locksmith in ${location.name}? Vula24 connects you with verified locksmiths in ${location.name} fast. Available 24/7, no hidden fees.`,
+    description: `Need a locksmith in ${location.name}? ${location.localSeoLine}`,
     keywords: [
       `locksmith ${location.name}`,
       `emergency locksmith ${location.name}`,
@@ -44,7 +44,7 @@ export async function generateMetadata({
     },
     openGraph: {
       title: `Locksmith ${location.name} | Vula24`,
-      description: `Verified locksmiths in ${location.name}. Fast response, available 24/7.`,
+      description: location.localSeoLine,
       url: `https://www.vula24.co.za/locksmith-${location.slug}`,
     },
   }
@@ -52,17 +52,28 @@ export async function generateMetadata({
 
 function suburbCoverageParagraph(location: {
   name: string
+  slug: string
   suburbs: string[]
   nearbyAreas: string[]
 }) {
   const top = location.suburbs.slice(0, 6).join(', ')
   const near = location.nearbyAreas.join(', ')
+  const intros: Record<string, string> = {
+    'cape-town': 'Along the coast and CBD,',
+    'johannesburg': 'From inner city to the northern ring,',
+    'pretoria': 'Across Tshwane’s main corridors,',
+    'sandton': 'In Sandton and linked northern nodes,',
+    'sea-point': 'On the Atlantic Seaboard,',
+    'george': 'Across the Garden Route town,',
+    'kempton-park': 'Near the airport belt,',
+  }
+  const intro = intros[location.slug] ?? `Throughout ${location.name},`
   return (
     <p className="text-muted-foreground leading-relaxed text-[15px]">
-      We provide locksmith services across {location.name}, including {top}
-      {location.suburbs.length > 6 ? ', and other suburbs' : ''}. We also
-      regularly assist in nearby areas such as {near}. Not listed? Request a
-      call-back — we confirm coverage for your street or complex.
+      {intro} we provide locksmith services including {top}
+      {location.suburbs.length > 6 ? ', and further suburbs' : ''}. We also
+      cover nearby areas such as {near}. Not listed? Request a call-back — we
+      confirm coverage for your street or complex.
     </p>
   )
 }
@@ -108,10 +119,13 @@ export default async function CityPage({ params }: Props) {
             24 Hour Emergency Locksmith in{' '}
             <span className="text-gold">{location.name}</span>
           </h1>
+          <p className="text-lg md:text-xl text-foreground/90 max-w-2xl mx-auto font-medium leading-snug mb-4">
+            {location.localSeoLine}
+          </p>
           <p className="text-base text-muted-foreground mb-4 max-w-2xl mx-auto italic">
             {location.tagline}
           </p>
-          <p className="text-lg md:text-xl text-muted-foreground mb-8 max-w-2xl mx-auto">
+          <p className="text-base md:text-lg text-muted-foreground mb-8 max-w-2xl mx-auto">
             {location.description} Fast response, verified professionals, no
             hidden fees.
           </p>
@@ -135,7 +149,12 @@ export default async function CityPage({ params }: Props) {
           <h2 className="font-heading font-bold text-xl md:text-2xl mb-3 text-center">
             Covering {location.name} and surrounding areas
           </h2>
-          {suburbCoverageParagraph(location)}
+          {suburbCoverageParagraph({
+            name: location.name,
+            slug: location.slug,
+            suburbs: location.suburbs,
+            nearbyAreas: location.nearbyAreas,
+          })}
         </div>
       </section>
 
