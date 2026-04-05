@@ -3,7 +3,7 @@
 import { useState } from 'react'
 import { cn } from '@/lib/utils'
 import { GoldButton } from './GoldButton'
-import { CITIES, CONTACT } from '@/lib/constants'
+import { CITIES, CONTACT, CITY_PROVINCE, SUBURBS } from '@/lib/constants'
 import {
   API_SERVICE_OPTIONS,
   CUSTOMER_URGENCY_OPTIONS,
@@ -15,6 +15,7 @@ export function RequestForm() {
   const [name, setName] = useState('')
   const [phone, setPhone] = useState('')
   const [city, setCity] = useState('')
+  const [suburb, setSuburb] = useState('')
   const [serviceType, setServiceType] = useState('')
   const [urgency, setUrgency] = useState<CustomerUrgencyKey>(
     CUSTOMER_URGENCY_OPTIONS[0].value
@@ -24,6 +25,10 @@ export function RequestForm() {
   const [isSuccess, setIsSuccess] = useState(false)
   const [successCity, setSuccessCity] = useState('')
   const [error, setError] = useState('')
+
+  const provinceForCity = city ? CITY_PROVINCE[city] ?? 'GP' : null
+  const suburbOptions =
+    provinceForCity != null ? SUBURBS[provinceForCity] : []
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -39,6 +44,10 @@ export function RequestForm() {
     }
     if (!city) {
       setError('Please select your city')
+      return
+    }
+    if (!suburb.trim()) {
+      setError('Please select your suburb')
       return
     }
     if (!serviceType) {
@@ -57,6 +66,7 @@ export function RequestForm() {
           name: name.trim(),
           phone: phone.trim(),
           city,
+          suburb: suburb.trim(),
           serviceType,
           urgency,
           notes: notes.trim() || undefined,
@@ -158,7 +168,10 @@ export function RequestForm() {
           <select
             id="cust-city"
             value={city}
-            onChange={(e) => setCity(e.target.value)}
+            onChange={(e) => {
+              setCity(e.target.value)
+              setSuburb('')
+            }}
             required
             className="w-full px-4 py-3 bg-background border border-border rounded-lg text-foreground focus:outline-none focus:ring-2 focus:ring-gold focus:border-transparent"
           >
@@ -173,6 +186,27 @@ export function RequestForm() {
                 <option key={c} value={c}>{c}</option>
               ))}
             </optgroup>
+          </select>
+        </div>
+
+        <div>
+          <label htmlFor="cust-suburb" className="block text-sm font-medium text-muted-foreground mb-2">
+            Suburb
+          </label>
+          <select
+            id="cust-suburb"
+            value={suburb}
+            onChange={(e) => setSuburb(e.target.value)}
+            required
+            disabled={!city}
+            className="w-full px-4 py-3 bg-background border border-border rounded-lg text-foreground focus:outline-none focus:ring-2 focus:ring-gold focus:border-transparent disabled:opacity-50 disabled:cursor-not-allowed"
+          >
+            <option value="">{city ? 'Select your suburb' : 'Select your city first'}</option>
+            {suburbOptions.map((s) => (
+              <option key={s} value={s}>
+                {s}
+              </option>
+            ))}
           </select>
         </div>
 

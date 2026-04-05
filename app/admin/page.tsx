@@ -70,6 +70,19 @@ type CustomerRequestRow = {
   suburb: string | null
 }
 
+type JobRow = {
+  id: number
+  job_code: string
+  service: string
+  urgency: string
+  suburb: string
+  province?: string
+  status: string
+  notified_count?: number
+  claimed_by?: string | null
+  created_at?: string
+}
+
 function asArray<T extends Record<string, unknown>>(raw: unknown): T[] {
   if (Array.isArray(raw)) return raw as T[]
   if (raw && typeof raw === 'object') {
@@ -117,6 +130,8 @@ export default function AdminPage() {
   const [active, setActive] = useState<ActiveRow[]>([])
   const [requests, setRequests] = useState<CustomerRequestRow[]>([])
   const [requestsWarning, setRequestsWarning] = useState<string | null>(null)
+  const [jobs, setJobs] = useState<JobRow[]>([])
+  const [jobsUnavailable, setJobsUnavailable] = useState(false)
   const [loading, setLoading] = useState(true)
   const [actionKey, setActionKey] = useState<string | null>(null)
   const [lastUpdated, setLastUpdated] = useState<Date | null>(null)
@@ -153,6 +168,27 @@ export default function AdminPage() {
     )
   }, [])
 
+  const loadJobs = useCallback(async () => {
+    if (!base) {
+      setJobsUnavailable(true)
+      return
+    }
+    try {
+      const res = await fetch(RW('jobs'))
+      if (!res.ok) {
+        setJobs([])
+        setJobsUnavailable(true)
+        return
+      }
+      const j = (await res.json()) as { jobs?: JobRow[] }
+      setJobs(Array.isArray(j.jobs) ? j.jobs : [])
+      setJobsUnavailable(false)
+    } catch {
+      setJobs([])
+      setJobsUnavailable(true)
+    }
+  }, [base])
+
   const loadAll = useCallback(async () => {
     setLoading(true)
     try {
@@ -167,9 +203,14 @@ export default function AdminPage() {
         e instanceof Error ? e.message : 'Could not load customer requests.'
       )
     }
+    try {
+      await loadJobs()
+    } catch {
+      setJobsUnavailable(true)
+    }
     setLastUpdated(new Date())
     setLoading(false)
-  }, [loadRailway, loadRequests])
+  }, [loadRailway, loadRequests, loadJobs])
 
   useEffect(() => {
     void loadAll()
@@ -293,6 +334,27 @@ export default function AdminPage() {
     }
   }
 
+  const redispatchJob = async (id: number) => {
+    setActionKey(`redispatch-job-${id}`)
+    try {
+      const res = await fetch(RW(`jobs/${id}/redispatch`), {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+      })
+      const j = (await res.json().catch(() => ({}))) as { error?: string }
+      if (!res.ok) {
+        toast.error(j.error ?? 'Redispatch failed.')
+        return
+      }
+      toast.success('Job redispatched')
+      await loadJobs()
+    } catch {
+      toast.error('Network error.')
+    } finally {
+      setActionKey(null)
+    }
+  }
+
   const markRequestAssigned = async (id: string) => {
     setActionKey(`req-${id}`)
     try {
@@ -326,8 +388,9 @@ export default function AdminPage() {
       pending: pending.length,
       payments: payments.length,
       active: active.length,
+      jobs: jobs.length,
     }),
-    [pending.length, payments.length, active.length]
+    [pending.length, payments.length, active.length, jobs.length]
   )
 
   return (
@@ -383,6 +446,7 @@ export default function AdminPage() {
               ['pending', `Pending (${counts.pending})`],
               ['payments', `Payments (${counts.payments})`],
               ['active', `Active (${counts.active})`],
+              ['jobs', `Jobs (${counts.jobs})`],
               ['requests', 'Requests'],
             ] as const
           ).map(([value, label]) => (
@@ -542,6 +606,73 @@ export default function AdminPage() {
                       </tr>
                     )
                   })}
+                </tbody>
+              </table>
+            </div>
+          )}
+        </TabsContent>
+
+        <TabsContent value="jobs" className="mt-6">
+          {jobsUnavailable ? (
+            <p className="text-muted-foreground text-sm py-8">
+              Jobs dashboard coming soon
+            </p>
+          ) : loading ? (
+            <TableSkeleton cols={8} />
+          ) : jobs.length === 0 ? (
+            <p className="text-muted-foreground text-sm py-8">No jobs yet.</p>
+          ) : (
+            <div className="overflow-x-auto rounded-lg border border-border">
+              <table className="w-full min-w-[960px] text-sm text-left">
+                <thead className="bg-muted/50 border-b border-border">
+                  <tr>
+                    <th className="p-3 font-medium">Job code</th>
+                    <th className="p-3 font-medium">Service</th>
+                    <th className="p-3 font-medium">Suburb</th>
+                    <th className="p-3 font-medium">Urgency</th>
+                    <th className="p-3 font-medium">Status</th>
+                    <th className="p-3 font-medium">Notified</th>
+                    <th className="p-3 font-medium">Claimed by</th>
+                    <th className="p-3 font-medium">Created</th>
+                    <th className="p-3 font-medium w-[120px]">Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {jobs.map((row) => (
+                    <tr
+                      key={row.id}
+                      className="border-b border-border/80 hover:bg-muted/30"
+                    >
+                      <td className="p-3 align-top font-heading font-bold text-gold whitespace-nowrap">
+                        {row.job_code}
+                      </td>
+                      <td className="p-3 align-top">{row.service}</td>
+                      <td className="p-3 align-top">{row.suburb}</td>
+                      <td className="p-3 align-top">
+                        <UrgencyBadge urgency={row.urgency} />
+                      </td>
+                      <td className="p-3 align-top">
+                        <JobStatusBadge status={row.status} />
+                      </td>
+                      <td className="p-3 align-top">{row.notified_count ?? 0}</td>
+                      <td className="p-3 align-top whitespace-nowrap">
+                        {row.claimed_by ?? '—'}
+                      </td>
+                      <td className="p-3 align-top whitespace-nowrap text-muted-foreground">
+                        {formatTimeAgo(row.created_at)}
+                      </td>
+                      <td className="p-3 align-top">
+                        <GoldButton
+                          type="button"
+                          label="Redispatch"
+                          size="sm"
+                          variant="outline"
+                          disabled={!!actionKey}
+                          onClick={() => void redispatchJob(row.id)}
+                        />
+                      </td>
+                    </tr>
+                  ))}
                 </tbody>
               </table>
             </div>
@@ -759,6 +890,70 @@ function DaysBadge({ days }: { days?: number }) {
       )}
     >
       {days} days
+    </span>
+  )
+}
+
+function formatTimeAgo(iso?: string) {
+  if (!iso) return '—'
+  const t = new Date(iso).getTime()
+  if (Number.isNaN(t)) return '—'
+  const s = Math.floor((Date.now() - t) / 1000)
+  if (s < 60) return `${s}s ago`
+  const m = Math.floor(s / 60)
+  if (m < 60) return `${m}m ago`
+  const h = Math.floor(m / 60)
+  if (h < 48) return `${h}h ago`
+  const d = Math.floor(h / 24)
+  return `${d}d ago`
+}
+
+function UrgencyBadge({ urgency }: { urgency: string }) {
+  const u = urgency.toLowerCase()
+  let cls =
+    'bg-success/20 text-success border-success/30'
+  if (u.includes('emergency'))
+    cls =
+      'bg-destructive/20 text-destructive border-destructive/40'
+  else if (u.includes('urgent'))
+    cls =
+      'bg-amber-500/15 text-amber-600 border-amber-500/40 dark:text-amber-400'
+
+  return (
+    <span
+      className={cn(
+        'inline-flex rounded-full border px-2 py-0.5 text-xs font-medium',
+        cls
+      )}
+    >
+      {urgency}
+    </span>
+  )
+}
+
+function JobStatusBadge({ status }: { status: string }) {
+  const s = status.toLowerCase().replace(/_/g, ' ')
+  let cls = 'bg-muted text-foreground border-border'
+  if (s === 'pending')
+    cls = 'bg-muted text-muted-foreground border-border'
+  else if (s === 'dispatched')
+    cls = 'bg-blue-500/15 text-blue-600 border-blue-500/40 dark:text-blue-400'
+  else if (s === 'claimed')
+    cls = 'bg-gold/10 text-gold border-gold/40'
+  else if (s === 'no coverage')
+    cls =
+      'bg-destructive/15 text-destructive border-destructive/40'
+  else if (s === 'completed')
+    cls = 'bg-success/20 text-success border-success/30'
+
+  return (
+    <span
+      className={cn(
+        'inline-flex rounded-full border px-2 py-0.5 text-xs font-medium capitalize',
+        cls
+      )}
+    >
+      {status.replace(/_/g, ' ')}
     </span>
   )
 }
