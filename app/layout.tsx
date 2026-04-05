@@ -57,6 +57,17 @@ export const metadata: Metadata = {
     index: true,
     follow: true,
   },
+  /**
+   * Google Search Console — HTML tag method (optional; file method is public/google*.html).
+   * Set NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION in .env.local to the exact `content` from Search Console.
+   */
+  ...(process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION
+    ? {
+        verification: {
+          google: process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION,
+        },
+      }
+    : {}),
 }
 
 export const viewport: Viewport = {
