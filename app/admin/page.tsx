@@ -116,6 +116,7 @@ export default function AdminPage() {
   const [payments, setPayments] = useState<PaymentRow[]>([])
   const [active, setActive] = useState<ActiveRow[]>([])
   const [requests, setRequests] = useState<CustomerRequestRow[]>([])
+  const [requestsWarning, setRequestsWarning] = useState<string | null>(null)
   const [loading, setLoading] = useState(true)
   const [actionKey, setActionKey] = useState<string | null>(null)
   const [lastUpdated, setLastUpdated] = useState<Date | null>(null)
@@ -133,16 +134,23 @@ export default function AdminPage() {
 
   const loadRequests = useCallback(async () => {
     const res = await fetch('/api/admin/requests-session')
-    const j = await res.json().catch(() => ({}))
+    const j = (await res.json().catch(() => ({}))) as {
+      requests?: CustomerRequestRow[]
+      warning?: string
+      error?: string
+    }
     if (!res.ok) {
       throw new Error(
-        typeof j === 'object' && j && 'error' in j
-          ? String((j as { error: unknown }).error)
+        j.error != null
+          ? String(j.error)
           : 'Could not load customer requests.'
       )
     }
-    const list = (j as { requests?: CustomerRequestRow[] }).requests ?? []
+    const list = j.requests ?? []
     setRequests(list)
+    setRequestsWarning(
+      typeof j.warning === 'string' && j.warning.length > 0 ? j.warning : null
+    )
   }, [])
 
   const loadAll = useCallback(async () => {
@@ -197,10 +205,12 @@ export default function AdminPage() {
         toast.error(j.error ?? 'Approve failed.')
         return
       }
-      let msg = 'Approved. SMS sent to locksmith.'
+      let msg = 'Approved.'
       if (j.customer_code) {
-        msg += ` Code: ${j.customer_code}`
+        msg += ` Code: ${j.customer_code}.`
       }
+      msg +=
+        ' SMS is sent by the Railway API when SMSPortal/env is configured there.'
       toast.success(msg)
       setPending((prev) => prev.filter((p) => p.id !== id))
     } catch {
@@ -629,11 +639,18 @@ export default function AdminPage() {
         </TabsContent>
 
         <TabsContent value="requests" className="mt-6">
+          {requestsWarning && (
+            <div className="mb-4 rounded-lg border border-amber-500/40 bg-amber-500/10 px-4 py-3 text-sm text-foreground leading-relaxed">
+              {requestsWarning}
+            </div>
+          )}
           {loading ? (
             <TableSkeleton cols={8} />
           ) : requests.length === 0 ? (
             <p className="text-muted-foreground text-sm py-8">
-              No customer requests yet.
+              {requestsWarning
+                ? 'No rows loaded in this tab. (Leads from the homepage are saved on Railway.)'
+                : 'No customer requests in this database yet.'}
             </p>
           ) : (
             <div className="overflow-x-auto rounded-lg border border-border">
