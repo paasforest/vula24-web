@@ -4,6 +4,9 @@ import { Footer } from '@/components/Footer'
 import { GoldButton } from '@/components/GoldButton'
 import { RequestForm } from '@/components/RequestForm'
 import { StickyMobileCTA } from '@/components/StickyMobileCTA'
+import { CoverageVisual } from '@/components/home/CoverageVisual'
+import { HeroIllustration } from '@/components/home/HeroIllustration'
+import { LocksmithStripVisual } from '@/components/home/LocksmithStripVisual'
 import { CITIES, CONTACT } from '@/lib/constants'
 
 export const metadata: Metadata = {
@@ -18,63 +21,82 @@ export default function HomePage() {
       <Nav />
 
       {/* Hero — customers */}
-      <section className="pt-24 pb-16 md:pt-32 md:pb-24 px-4">
-        <div className="max-w-7xl mx-auto">
-          <div className="inline-flex items-center gap-2 bg-surface border border-border rounded-full px-4 py-2 mb-6">
-            <span className="w-2 h-2 bg-gold rounded-full animate-pulse" />
-            <span className="text-sm text-muted-foreground">
-              Available in Gauteng & Western Cape — 24/7
-            </span>
-          </div>
+      <section className="relative overflow-hidden pt-24 pb-16 md:pt-32 md:pb-24 px-4">
+        <div
+          className="pointer-events-none absolute -right-24 -top-24 h-72 w-72 rounded-full bg-gold/[0.04] blur-3xl md:h-96 md:w-96"
+          aria-hidden
+        />
+        <div
+          className="pointer-events-none absolute -bottom-16 -left-20 h-64 w-64 rounded-full bg-gold/[0.03] blur-3xl"
+          aria-hidden
+        />
+        <div className="relative max-w-7xl mx-auto grid gap-12 lg:grid-cols-2 lg:gap-16 lg:items-center">
+          <div>
+            <div className="inline-flex items-center gap-2 bg-surface border border-border rounded-full px-4 py-2 mb-6">
+              <span className="w-2 h-2 bg-gold rounded-full animate-pulse" />
+              <span className="text-sm text-muted-foreground">
+                Available in Gauteng & Western Cape — 24/7
+              </span>
+            </div>
 
-          <h1 className="font-heading font-bold text-4xl md:text-5xl lg:text-6xl leading-tight mb-6 text-balance">
-            A locksmith.
-            <br />
-            Near you.
-            <br />
-            <span className="text-gold">Now.</span>
-          </h1>
+            <h1 className="font-heading font-bold text-4xl md:text-5xl lg:text-6xl leading-tight mb-6 text-balance">
+              A locksmith.
+              <br />
+              Near you.
+              <br />
+              <span className="text-gold">Now.</span>
+            </h1>
 
-          <p className="text-lg md:text-xl text-muted-foreground mb-8 max-w-lg text-pretty">
-            24/7 emergency locksmith services across South Africa. Verified professionals, no surprises.
-          </p>
+            <p className="text-lg md:text-xl text-muted-foreground mb-8 max-w-lg text-pretty">
+              24/7 emergency locksmith services across South Africa. Verified professionals, no surprises.
+            </p>
 
-          <div className="flex flex-wrap gap-4 mb-8">
-            <GoldButton label="Get Help Now →" href="#request" size="lg" />
-            <GoldButton
-              label="Call Now"
-              href={`tel:${CONTACT.phone}`}
-              size="lg"
-              variant="outline"
-            />
-          </div>
+            <div className="flex flex-wrap gap-4 mb-8">
+              <GoldButton label="Get Help Now →" href="#request" size="lg" />
+              <GoldButton
+                label="Call Now"
+                href={`tel:${CONTACT.phone}`}
+                size="lg"
+                variant="outline"
+              />
+            </div>
 
-          <div className="flex flex-wrap items-center gap-4 md:gap-0 text-sm text-muted-foreground">
-            <div className="flex items-center gap-2 md:gap-4">
-              <div>
-                <span className="font-heading font-bold text-foreground">15 min</span>
-                <span className="text-muted-foreground"> — Avg response</span>
+            <div className="flex flex-wrap items-center gap-4 md:gap-0 text-sm text-muted-foreground">
+              <div className="flex items-center gap-2 md:gap-4">
+                <div>
+                  <span className="font-heading font-bold text-foreground">15 min</span>
+                  <span className="text-muted-foreground"> — Avg response</span>
+                </div>
+                <span className="hidden md:inline w-px h-4 bg-border shrink-0" aria-hidden />
               </div>
-              <span className="hidden md:inline w-px h-4 bg-border shrink-0" aria-hidden />
-            </div>
-            <div className="flex items-center gap-2 md:gap-4">
-              <div>
-                <span className="font-heading font-bold text-foreground">200+</span>
-                <span className="text-muted-foreground"> — Jobs done</span>
+              <div className="flex items-center gap-2 md:gap-4">
+                <div>
+                  <span className="font-heading font-bold text-foreground">200+</span>
+                  <span className="text-muted-foreground"> — Jobs done</span>
+                </div>
+                <span className="hidden md:inline w-px h-4 bg-border shrink-0" aria-hidden />
               </div>
-              <span className="hidden md:inline w-px h-4 bg-border shrink-0" aria-hidden />
-            </div>
-            <div>
-              <span className="font-heading font-bold text-foreground">4.9 ★</span>
-              <span className="text-muted-foreground"> — Avg rating</span>
+              <div>
+                <span className="font-heading font-bold text-foreground">4.9 ★</span>
+                <span className="text-muted-foreground"> — Avg rating</span>
+              </div>
             </div>
           </div>
+
+          <HeroIllustration />
         </div>
       </section>
 
       {/* How it works — customers */}
       <section id="how-it-works" className="py-16 md:py-24 px-4 scroll-mt-24">
         <div className="max-w-7xl mx-auto">
+          <div className="mb-12 text-center md:mb-14">
+            <h2 className="font-heading font-bold text-3xl md:text-4xl mb-3">How it works</h2>
+            <p className="text-muted-foreground max-w-xl mx-auto text-sm md:text-base">
+              Three steps from stress to sorted — no app required.
+            </p>
+            <div className="mx-auto mt-6 h-1 w-16 rounded-full bg-gold/60" aria-hidden />
+          </div>
           <div className="grid md:grid-cols-3 gap-8">
             <div className="relative bg-surface border border-border rounded-xl p-6">
               <p className="text-5xl md:text-6xl font-heading font-bold text-muted-foreground/30 absolute top-4 right-4 leading-none">
@@ -129,6 +151,12 @@ export default function HomePage() {
       {/* Trust — customers */}
       <section className="py-16 md:py-24 px-4">
         <div className="max-w-7xl mx-auto">
+          <div className="mb-10 text-center md:mb-12">
+            <h2 className="font-heading font-bold text-3xl md:text-4xl mb-2">Why trust Vula24</h2>
+            <p className="text-muted-foreground text-sm md:text-base max-w-2xl mx-auto">
+              Built for real emergencies — verified pros, fast response, always on.
+            </p>
+          </div>
           <div className="grid md:grid-cols-3 gap-8">
             <div className="flex items-start gap-4 bg-background border border-border rounded-xl p-6">
               <div className="w-14 h-14 rounded-xl bg-gold/10 border border-gold/30 flex items-center justify-center text-gold shrink-0">
@@ -178,8 +206,12 @@ export default function HomePage() {
       </section>
 
       {/* Request form — customers */}
-      <section id="request" className="py-16 md:py-24 px-4 bg-surface scroll-mt-24">
-        <div className="max-w-xl mx-auto">
+      <section id="request" className="relative py-16 md:py-24 px-4 bg-surface scroll-mt-24 overflow-hidden">
+        <div
+          className="pointer-events-none absolute right-0 top-1/2 h-64 w-64 -translate-y-1/2 translate-x-1/3 rounded-full bg-gold/[0.04] blur-3xl"
+          aria-hidden
+        />
+        <div className="relative max-w-xl mx-auto">
           <h2 className="font-heading font-bold text-3xl md:text-4xl text-center mb-4">
             Request a locksmith
           </h2>
@@ -196,9 +228,10 @@ export default function HomePage() {
           <h2 className="font-heading font-bold text-3xl md:text-4xl text-center mb-4">
             Where Vula24 locksmiths operate
           </h2>
-          <p className="text-muted-foreground text-center mb-12 max-w-2xl mx-auto">
+          <p className="text-muted-foreground text-center mb-8 max-w-2xl mx-auto">
             Our service is live in Gauteng and Western Cape. More provinces coming soon.
           </p>
+          <CoverageVisual />
 
           <div className="grid md:grid-cols-2 gap-8">
             <div className="bg-background border border-border rounded-xl p-6">
@@ -249,20 +282,23 @@ export default function HomePage() {
             </p>
             <GoldButton label="Learn More →" href="/for-locksmiths" size="lg" />
           </div>
-          <ul className="space-y-3 text-muted-foreground text-sm">
-            <li className="flex gap-2">
-              <span className="text-gold font-heading font-bold shrink-0">→</span>
-              Jobs sent straight to your phone
-            </li>
-            <li className="flex gap-2">
-              <span className="text-gold font-heading font-bold shrink-0">→</span>
-              You set your own prices
-            </li>
-            <li className="flex gap-2">
-              <span className="text-gold font-heading font-bold shrink-0">→</span>
-              One flat monthly fee
-            </li>
-          </ul>
+          <div className="flex flex-col gap-8">
+            <LocksmithStripVisual />
+            <ul className="space-y-3 text-muted-foreground text-sm">
+              <li className="flex gap-2">
+                <span className="text-gold font-heading font-bold shrink-0">→</span>
+                Jobs sent straight to your phone
+              </li>
+              <li className="flex gap-2">
+                <span className="text-gold font-heading font-bold shrink-0">→</span>
+                You set your own prices
+              </li>
+              <li className="flex gap-2">
+                <span className="text-gold font-heading font-bold shrink-0">→</span>
+                One flat monthly fee
+              </li>
+            </ul>
+          </div>
         </div>
       </section>
 
