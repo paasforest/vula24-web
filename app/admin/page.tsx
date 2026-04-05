@@ -1,11 +1,26 @@
 'use client'
 
-import { useCallback, useEffect, useMemo, useState } from 'react'
+import {
+  Fragment,
+  useCallback,
+  useEffect,
+  useMemo,
+  useState,
+} from 'react'
 import { useRouter } from 'next/navigation'
 import { Toaster, toast } from 'sonner'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from '@/components/ui/dialog'
 import { GoldButton } from '@/components/GoldButton'
 import { cn } from '@/lib/utils'
+import { getServiceLabel } from '@/lib/api-services'
 
 /** Display only — data uses `/api/admin/railway/*` (Bearer token on server). */
 function apiBase(): string | null {
@@ -83,6 +98,53 @@ type JobRow = {
   created_at?: string
 }
 
+type ProviderRow = {
+  id: number
+  name?: string
+  phone?: string
+  email?: string
+  customer_code?: string
+  tier?: string
+  status?: string
+  province?: string
+  coverage_areas?: string[]
+  services?: unknown
+  base_address?: string
+  activation_date?: string
+  expiry_date?: string
+  amount_paid?: number | string | null
+  payment_date?: string
+  created_at?: string
+  days_remaining?: number | string | null
+}
+
+type FinanceSummary = {
+  totalRevenue?: number
+  thisMonthRevenue?: number
+  lastMonthRevenue?: number
+  activeCount?: number
+  starterCount?: number
+  proCount?: number
+  pendingCount?: number
+  expiredCount?: number
+  suspendedCount?: number
+  projectedNextMonth?: number
+}
+
+type FinancePaymentRow = {
+  id: number
+  customerCode?: string
+  name?: string
+  phone?: string
+  tier?: string
+  amountPaid?: number | null
+  paymentDate?: string
+  activationDate?: string
+  expiryDate?: string
+  status?: string
+  daysRemaining?: number | null
+}
+
 function asArray<T extends Record<string, unknown>>(raw: unknown): T[] {
   if (Array.isArray(raw)) return raw as T[]
   if (raw && typeof raw === 'object') {
@@ -121,6 +183,81 @@ function TableSkeleton({ cols = 6 }: { cols?: number }) {
   )
 }
 
+const TIER_EXPECTED_AMOUNT: Record<string, number> = {
+  Starter: 499,
+  Pro: 899,
+  starter: 499,
+  pro: 899,
+}
+
+function expectedTierAmount(tier?: string): number {
+  if (!tier) return TIER_EXPECTED_AMOUNT.Starter
+  const t = String(tier).trim()
+  return TIER_EXPECTED_AMOUNT[t] ?? (t.toLowerCase() === 'pro' ? 899 : 499)
+}
+
+function parseServicesField(raw: unknown): string[] {
+  if (Array.isArray(raw)) return raw.map((x) => String(x))
+  if (typeof raw === 'string') {
+    try {
+      const p = JSON.parse(raw) as unknown
+      if (Array.isArray(p)) return p.map((x) => String(x))
+    } catch {
+      /* ignore */
+    }
+  }
+  return []
+}
+
+function csvEscapeCell(v: unknown): string {
+  const s = v == null ? '' : String(v)
+  if (/[",\n\r]/.test(s)) {
+    return `"${s.replace(/"/g, '""')}"`
+  }
+  return s
+}
+
+function exportFinanceToCsv(payments: FinancePaymentRow[]) {
+  const headers = [
+    'Customer Code',
+    'Name',
+    'Phone',
+    'Tier',
+    'Amount Paid',
+    'Payment Date',
+    'Activation Date',
+    'Expiry Date',
+    'Status',
+  ]
+  const rows = payments.map((p) => [
+    p.customerCode ?? '',
+    p.name ?? '',
+    p.phone ?? '',
+    p.tier ?? '',
+    p.amountPaid ?? '',
+    p.paymentDate
+      ? new Date(p.paymentDate).toLocaleDateString('en-ZA')
+      : '',
+    p.activationDate
+      ? new Date(p.activationDate).toLocaleDateString('en-ZA')
+      : '',
+    p.expiryDate
+      ? new Date(p.expiryDate).toLocaleDateString('en-ZA')
+      : '',
+    p.status ?? '',
+  ])
+  const csv = [headers, ...rows]
+    .map((r) => r.map(csvEscapeCell).join(','))
+    .join('\n')
+  const blob = new Blob([csv], { type: 'text/csv;charset=utf-8' })
+  const url = URL.createObjectURL(blob)
+  const a = document.createElement('a')
+  a.href = url
+  a.download = `vula24-finance-${new Date().toISOString().split('T')[0]}.csv`
+  a.click()
+  URL.revokeObjectURL(url)
+}
+
 export default function AdminPage() {
   const router = useRouter()
   const base = apiBase()
@@ -132,6 +269,23 @@ export default function AdminPage() {
   const [requestsWarning, setRequestsWarning] = useState<string | null>(null)
   const [jobs, setJobs] = useState<JobRow[]>([])
   const [jobsUnavailable, setJobsUnavailable] = useState(false)
+  const [providers, setProviders] = useState<ProviderRow[]>([])
+  const [financeSummary, setFinanceSummary] = useState<FinanceSummary | null>(
+    null
+  )
+  const [financePayments, setFinancePayments] = useState<FinancePaymentRow[]>(
+    []
+  )
+  const [providerSearch, setProviderSearch] = useState('')
+  const [providerStatus, setProviderStatus] = useState<string>('all')
+  const [providerProvince, setProviderProvince] = useState<string>('all')
+  const [providerTier, setProviderTier] = useState<string>('all')
+  const [expandedProviders, setExpandedProviders] = useState<Set<number>>(
+    () => new Set()
+  )
+  const [activateTarget, setActivateTarget] = useState<PaymentRow | null>(null)
+  const [activateAmountStr, setActivateAmountStr] = useState('')
+  const [activateMismatchStep, setActivateMismatchStep] = useState(false)
   const [loading, setLoading] = useState(true)
   const [actionKey, setActionKey] = useState<string | null>(null)
   const [lastUpdated, setLastUpdated] = useState<Date | null>(null)
@@ -189,6 +343,51 @@ export default function AdminPage() {
     }
   }, [base])
 
+  const loadProviders = useCallback(async () => {
+    if (!base) {
+      setProviders([])
+      return
+    }
+    try {
+      const res = await fetch(RW('providers'))
+      const j = (await res.json().catch(() => ({}))) as {
+        providers?: ProviderRow[]
+      }
+      if (!res.ok) {
+        setProviders([])
+        return
+      }
+      setProviders(Array.isArray(j.providers) ? j.providers : [])
+    } catch {
+      setProviders([])
+    }
+  }, [base])
+
+  const loadFinance = useCallback(async () => {
+    if (!base) {
+      setFinanceSummary(null)
+      setFinancePayments([])
+      return
+    }
+    try {
+      const res = await fetch(RW('finance'))
+      const j = (await res.json().catch(() => ({}))) as {
+        summary?: FinanceSummary
+        payments?: FinancePaymentRow[]
+      }
+      if (!res.ok) {
+        setFinanceSummary(null)
+        setFinancePayments([])
+        return
+      }
+      setFinanceSummary(j.summary ?? null)
+      setFinancePayments(Array.isArray(j.payments) ? j.payments : [])
+    } catch {
+      setFinanceSummary(null)
+      setFinancePayments([])
+    }
+  }, [base])
+
   const loadAll = useCallback(async () => {
     setLoading(true)
     try {
@@ -208,9 +407,20 @@ export default function AdminPage() {
     } catch {
       setJobsUnavailable(true)
     }
+    try {
+      await loadProviders()
+    } catch {
+      setProviders([])
+    }
+    try {
+      await loadFinance()
+    } catch {
+      setFinanceSummary(null)
+      setFinancePayments([])
+    }
     setLastUpdated(new Date())
     setLoading(false)
-  }, [loadRailway, loadRequests, loadJobs])
+  }, [loadRailway, loadRequests, loadJobs, loadProviders, loadFinance])
 
   useEffect(() => {
     void loadAll()
@@ -259,30 +469,54 @@ export default function AdminPage() {
     }
   }
 
-  const activatePayment = async (id: number) => {
-    setActionKey(`activate-${id}`)
+  const closeActivateModal = () => {
+    setActivateTarget(null)
+    setActivateMismatchStep(false)
+    setActivateAmountStr('')
+  }
+
+  const submitActivatePayment = async (row: PaymentRow, amountPaid: number) => {
+    setActionKey(`activate-${row.id}`)
     try {
-      const res = await fetch(RW(`activate/${id}`), {
+      const res = await fetch(RW(`activate/${row.id}`), {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ activated_by: 'admin' }),
+        body: JSON.stringify({
+          activatedBy: 'admin',
+          amountPaid,
+          proofUrl: row.proof_of_payment?.trim() || undefined,
+        }),
       })
-      const j = await res.json().catch(() => ({}))
+      const j = (await res.json().catch(() => ({}))) as {
+        error?: string
+        amountMatches?: boolean
+      }
       if (!res.ok) {
         toast.error(
-          typeof j === 'object' && j && 'error' in j
-            ? String((j as { error: unknown }).error)
-            : 'Activate failed.'
+          typeof j.error === 'string' ? j.error : 'Activate failed.'
         )
         return
       }
-      toast.success('Account activated. Confirmation SMS sent.')
-      setPayments((prev) => prev.filter((p) => p.id !== id))
+      toast.success('Account activated. SMS sent.')
+      setPayments((prev) => prev.filter((p) => p.id !== row.id))
+      closeActivateModal()
     } catch {
       toast.error('Network error.')
     } finally {
       setActionKey(null)
     }
+  }
+
+  const onActivateModalConfirm = () => {
+    if (!activateTarget) return
+    const row = activateTarget
+    const amountPaid = parseFloat(activateAmountStr) || 0
+    const expected = expectedTierAmount(row.tier)
+    if (amountPaid !== expected && !activateMismatchStep) {
+      setActivateMismatchStep(true)
+      return
+    }
+    void submitActivatePayment(row, amountPaid)
   }
 
   const rejectPayment = (id: number) => {
@@ -389,9 +623,75 @@ export default function AdminPage() {
       payments: payments.length,
       active: active.length,
       jobs: jobs.length,
+      providers: providers.length,
     }),
-    [pending.length, payments.length, active.length, jobs.length]
+    [pending.length, payments.length, active.length, jobs.length, providers.length]
   )
+
+  const filteredProviders = useMemo(() => {
+    return providers.filter((p) => {
+      if (providerStatus !== 'all') {
+        if (
+          String(p.status || '').toLowerCase() !==
+          providerStatus.toLowerCase()
+        ) {
+          return false
+        }
+      }
+      if (providerProvince !== 'all') {
+        if (
+          String(p.province || '').toUpperCase() !==
+          providerProvince.toUpperCase()
+        ) {
+          return false
+        }
+      }
+      if (providerTier !== 'all') {
+        if (
+          String(p.tier || '').toLowerCase() !== providerTier.toLowerCase()
+        ) {
+          return false
+        }
+      }
+      if (providerSearch.trim()) {
+        const q = providerSearch.trim().toLowerCase()
+        const name = (p.name || '').toLowerCase()
+        const phone = (p.phone || '').toLowerCase()
+        if (!name.includes(q) && !phone.includes(q)) {
+          return false
+        }
+      }
+      return true
+    })
+  }, [
+    providers,
+    providerStatus,
+    providerProvince,
+    providerTier,
+    providerSearch,
+  ])
+
+  const financeMismatchCount = useMemo(() => {
+    return financePayments.filter((p) => {
+      if (p.amountPaid == null) return false
+      const exp = expectedTierAmount(p.tier)
+      return Number(p.amountPaid) !== exp
+    }).length
+  }, [financePayments])
+
+  const financeMonthLabels = useMemo(() => {
+    const now = new Date()
+    const thisL = new Intl.DateTimeFormat('en-ZA', {
+      month: 'long',
+      year: 'numeric',
+    }).format(now)
+    const last = new Date(now.getFullYear(), now.getMonth() - 1, 1)
+    const lastL = new Intl.DateTimeFormat('en-ZA', {
+      month: 'long',
+      year: 'numeric',
+    }).format(last)
+    return { thisMonthLabel: thisL, lastMonthLabel: lastL }
+  }, [])
 
   return (
     <div className="mx-auto max-w-7xl px-4 py-10 space-y-6">
@@ -446,8 +746,10 @@ export default function AdminPage() {
               ['pending', `Pending (${counts.pending})`],
               ['payments', `Payments (${counts.payments})`],
               ['active', `Active (${counts.active})`],
-              ['jobs', `Jobs (${counts.jobs})`],
               ['requests', 'Requests'],
+              ['jobs', `Jobs (${counts.jobs})`],
+              ['providers', `Providers (${counts.providers})`],
+              ['finance', 'Finance'],
             ] as const
           ).map(([value, label]) => (
             <TabsTrigger
@@ -590,7 +892,13 @@ export default function AdminPage() {
                               label="Activate Account"
                               size="sm"
                               disabled={!!actionKey}
-                              onClick={() => void activatePayment(row.id)}
+                              onClick={() => {
+                                setActivateTarget(row)
+                                setActivateAmountStr(
+                                  String(expectedTierAmount(row.tier))
+                                )
+                                setActivateMismatchStep(false)
+                              }}
                             />
                             <GoldButton
                               type="button"
@@ -837,8 +1145,631 @@ export default function AdminPage() {
             </div>
           )}
         </TabsContent>
+
+        <TabsContent value="providers" className="mt-6">
+          <div className="space-y-4">
+            <div className="flex flex-wrap gap-3 items-end">
+              <div className="min-w-[200px] flex-1">
+                <label className="block text-xs text-muted-foreground mb-1">
+                  Search
+                </label>
+                <input
+                  type="search"
+                  placeholder="Search by name or phone"
+                  value={providerSearch}
+                  onChange={(e) => setProviderSearch(e.target.value)}
+                  className="w-full rounded-lg border border-border bg-background px-3 py-2 text-sm"
+                />
+              </div>
+              <div>
+                <label className="block text-xs text-muted-foreground mb-1">
+                  Status
+                </label>
+                <select
+                  value={providerStatus}
+                  onChange={(e) => setProviderStatus(e.target.value)}
+                  className="rounded-lg border border-border bg-background px-3 py-2 text-sm min-w-[140px]"
+                >
+                  <option value="all">All statuses</option>
+                  <option value="active">Active</option>
+                  <option value="pending">Pending</option>
+                  <option value="approved">Approved</option>
+                  <option value="expired">Expired</option>
+                  <option value="suspended">Suspended</option>
+                </select>
+              </div>
+              <div>
+                <label className="block text-xs text-muted-foreground mb-1">
+                  Province
+                </label>
+                <select
+                  value={providerProvince}
+                  onChange={(e) => setProviderProvince(e.target.value)}
+                  className="rounded-lg border border-border bg-background px-3 py-2 text-sm min-w-[160px]"
+                >
+                  <option value="all">All provinces</option>
+                  <option value="GP">Gauteng (GP)</option>
+                  <option value="WC">Western Cape (WC)</option>
+                </select>
+              </div>
+              <div>
+                <label className="block text-xs text-muted-foreground mb-1">
+                  Tier
+                </label>
+                <select
+                  value={providerTier}
+                  onChange={(e) => setProviderTier(e.target.value)}
+                  className="rounded-lg border border-border bg-background px-3 py-2 text-sm min-w-[120px]"
+                >
+                  <option value="all">All tiers</option>
+                  <option value="starter">Starter</option>
+                  <option value="pro">Pro</option>
+                </select>
+              </div>
+            </div>
+            <p className="text-sm text-muted-foreground">
+              <span className="font-semibold text-foreground">
+                {providers.length}
+              </span>{' '}
+              locksmiths on the platform
+            </p>
+            {loading ? (
+              <TableSkeleton cols={9} />
+            ) : filteredProviders.length === 0 ? (
+              <p className="text-muted-foreground text-sm py-8">
+                No locksmiths found.
+              </p>
+            ) : (
+              <div className="overflow-x-auto rounded-lg border border-border">
+                <table className="w-full min-w-[1100px] text-sm text-left">
+                  <thead className="bg-muted/50 border-b border-border">
+                    <tr>
+                      <th className="p-3 font-medium">Code</th>
+                      <th className="p-3 font-medium">Name</th>
+                      <th className="p-3 font-medium">Phone</th>
+                      <th className="p-3 font-medium">Province</th>
+                      <th className="p-3 font-medium">Tier</th>
+                      <th className="p-3 font-medium">Status</th>
+                      <th className="p-3 font-medium">Coverage</th>
+                      <th className="p-3 font-medium">Services</th>
+                      <th className="p-3 font-medium">Expiry / Days</th>
+                      <th className="p-3 font-medium w-[100px]">Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {filteredProviders.map((row) => {
+                      const areas = row.coverage_areas ?? []
+                      const shownAreas = areas.slice(0, 2)
+                      const moreAreas = areas.length - shownAreas.length
+                      const svcList = parseServicesField(row.services)
+                      const expanded = expandedProviders.has(row.id)
+                      const dr =
+                        row.days_remaining != null &&
+                        row.days_remaining !== ''
+                          ? Number(row.days_remaining)
+                          : null
+                      return (
+                        <Fragment key={row.id}>
+                          <tr className="border-b border-border/80 hover:bg-muted/30">
+                            <td className="p-3 align-top font-heading text-xs font-bold text-gold whitespace-nowrap">
+                              {row.customer_code ?? '—'}
+                            </td>
+                            <td className="p-3 align-top">{row.name ?? '—'}</td>
+                            <td className="p-3 align-top whitespace-nowrap">
+                              {row.phone ? (
+                                <a
+                                  href={`tel:${row.phone}`}
+                                  className="text-gold hover:underline"
+                                >
+                                  {row.phone}
+                                </a>
+                              ) : (
+                                '—'
+                              )}
+                            </td>
+                            <td className="p-3 align-top">
+                              <ProvinceBadge p={row.province} />
+                            </td>
+                            <td className="p-3 align-top">
+                              <ProviderTierBadge tier={row.tier} />
+                            </td>
+                            <td className="p-3 align-top">
+                              <ProviderStatusBadge status={row.status} />
+                            </td>
+                            <td className="p-3 align-top max-w-[200px]">
+                              <div className="flex flex-wrap gap-1">
+                                {shownAreas.map((a) => (
+                                  <span
+                                    key={a}
+                                    className="inline-flex rounded-full bg-muted px-2 py-0.5 text-xs"
+                                  >
+                                    {a}
+                                  </span>
+                                ))}
+                                {moreAreas > 0 && (
+                                  <span className="text-xs text-muted-foreground">
+                                    +{moreAreas} more
+                                  </span>
+                                )}
+                              </div>
+                            </td>
+                            <td className="p-3 align-top text-muted-foreground text-xs">
+                              {svcList.length} services
+                            </td>
+                            <td className="p-3 align-top">
+                              <ProviderExpiryDays days={dr} expiry={row.expiry_date} />
+                            </td>
+                            <td className="p-3 align-top">
+                              <GoldButton
+                                type="button"
+                                label={expanded ? 'Hide' : 'View'}
+                                size="sm"
+                                variant="outline"
+                                onClick={() =>
+                                  setExpandedProviders((prev) => {
+                                    const n = new Set(prev)
+                                    if (n.has(row.id)) n.delete(row.id)
+                                    else n.add(row.id)
+                                    return n
+                                  })
+                                }
+                              />
+                            </td>
+                          </tr>
+                          {expanded && (
+                            <tr className="bg-muted/20 border-b border-border/80">
+                              <td colSpan={10} className="p-4 text-sm">
+                                <div className="grid gap-3 md:grid-cols-2">
+                                  <div>
+                                    <p className="text-xs font-medium text-muted-foreground mb-1">
+                                      Coverage areas
+                                    </p>
+                                    <div className="flex flex-wrap gap-1">
+                                      {areas.map((a) => (
+                                        <span
+                                          key={a}
+                                          className="inline-flex rounded-full bg-muted px-2 py-0.5 text-xs"
+                                        >
+                                          {a}
+                                        </span>
+                                      ))}
+                                    </div>
+                                  </div>
+                                  <div>
+                                    <p className="text-xs font-medium text-muted-foreground mb-1">
+                                      Services
+                                    </p>
+                                    <div className="flex flex-wrap gap-1">
+                                      {svcList.map((s) => (
+                                        <span
+                                          key={s}
+                                          className="inline-flex rounded-full border border-border px-2 py-0.5 text-xs"
+                                        >
+                                          {getServiceLabel(s)}
+                                        </span>
+                                      ))}
+                                    </div>
+                                  </div>
+                                  <div>
+                                    <p className="text-xs text-muted-foreground">
+                                      Base address
+                                    </p>
+                                    <p>{row.base_address ?? '—'}</p>
+                                  </div>
+                                  <div>
+                                    <p className="text-xs text-muted-foreground">
+                                      Email
+                                    </p>
+                                    <p className="break-all">{row.email ?? '—'}</p>
+                                  </div>
+                                  <div>
+                                    <p className="text-xs text-muted-foreground">
+                                      Activation date
+                                    </p>
+                                    <p>{formatDate(row.activation_date)}</p>
+                                  </div>
+                                  <div>
+                                    <p className="text-xs text-muted-foreground">
+                                      Amount paid
+                                    </p>
+                                    <p>
+                                      {row.amount_paid != null && row.amount_paid !== ''
+                                        ? `R${Number(row.amount_paid).toLocaleString('en-ZA')}`
+                                        : '—'}
+                                    </p>
+                                  </div>
+                                  <div>
+                                    <p className="text-xs text-muted-foreground">
+                                      Payment date
+                                    </p>
+                                    <p>{formatDate(row.payment_date)}</p>
+                                  </div>
+                                </div>
+                              </td>
+                            </tr>
+                          )}
+                        </Fragment>
+                      )
+                    })}
+                  </tbody>
+                </table>
+              </div>
+            )}
+          </div>
+        </TabsContent>
+
+        <TabsContent value="finance" className="mt-6 space-y-6">
+          {financeMismatchCount > 0 && (
+            <div className="rounded-lg border border-amber-500/40 bg-amber-500/10 px-4 py-3 text-sm text-foreground">
+              ⚠️ {financeMismatchCount} payment(s) have amount mismatches. Review
+              the payment history below.
+            </div>
+          )}
+          {loading && !financeSummary ? (
+            <TableSkeleton cols={3} />
+          ) : (
+            <>
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                <div className="rounded-xl border border-gold/40 bg-gold/10 p-4">
+                  <p className="text-xs text-muted-foreground">Total Revenue</p>
+                  <p className="text-2xl font-bold text-gold mt-1">
+                    R
+                    {(financeSummary?.totalRevenue ?? 0).toLocaleString('en-ZA')}
+                  </p>
+                  <p className="text-xs text-muted-foreground mt-1">All time</p>
+                </div>
+                <div className="rounded-xl border border-success/40 bg-success/10 p-4">
+                  <p className="text-xs text-muted-foreground">This Month</p>
+                  <p className="text-2xl font-bold text-success mt-1">
+                    R
+                    {(financeSummary?.thisMonthRevenue ?? 0).toLocaleString(
+                      'en-ZA'
+                    )}
+                  </p>
+                  <p className="text-xs text-muted-foreground mt-1">
+                    {financeMonthLabels.thisMonthLabel}
+                  </p>
+                </div>
+                <div className="rounded-xl border border-border bg-muted/30 p-4">
+                  <p className="text-xs text-muted-foreground">Last Month</p>
+                  <p className="text-2xl font-bold text-foreground mt-1">
+                    R
+                    {(financeSummary?.lastMonthRevenue ?? 0).toLocaleString(
+                      'en-ZA'
+                    )}
+                  </p>
+                  <p className="text-xs text-muted-foreground mt-1">
+                    {financeMonthLabels.lastMonthLabel}
+                  </p>
+                </div>
+                <div className="rounded-xl border border-blue-500/40 bg-blue-500/10 p-4">
+                  <p className="text-xs text-muted-foreground">
+                    Projected Next Month
+                  </p>
+                  <p className="text-2xl font-bold text-blue-600 dark:text-blue-400 mt-1">
+                    R
+                    {(financeSummary?.projectedNextMonth ?? 0).toLocaleString(
+                      'en-ZA'
+                    )}
+                  </p>
+                  <p className="text-xs text-muted-foreground mt-1">
+                    Based on active subscribers
+                  </p>
+                </div>
+                <div className="rounded-xl border border-success/40 bg-success/10 p-4">
+                  <p className="text-xs text-muted-foreground">
+                    Active Subscribers
+                  </p>
+                  <p className="text-2xl font-bold text-success mt-1">
+                    {financeSummary?.activeCount ?? 0}
+                  </p>
+                  <p className="text-xs text-muted-foreground mt-1">
+                    Currently active
+                  </p>
+                </div>
+                <div className="rounded-xl border border-amber-500/40 bg-amber-500/10 p-4">
+                  <p className="text-xs text-muted-foreground">Starter / Pro</p>
+                  <p className="text-2xl font-bold text-amber-700 dark:text-amber-400 mt-1">
+                    {financeSummary?.starterCount ?? 0} /{' '}
+                    {financeSummary?.proCount ?? 0}
+                  </p>
+                  <p className="text-xs text-muted-foreground mt-1">
+                    Starter / Pro
+                  </p>
+                </div>
+              </div>
+
+              <div className="flex flex-wrap items-center justify-between gap-3">
+                <h2 className="font-heading text-lg font-semibold">
+                  Payment History
+                </h2>
+                <GoldButton
+                  type="button"
+                  label="Export CSV"
+                  size="sm"
+                  variant="outline"
+                  onClick={() => exportFinanceToCsv(financePayments)}
+                />
+              </div>
+
+              {loading ? (
+                <TableSkeleton cols={8} />
+              ) : financePayments.length === 0 ? (
+                <p className="text-muted-foreground text-sm py-8">
+                  No payment rows yet.
+                </p>
+              ) : (
+                <div className="overflow-x-auto rounded-lg border border-border">
+                  <table className="w-full min-w-[1000px] text-sm text-left">
+                    <thead className="bg-muted/50 border-b border-border">
+                      <tr>
+                        <th className="p-3 font-medium">Code</th>
+                        <th className="p-3 font-medium">Name</th>
+                        <th className="p-3 font-medium">Tier</th>
+                        <th className="p-3 font-medium">Amount</th>
+                        <th className="p-3 font-medium">Payment date</th>
+                        <th className="p-3 font-medium">Activation</th>
+                        <th className="p-3 font-medium">Expiry</th>
+                        <th className="p-3 font-medium">Days left</th>
+                        <th className="p-3 font-medium">Status</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {financePayments.map((p) => (
+                        <tr
+                          key={p.id}
+                          className="border-b border-border/80 hover:bg-muted/30"
+                        >
+                          <td className="p-3 align-top font-bold text-gold text-xs whitespace-nowrap">
+                            {p.customerCode ?? '—'}
+                          </td>
+                          <td className="p-3 align-top">{p.name ?? '—'}</td>
+                          <td className="p-3 align-top">
+                            <ProviderTierBadge tier={p.tier} />
+                          </td>
+                          <td className="p-3 align-top">
+                            {p.amountPaid != null
+                              ? `R${Number(p.amountPaid).toLocaleString('en-ZA')}`
+                              : '—'}
+                          </td>
+                          <td className="p-3 align-top whitespace-nowrap">
+                            {p.paymentDate
+                              ? new Date(p.paymentDate).toLocaleDateString(
+                                  'en-ZA'
+                                )
+                              : '—'}
+                          </td>
+                          <td className="p-3 align-top whitespace-nowrap">
+                            {p.activationDate
+                              ? new Date(p.activationDate).toLocaleDateString(
+                                  'en-ZA'
+                                )
+                              : '—'}
+                          </td>
+                          <td className="p-3 align-top whitespace-nowrap">
+                            {p.expiryDate
+                              ? new Date(p.expiryDate).toLocaleDateString(
+                                  'en-ZA'
+                                )
+                              : '—'}
+                          </td>
+                          <td className="p-3 align-top">
+                            <FinanceDaysBadge days={p.daysRemaining} />
+                          </td>
+                          <td className="p-3 align-top">
+                            <ProviderStatusBadge status={p.status} />
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              )}
+            </>
+          )}
+        </TabsContent>
       </Tabs>
+
+      <Dialog
+        open={activateTarget != null}
+        onOpenChange={(open) => {
+          if (!open) closeActivateModal()
+        }}
+      >
+        <DialogContent className="sm:max-w-md">
+          <DialogHeader>
+            <DialogTitle>Activate Account</DialogTitle>
+            <DialogDescription>
+              {activateTarget?.name ?? 'Locksmith'} · Code{' '}
+              <span className="font-mono text-gold">
+                {activateTarget?.customer_code ?? '—'}
+              </span>
+            </DialogDescription>
+          </DialogHeader>
+          {!activateMismatchStep ? (
+            <div className="space-y-2 py-2">
+              <label
+                htmlFor="activate-amount"
+                className="text-sm font-medium text-foreground"
+              >
+                Amount on proof of payment
+              </label>
+              <input
+                id="activate-amount"
+                type="number"
+                min={0}
+                step={0.01}
+                value={activateAmountStr}
+                onChange={(e) => setActivateAmountStr(e.target.value)}
+                className="w-full rounded-lg border border-border bg-background px-3 py-2 text-sm"
+              />
+              <p className="text-xs text-muted-foreground">
+                Expected: R
+                {activateTarget
+                  ? expectedTierAmount(activateTarget.tier).toLocaleString(
+                      'en-ZA'
+                    )
+                  : '—'}{' '}
+                ({activateTarget?.tier ?? '—'})
+              </p>
+            </div>
+          ) : (
+            <p className="text-sm text-amber-700 dark:text-amber-400 py-2 leading-relaxed">
+              ⚠️ Amount paid (R
+              {(parseFloat(activateAmountStr) || 0).toLocaleString('en-ZA')})
+              does not match expected (R
+              {activateTarget
+                ? expectedTierAmount(activateTarget.tier).toLocaleString(
+                    'en-ZA'
+                  )
+                : '—'}
+              ).
+              <br />
+              Activate anyway?
+            </p>
+          )}
+          <DialogFooter className="gap-2 sm:gap-0">
+            {!activateMismatchStep ? (
+              <>
+                <button
+                  type="button"
+                  onClick={closeActivateModal}
+                  className="rounded-lg border border-border px-4 py-2 text-sm hover:bg-muted"
+                >
+                  Cancel
+                </button>
+                <GoldButton
+                  type="button"
+                  label="Activate Account"
+                  size="sm"
+                  disabled={!!actionKey}
+                  onClick={() => void onActivateModalConfirm()}
+                />
+              </>
+            ) : (
+              <>
+                <button
+                  type="button"
+                  onClick={() => setActivateMismatchStep(false)}
+                  className="rounded-lg border border-border px-4 py-2 text-sm hover:bg-muted"
+                >
+                  Back
+                </button>
+                <GoldButton
+                  type="button"
+                  label="Yes, activate anyway"
+                  size="sm"
+                  disabled={!!actionKey}
+                  onClick={() => {
+                    if (!activateTarget) return
+                    void submitActivatePayment(
+                      activateTarget,
+                      parseFloat(activateAmountStr) || 0
+                    )
+                  }}
+                />
+              </>
+            )}
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </div>
+  )
+}
+
+function ProvinceBadge({ p }: { p?: string }) {
+  if (!p) return <span className="text-muted-foreground">—</span>
+  return (
+    <span className="inline-flex rounded-full border border-border px-2 py-0.5 text-xs font-medium">
+      {p}
+    </span>
+  )
+}
+
+function ProviderTierBadge({ tier }: { tier?: string }) {
+  if (!tier) return <span className="text-muted-foreground">—</span>
+  const low = tier.toLowerCase()
+  const cls =
+    low === 'pro'
+      ? 'border-gold/60 bg-gold/10 text-gold'
+      : 'border-amber-500/50 bg-amber-500/10 text-amber-700 dark:text-amber-400'
+  return (
+    <span
+      className={cn(
+        'inline-flex rounded-full border px-2 py-0.5 text-xs font-medium capitalize',
+        cls
+      )}
+    >
+      {tier}
+    </span>
+  )
+}
+
+function ProviderStatusBadge({ status }: { status?: string }) {
+  if (!status) return <span className="text-muted-foreground">—</span>
+  const s = status.toLowerCase()
+  let cls = 'border-border bg-muted text-foreground'
+  if (s === 'active') cls = 'border-success/50 bg-success/15 text-success'
+  else if (s === 'pending') cls = 'border-blue-500/50 bg-blue-500/10 text-blue-600'
+  else if (s === 'approved')
+    cls = 'border-amber-500/50 bg-amber-500/10 text-amber-700 dark:text-amber-400'
+  else if (s === 'expired' || s === 'suspended')
+    cls = 'border-destructive/50 bg-destructive/10 text-destructive'
+  return (
+    <span
+      className={cn(
+        'inline-flex rounded-full border px-2 py-0.5 text-xs font-medium capitalize',
+        cls
+      )}
+    >
+      {status}
+    </span>
+  )
+}
+
+function ProviderExpiryDays({
+  days,
+  expiry,
+}: {
+  days: number | null
+  expiry?: string
+}) {
+  if (!expiry) {
+    return <span className="text-xs text-muted-foreground">No expiry yet</span>
+  }
+  if (days == null || Number.isNaN(days)) {
+    return <span className="text-muted-foreground">—</span>
+  }
+  let cls = 'text-success'
+  if (days < 3) cls = 'text-destructive font-medium'
+  else if (days < 7) cls = 'text-amber-600 dark:text-amber-400'
+  else if (days > 7) cls = 'text-success'
+  return (
+    <span className={cn('text-xs', cls)}>
+      {Math.round(days)} days
+    </span>
+  )
+}
+
+function FinanceDaysBadge({ days }: { days?: number | null }) {
+  if (days == null || Number.isNaN(Number(days))) {
+    return <span className="text-muted-foreground text-xs">—</span>
+  }
+  const d = Number(days)
+  let cls =
+    'bg-success/20 text-success border-success/30'
+  if (d < 3) cls = 'bg-destructive/20 text-destructive border-destructive/40'
+  else if (d < 7)
+    cls = 'bg-amber-500/15 text-amber-600 border-amber-500/40 dark:text-amber-400'
+  return (
+    <span
+      className={cn(
+        'inline-flex rounded-full border px-2 py-0.5 text-xs font-medium',
+        cls
+      )}
+    >
+      {Math.round(d)} days
+    </span>
   )
 }
 

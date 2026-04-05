@@ -6,6 +6,31 @@ import { CONTACT } from '@/lib/constants'
 import { API_SERVICE_OPTIONS, SUBURBS } from '@/lib/api-services'
 import { getVula24ApiBase } from '@/lib/vula24-api'
 
+const EMERGENCY_SERVICE_KEYS = [
+  'car_lockout',
+  'house_lockout',
+  'office_lockout',
+] as const
+const URGENT_SERVICE_KEYS = [
+  'lost_car_key',
+  'car_key_programming',
+  'broken_key_extraction',
+  'house_key_replacement',
+  'safe_opening',
+  'padlock_removal',
+  'ignition_repair',
+] as const
+const FLEXIBLE_SERVICE_KEYS = [
+  'car_key_duplication',
+  'house_key_duplication',
+  'lock_repair',
+  'lock_replacement',
+  'lock_upgrade',
+  'gate_motor',
+  'access_control',
+  'garage_door',
+] as const
+
 type Province = 'GP' | 'WC'
 type Tier = 'Starter' | 'Pro'
 
@@ -391,34 +416,112 @@ export function LocksmithApplicationForm() {
             </span>
           </span>
           <p className="text-xs text-muted-foreground mb-3">
-            Tick everything you can take — we match you to customers who need these jobs.
+            Tick everything you can take — we match you to customers who need these jobs. At least one
+            service is required.
           </p>
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 max-h-[min(280px,50vh)] overflow-y-auto rounded-lg border border-border bg-surface/50 p-3">
-            {API_SERVICE_OPTIONS.map(({ value, label }) => {
-              const checked = services.includes(value)
-              return (
-                <label
-                  key={value}
-                  className={`flex cursor-pointer items-start gap-2 rounded-md px-2 py-2 text-sm transition-colors hover:bg-background/80 ${
-                    checked ? 'text-foreground' : 'text-muted-foreground'
-                  }`}
-                >
-                  <input
-                    type="checkbox"
-                    checked={checked}
-                    onChange={() => {
-                      setServices((prev) =>
-                        checked
-                          ? prev.filter((s) => s !== value)
-                          : [...prev, value]
-                      )
-                    }}
-                    className="mt-0.5 h-4 w-4 shrink-0 rounded border-border text-gold focus:ring-gold"
-                  />
-                  <span>{label}</span>
-                </label>
-              )
-            })}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div className="rounded-lg border border-border bg-surface/50 p-3 space-y-2">
+              <p className="text-xs font-semibold text-foreground">
+                🔴 Emergency
+              </p>
+              <p className="text-[11px] text-muted-foreground">Emergency services</p>
+              {EMERGENCY_SERVICE_KEYS.map((value) => {
+                const opt = API_SERVICE_OPTIONS.find((o) => o.value === value)
+                if (!opt) return null
+                const checked = services.includes(value)
+                return (
+                  <label
+                    key={value}
+                    className={`flex cursor-pointer items-start gap-2 rounded-md px-2 py-1.5 text-sm transition-colors hover:bg-background/80 ${
+                      checked ? 'text-foreground' : 'text-muted-foreground'
+                    }`}
+                  >
+                    <input
+                      type="checkbox"
+                      checked={checked}
+                      onChange={() => {
+                        setServices((prev) =>
+                          checked ? prev.filter((s) => s !== value) : [...prev, value]
+                        )
+                      }}
+                      className="mt-0.5 h-4 w-4 shrink-0 rounded border-border text-gold focus:ring-gold"
+                    />
+                    <span>
+                      <span className="mr-1.5 inline-block h-2 w-2 shrink-0 rounded-full bg-red-500" aria-hidden />
+                      {opt.label}
+                    </span>
+                  </label>
+                )
+              })}
+            </div>
+            <div className="rounded-lg border border-border bg-surface/50 p-3 space-y-2">
+              <p className="text-xs font-semibold text-foreground">
+                🟡 Urgent
+              </p>
+              <p className="text-[11px] text-muted-foreground">Urgent services</p>
+              {URGENT_SERVICE_KEYS.map((value) => {
+                const opt = API_SERVICE_OPTIONS.find((o) => o.value === value)
+                if (!opt) return null
+                const checked = services.includes(value)
+                return (
+                  <label
+                    key={value}
+                    className={`flex cursor-pointer items-start gap-2 rounded-md px-2 py-1.5 text-sm transition-colors hover:bg-background/80 ${
+                      checked ? 'text-foreground' : 'text-muted-foreground'
+                    }`}
+                  >
+                    <input
+                      type="checkbox"
+                      checked={checked}
+                      onChange={() => {
+                        setServices((prev) =>
+                          checked ? prev.filter((s) => s !== value) : [...prev, value]
+                        )
+                      }}
+                      className="mt-0.5 h-4 w-4 shrink-0 rounded border-border text-gold focus:ring-gold"
+                    />
+                    <span>
+                      <span className="mr-1.5 inline-block h-2 w-2 shrink-0 rounded-full bg-amber-500" aria-hidden />
+                      {opt.label}
+                    </span>
+                  </label>
+                )
+              })}
+            </div>
+            <div className="rounded-lg border border-border bg-surface/50 p-3 space-y-2 md:col-span-1">
+              <p className="text-xs font-semibold text-foreground">
+                🟢 Flexible
+              </p>
+              <p className="text-[11px] text-muted-foreground">Flexible services</p>
+              {FLEXIBLE_SERVICE_KEYS.map((value) => {
+                const opt = API_SERVICE_OPTIONS.find((o) => o.value === value)
+                if (!opt) return null
+                const checked = services.includes(value)
+                return (
+                  <label
+                    key={value}
+                    className={`flex cursor-pointer items-start gap-2 rounded-md px-2 py-1.5 text-sm transition-colors hover:bg-background/80 ${
+                      checked ? 'text-foreground' : 'text-muted-foreground'
+                    }`}
+                  >
+                    <input
+                      type="checkbox"
+                      checked={checked}
+                      onChange={() => {
+                        setServices((prev) =>
+                          checked ? prev.filter((s) => s !== value) : [...prev, value]
+                        )
+                      }}
+                      className="mt-0.5 h-4 w-4 shrink-0 rounded border-border text-gold focus:ring-gold"
+                    />
+                    <span>
+                      <span className="mr-1.5 inline-block h-2 w-2 shrink-0 rounded-full bg-emerald-500" aria-hidden />
+                      {opt.label}
+                    </span>
+                  </label>
+                )
+              })}
+            </div>
           </div>
         </div>
 

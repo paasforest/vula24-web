@@ -1,23 +1,37 @@
 /**
  * Service keys sent to Railway API (snake_case).
- * Labels are for UI only.
+ * Matches GET /api/services on Railway (Phase 4).
  */
 export const API_SERVICE_OPTIONS = [
-  { value: 'car_lockout', label: 'Car lockout' },
-  { value: 'house_lockout', label: 'House lockout' },
-  { value: 'key_duplication', label: 'Key duplication' },
-  { value: 'lock_replacement', label: 'Lock replacement' },
-  { value: 'lock_repair', label: 'Lock repair' },
-  { value: 'safe_opening', label: 'Safe opening' },
-  { value: 'emergency_24h', label: 'Emergency / 24-hour' },
-  { value: 'commercial', label: 'Commercial / office' },
-  { value: 'security_access', label: 'Security & access control' },
-  { value: 'gate_garage', label: 'Gate & garage' },
-  { value: 'onsite_mobile', label: 'Onsite / mobile' },
-  { value: 'other', label: 'Other' },
+  { value: 'car_lockout', label: 'Car lockout', urgency: 'emergency' },
+  { value: 'house_lockout', label: 'House lockout', urgency: 'emergency' },
+  { value: 'office_lockout', label: 'Office lockout', urgency: 'emergency' },
+  { value: 'lost_car_key', label: 'Lost car key replacement', urgency: 'urgent' },
+  { value: 'car_key_duplication', label: 'Car key duplication', urgency: 'flexible' },
+  { value: 'car_key_programming', label: 'Car key programming', urgency: 'urgent' },
+  { value: 'broken_key_extraction', label: 'Broken car key extraction', urgency: 'urgent' },
+  { value: 'house_key_replacement', label: 'House key replacement', urgency: 'urgent' },
+  { value: 'house_key_duplication', label: 'House key duplication', urgency: 'flexible' },
+  { value: 'lock_repair', label: 'Lock repair', urgency: 'flexible' },
+  { value: 'lock_replacement', label: 'Lock replacement', urgency: 'flexible' },
+  { value: 'lock_upgrade', label: 'Lock upgrade', urgency: 'flexible' },
+  { value: 'safe_opening', label: 'Safe opening', urgency: 'urgent' },
+  { value: 'gate_motor', label: 'Gate motor repair', urgency: 'flexible' },
+  { value: 'access_control', label: 'Access control', urgency: 'flexible' },
+  { value: 'padlock_removal', label: 'Padlock removal', urgency: 'urgent' },
+  { value: 'garage_door', label: 'Garage door', urgency: 'flexible' },
+  { value: 'ignition_repair', label: 'Ignition repair', urgency: 'urgent' },
 ] as const
 
 export type ApiServiceKey = (typeof API_SERVICE_OPTIONS)[number]['value']
+
+export function getServiceLabel(value: string): string {
+  return API_SERVICE_OPTIONS.find((s) => s.value === value)?.label ?? value
+}
+
+export function getServiceUrgency(value: string): string {
+  return API_SERVICE_OPTIONS.find((s) => s.value === value)?.urgency ?? 'flexible'
+}
 
 /** Customer lead urgency → API */
 export const CUSTOMER_URGENCY_OPTIONS = [
