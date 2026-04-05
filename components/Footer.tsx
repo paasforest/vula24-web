@@ -15,12 +15,14 @@ export function Footer() {
       { label: 'Coverage', href: '/coverage' },
     ],
     areas: [
-      { label: 'Johannesburg', href: '/coverage' },
-      { label: 'Pretoria', href: '/coverage' },
-      { label: 'Cape Town', href: '/coverage' },
-      { label: 'All areas', href: '/coverage' },
+      { label: 'Locksmith Gauteng', href: '/locksmith-gauteng' },
+      { label: 'Locksmith Western Cape', href: '/locksmith-western-cape' },
+      { label: 'Johannesburg', href: '/locksmith-johannesburg' },
+      { label: 'Cape Town', href: '/locksmith-cape-town' },
+      { label: 'Coverage', href: '/coverage' },
     ],
     company: [
+      { label: 'Resources', href: '/resources' },
       { label: 'About', href: '/about' },
       { label: 'For locksmiths', href: '/for-locksmiths' },
       { label: 'Locksmith account', href: '/for-locksmiths/account' },

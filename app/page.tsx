@@ -6,6 +6,7 @@ import { StickyMobileCTA } from '@/components/StickyMobileCTA'
 import { CoverageVisual } from '@/components/home/CoverageVisual'
 import { HeroIllustration } from '@/components/home/HeroIllustration'
 import { LocksmithStripVisual } from '@/components/home/LocksmithStripVisual'
+import Link from 'next/link'
 import { CITIES, CONTACT } from '@/lib/constants'
 
 export const metadata: Metadata = {
@@ -83,6 +84,47 @@ export default function HomePage() {
           </div>
 
           <HeroIllustration />
+        </div>
+      </section>
+
+      {/* Popular areas — internal links to city SEO pages */}
+      <section className="py-10 px-4 border-t border-border bg-surface/50">
+        <div className="max-w-7xl mx-auto">
+          <p className="text-center text-sm font-heading font-bold text-gold uppercase tracking-wide mb-3">
+            Popular areas
+          </p>
+          <div className="flex flex-wrap justify-center gap-3 md:gap-4">
+            <Link
+              href="/locksmith-johannesburg"
+              className="rounded-full border border-border bg-background px-4 py-2 text-sm text-muted-foreground hover:border-gold hover:text-gold transition-colors"
+            >
+              Johannesburg locksmith
+            </Link>
+            <Link
+              href="/locksmith-cape-town"
+              className="rounded-full border border-border bg-background px-4 py-2 text-sm text-muted-foreground hover:border-gold hover:text-gold transition-colors"
+            >
+              Cape Town locksmith
+            </Link>
+            <Link
+              href="/locksmith-pretoria"
+              className="rounded-full border border-border bg-background px-4 py-2 text-sm text-muted-foreground hover:border-gold hover:text-gold transition-colors"
+            >
+              Pretoria locksmith
+            </Link>
+            <Link
+              href="/locksmith-gauteng"
+              className="rounded-full border border-border bg-background px-4 py-2 text-sm text-muted-foreground hover:border-gold hover:text-gold transition-colors"
+            >
+              All Gauteng
+            </Link>
+            <Link
+              href="/locksmith-western-cape"
+              className="rounded-full border border-border bg-background px-4 py-2 text-sm text-muted-foreground hover:border-gold hover:text-gold transition-colors"
+            >
+              All Western Cape
+            </Link>
+          </div>
         </div>
       </section>
 
@@ -321,6 +363,42 @@ export default function HomePage() {
           </div>
         </div>
       </section>
+
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            '@context': 'https://schema.org',
+            '@type': 'LocalBusiness',
+            name: 'Vula24',
+            '@id': 'https://www.vula24.co.za',
+            url: 'https://www.vula24.co.za',
+            description:
+              'Emergency locksmith services across Gauteng and Western Cape. Available 24/7.',
+            areaServed: [
+              {
+                '@type': 'State',
+                name: 'Gauteng',
+                containedInPlace: {
+                  '@type': 'Country',
+                  name: 'South Africa',
+                },
+              },
+              {
+                '@type': 'State',
+                name: 'Western Cape',
+                containedInPlace: {
+                  '@type': 'Country',
+                  name: 'South Africa',
+                },
+              },
+            ],
+            serviceType: 'Locksmith',
+            openingHours: 'Mo-Su 00:00-24:00',
+            priceRange: '$$',
+          }),
+        }}
+      />
 
       <StickyMobileCTA />
     </main>

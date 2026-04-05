@@ -18,27 +18,44 @@ const dmSans = DM_Sans({
 
 export const metadata: Metadata = {
   title: {
-    default: 'Vula24 — Software platform for South African locksmiths',
+    default: 'Vula24 — Emergency Locksmith Services | Gauteng & Western Cape',
     template: '%s | Vula24',
   },
   description:
-    'Vula24 is a lead generation service for locksmiths: monthly subscription, SMS customer leads in Gauteng and Western Cape. No app required.',
+    'Get a verified locksmith in minutes. 24/7 emergency locksmith services across Gauteng and Western Cape. Fast response, no hidden fees.',
   keywords: [
-    'locksmith leads',
-    'South Africa',
-    'Johannesburg',
-    'Cape Town',
-    'SMS leads',
-    'Vula24',
+    'locksmith',
+    'emergency locksmith',
+    'locksmith near me',
+    'locksmith Johannesburg',
+    'locksmith Cape Town',
+    'locksmith Gauteng',
+    'locksmith Western Cape',
+    'car lockout',
+    'house lockout',
+    '24 hour locksmith',
+    'locksmith South Africa',
   ],
   authors: [{ name: 'Vula24' }],
+  metadataBase: new URL('https://www.vula24.co.za'),
   openGraph: {
-    title: 'Vula24 — Software for locksmiths',
+    title: 'Vula24 — Emergency Locksmith Services',
     description:
-      'Monthly subscription for SMS locksmith leads in South Africa. Independent professionals; customers request help on the web.',
+      'Get a verified locksmith in minutes. 24/7 emergency services across Gauteng and Western Cape.',
     type: 'website',
     locale: 'en_ZA',
     siteName: 'Vula24',
+    url: 'https://www.vula24.co.za',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Vula24 — Emergency Locksmith Services',
+    description:
+      'Get a verified locksmith in minutes. 24/7 emergency services across Gauteng and Western Cape.',
+  },
+  robots: {
+    index: true,
+    follow: true,
   },
 }
 

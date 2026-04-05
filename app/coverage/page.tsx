@@ -1,4 +1,5 @@
 import { Metadata } from 'next'
+import Link from 'next/link'
 import { Nav } from '@/components/Nav'
 import { GoldButton } from '@/components/GoldButton'
 import { CITIES, LOCKSMITH_PORTAL_HREF } from '@/lib/constants'
@@ -37,12 +38,18 @@ export default function CoveragePage() {
 
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             {CITIES.gauteng.map((city) => (
-              <div
+              <Link
                 key={city}
-                className="bg-background border border-border rounded-xl p-4 text-center hover:border-gold transition-colors"
+                href={`/locksmith-${city.toLowerCase().replace(/\s+/g, '-')}`}
+                className="bg-background border border-border rounded-xl p-4 text-center hover:border-gold transition-colors group"
               >
-                <p className="font-medium">{city}</p>
-              </div>
+                <p className="font-medium group-hover:text-gold transition-colors">
+                  {city}
+                </p>
+                <p className="text-xs text-muted-foreground mt-1">
+                  Find a locksmith →
+                </p>
+              </Link>
             ))}
           </div>
         </div>
@@ -59,12 +66,18 @@ export default function CoveragePage() {
 
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             {CITIES.westernCape.map((city) => (
-              <div
+              <Link
                 key={city}
-                className="bg-surface border border-border rounded-xl p-4 text-center hover:border-gold transition-colors"
+                href={`/locksmith-${city.toLowerCase().replace(/\s+/g, '-')}`}
+                className="bg-surface border border-border rounded-xl p-4 text-center hover:border-gold transition-colors group"
               >
-                <p className="font-medium">{city}</p>
-              </div>
+                <p className="font-medium group-hover:text-gold transition-colors">
+                  {city}
+                </p>
+                <p className="text-xs text-muted-foreground mt-1">
+                  Find a locksmith →
+                </p>
+              </Link>
             ))}
           </div>
         </div>
