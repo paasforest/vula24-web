@@ -1,14 +1,23 @@
 import { NextResponse } from "next/server";
 
-const DEFAULT_UPSTREAM =
-  "https://vula24-production.up.railway.app/api/auth/locksmith/register";
+function apiBase(): string {
+  const explicit = process.env.LOCKSMITH_REGISTER_URL?.trim();
+  if (explicit) {
+    return explicit
+      .replace(/\/api\/auth\/locksmith\/register\/?$/i, "")
+      .replace(/\/$/, "");
+  }
+  return (
+    process.env.NEXT_PUBLIC_VULA24_API_URL?.trim() ||
+    "https://vula24-api-production.up.railway.app"
+  ).replace(/\/$/, "");
+}
 
 /**
- * Proxies locksmith registration to the Railway API (avoids browser CORS issues).
+ * Proxies locksmith registration to the Railway API (optional fallback).
  */
 export async function POST(request: Request) {
-  const upstreamUrl =
-    process.env.LOCKSMITH_REGISTER_URL?.trim() || DEFAULT_UPSTREAM;
+  const upstreamUrl = `${apiBase()}/api/auth/locksmith/register`;
 
   try {
     const body = await request.text();

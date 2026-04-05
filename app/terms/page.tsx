@@ -1,6 +1,5 @@
 import { Metadata } from 'next'
 import { Nav } from '@/components/Nav'
-import { Footer } from '@/components/Footer'
 
 export const metadata: Metadata = {
   title: 'Vula24 — Terms of Service',
@@ -106,8 +105,6 @@ export default function TermsPage() {
           </div>
         </div>
       </section>
-
-      <Footer />
     </main>
   )
 }

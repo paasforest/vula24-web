@@ -1,6 +1,5 @@
 import { Metadata } from 'next'
 import { Nav } from '@/components/Nav'
-import { Footer } from '@/components/Footer'
 import { GoldButton } from '@/components/GoldButton'
 import { CITIES, LOCKSMITH_PORTAL_HREF } from '@/lib/constants'
 
@@ -83,8 +82,6 @@ export default function CoveragePage() {
           <GoldButton label="Join as a Locksmith" href={LOCKSMITH_PORTAL_HREF} size="lg" />
         </div>
       </section>
-
-      <Footer />
     </main>
   )
 }

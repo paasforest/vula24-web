@@ -3,20 +3,22 @@
 import { useState } from 'react'
 import { cn } from '@/lib/utils'
 import { GoldButton } from './GoldButton'
-import { CITIES, CONTACT, CUSTOMER_JOB_SERVICES } from '@/lib/constants'
-
-const URGENCY_OPTIONS = [
-  { value: 'Right now — emergency', label: 'Right now — emergency' },
-  { value: 'Within the hour', label: 'Within the hour' },
-  { value: 'Today — flexible time', label: 'Today — flexible time' },
-] as const
+import { CITIES, CONTACT } from '@/lib/constants'
+import {
+  API_SERVICE_OPTIONS,
+  CUSTOMER_URGENCY_OPTIONS,
+  type CustomerUrgencyKey,
+} from '@/lib/api-services'
+import { getVula24ApiBase } from '@/lib/vula24-api'
 
 export function RequestForm() {
   const [name, setName] = useState('')
   const [phone, setPhone] = useState('')
   const [city, setCity] = useState('')
   const [serviceType, setServiceType] = useState('')
-  const [urgency, setUrgency] = useState<string>(URGENCY_OPTIONS[0].value)
+  const [urgency, setUrgency] = useState<CustomerUrgencyKey>(
+    CUSTOMER_URGENCY_OPTIONS[0].value
+  )
   const [notes, setNotes] = useState('')
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [isSuccess, setIsSuccess] = useState(false)
@@ -47,7 +49,8 @@ export function RequestForm() {
     setIsSubmitting(true)
 
     try {
-      const res = await fetch('/api/jobs-website-request', {
+      const base = getVula24ApiBase()
+      const res = await fetch(`${base}/api/jobs/website/request`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -59,7 +62,7 @@ export function RequestForm() {
           notes: notes.trim() || undefined,
         }),
       })
-      const data = await res.json().catch(() => ({}))
+      await res.json().catch(() => ({}))
       if (!res.ok) {
         setError('Something went wrong. Please WhatsApp us directly.')
         setIsSubmitting(false)
@@ -185,8 +188,8 @@ export function RequestForm() {
             className="w-full px-4 py-3 bg-background border border-border rounded-lg text-foreground focus:outline-none focus:ring-2 focus:ring-gold focus:border-transparent"
           >
             <option value="">Select a service</option>
-            {CUSTOMER_JOB_SERVICES.map((s) => (
-              <option key={s} value={s}>{s}</option>
+            {API_SERVICE_OPTIONS.map((s) => (
+              <option key={s.value} value={s.value}>{s.label}</option>
             ))}
           </select>
         </div>
@@ -196,7 +199,7 @@ export function RequestForm() {
             How urgent?
           </span>
           <div className="space-y-2">
-            {URGENCY_OPTIONS.map((opt) => (
+            {CUSTOMER_URGENCY_OPTIONS.map((opt) => (
               <label
                 key={opt.value}
                 className={cn(

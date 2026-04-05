@@ -1,6 +1,5 @@
 import { Metadata } from 'next'
 import { Nav } from '@/components/Nav'
-import { Footer } from '@/components/Footer'
 import { CONTACT } from '@/lib/constants'
 import { ContactForm } from './contact-form'
 
@@ -88,8 +87,6 @@ export default function ContactPage() {
           <ContactForm />
         </div>
       </section>
-
-      <Footer />
     </main>
   )
 }

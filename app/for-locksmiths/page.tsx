@@ -1,6 +1,5 @@
 import { Metadata } from 'next'
 import { Nav } from '@/components/Nav'
-import { Footer } from '@/components/Footer'
 import { GoldButton } from '@/components/GoldButton'
 import { PricingTiers } from '@/components/PricingTiers'
 import { LOCKSMITH_PORTAL_HREF } from '@/lib/constants'
@@ -98,8 +97,6 @@ export default function ForLocksmithsPage() {
           <PricingTiers />
         </div>
       </section>
-
-      <Footer />
     </main>
   )
 }

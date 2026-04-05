@@ -1,6 +1,5 @@
 import { Metadata } from 'next'
 import { Nav } from '@/components/Nav'
-import { Footer } from '@/components/Footer'
 import { GoldButton } from '@/components/GoldButton'
 
 export const metadata: Metadata = {
@@ -44,8 +43,6 @@ export default function ThankYouPage() {
           <GoldButton label="Back to Home" href="/" size="md" />
         </div>
       </section>
-
-      <Footer />
     </main>
   )
 }

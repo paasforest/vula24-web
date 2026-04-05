@@ -75,24 +75,12 @@ export const PRICING = [
   },
 ];
 
-/**
- * Services customers can request — keep in sync with locksmith signup offerings.
- * Locksmiths select a subset via checkboxes on /for-locksmiths.
- */
-export const CUSTOMER_JOB_SERVICES = [
-  "Emergency / 24-hour",
-  "Car Lockout",
-  "House Lockout",
-  "Commercial / office",
-  "Key Duplication",
-  "Lock Replacement",
-  "Lock Repair",
-  "Safe Opening",
-  "Security & access control",
-  "Gate & garage",
-  "Onsite / mobile",
-  "Other",
-] as const;
+import { API_SERVICE_OPTIONS } from "@/lib/api-services";
+
+/** Display labels only — same order as API keys in `API_SERVICE_OPTIONS`. */
+export const CUSTOMER_JOB_SERVICES = API_SERVICE_OPTIONS.map(
+  (o) => o.label
+) as readonly string[];
 
 /** Same list for locksmith application — multi-select all they offer */
 export const LOCKSMITH_SERVICE_OPTIONS = CUSTOMER_JOB_SERVICES;

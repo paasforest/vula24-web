@@ -1,7 +1,6 @@
 import Link from 'next/link'
 import { Metadata } from 'next'
 import { Nav } from '@/components/Nav'
-import { Footer } from '@/components/Footer'
 import { LocksmithPortal } from '@/components/LocksmithPortal'
 
 export const metadata: Metadata = {
@@ -54,8 +53,6 @@ export default function LocksmithAccountPage() {
           </p>
         </div>
       </section>
-
-      <Footer />
     </main>
   )
 }

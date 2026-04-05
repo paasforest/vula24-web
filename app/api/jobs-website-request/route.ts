@@ -1,12 +1,21 @@
 import { NextResponse } from "next/server";
 
-const DEFAULT_UPSTREAM =
-  "https://vula24-production.up.railway.app/api/jobs/website/request";
+function apiBase(): string {
+  const explicit = process.env.JOBS_WEBSITE_REQUEST_URL?.trim();
+  if (explicit) {
+    return explicit
+      .replace(/\/api\/jobs\/website\/request\/?$/i, "")
+      .replace(/\/$/, "");
+  }
+  return (
+    process.env.NEXT_PUBLIC_VULA24_API_URL?.trim() ||
+    "https://vula24-api-production.up.railway.app"
+  ).replace(/\/$/, "");
+}
 
-/** Proxies customer lead requests to Railway (avoids browser CORS). */
+/** Proxies customer lead requests to Railway (optional fallback if client uses Next route). */
 export async function POST(request: Request) {
-  const upstreamUrl =
-    process.env.JOBS_WEBSITE_REQUEST_URL?.trim() || DEFAULT_UPSTREAM;
+  const upstreamUrl = `${apiBase()}/api/jobs/website/request`;
 
   try {
     const body = await request.text();

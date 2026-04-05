@@ -23,6 +23,9 @@ export function Footer() {
     company: [
       { label: 'About', href: '/about' },
       { label: 'For locksmiths', href: '/for-locksmiths' },
+      { label: 'Locksmith account', href: '/for-locksmiths/account' },
+      { label: 'Locksmith dashboard', href: '/locksmith/dashboard' },
+      { label: 'Payment proof', href: '/locksmith/payment' },
       { label: 'Privacy Policy', href: '/privacy-policy' },
       { label: 'Terms of Service', href: '/terms' },
     ],

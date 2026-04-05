@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from 'next'
 import { Syne, DM_Sans } from 'next/font/google'
 import { Analytics } from '@vercel/analytics/next'
+import { Footer } from '@/components/Footer'
 import './globals.css'
 
 const syne = Syne({ 
@@ -56,7 +57,10 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${syne.variable} ${dmSans.variable}`}>
       <body className="font-sans antialiased bg-background text-foreground">
-        {children}
+        <div className="flex min-h-screen flex-col">
+          <div className="flex-1 min-w-0">{children}</div>
+          <Footer />
+        </div>
         {process.env.NODE_ENV === 'production' && <Analytics />}
       </body>
     </html>

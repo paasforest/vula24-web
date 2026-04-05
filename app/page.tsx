@@ -1,6 +1,5 @@
 import { Metadata } from 'next'
 import { Nav } from '@/components/Nav'
-import { Footer } from '@/components/Footer'
 import { GoldButton } from '@/components/GoldButton'
 import { RequestForm } from '@/components/RequestForm'
 import { StickyMobileCTA } from '@/components/StickyMobileCTA'
@@ -323,7 +322,6 @@ export default function HomePage() {
         </div>
       </section>
 
-      <Footer />
       <StickyMobileCTA />
     </main>
   )

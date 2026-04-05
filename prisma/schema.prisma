@@ -15,6 +15,9 @@ model CustomerRequest {
   urgency   String
   status    String   @default("pending")
   createdAt DateTime @default(now())
+  name      String?
+  city      String?
+  suburb    String?
 }
 
 model LocksmithApplication {
@@ -22,10 +25,71 @@ model LocksmithApplication {
   name       String
   phone      String
   city       String
-  experience String
-  vehicle    String
-  status     String   @default("new")
+  experience String   @default("")
+  vehicle    String   @default("")
+  status     String   @default("pending")
   createdAt  DateTime @default(now())
+  passwordHash String?
+
+  customerCode   String?   @unique
+  tier           String?
+  activationDate DateTime?
+  expiryDate     DateTime?
+  suspendedAt    DateTime?
+  province       String?
+  coverageAreas  String[]  @default([])
+  services       String[]  @default([])
+  baseAddress    String?
+  accountType    String    @default("INDIVIDUAL")
+  businessName   String?
+  email          String?
+  approvedAt     DateTime?
+  approvedBy     String?
+
+  proofOfPayments ProofOfPayment[]
+}
+
+model ProofOfPayment {
+  id                  String   @id @default(cuid())
+  locksmithId         String
+  locksmith           LocksmithApplication @relation(fields: [locksmithId], references: [id], onDelete: Cascade)
+  cloudinaryUrl       String
+  cloudinaryPublicId  String
+  amount              Float
+  tier                String
+  depositReference    String
+  status              String   @default("pending")
+  reviewedAt          DateTime?
+  reviewedBy          String?
+  createdAt           DateTime @default(now())
+}
+
+model SmsLog {
+  id        String   @id @default(cuid())
+  recipient String
+  message   String
+  jobId     String?
+  status    String   @default("sent")
+  provider  String   @default("smsportal")
+  createdAt DateTime @default(now())
+}
+
+model Job {
+  id            String    @id @default(cuid())
+  jobCode       String    @unique
+  service       String
+  urgency       String
+  customerName  String
+  customerPhone String
+  suburb        String
+  province      String
+  status        String    @default("pending")
+  claimedBy     String?
+  claimedAt     DateTime?
+  completedAt   DateTime?
+  notifiedCount Int       @default(0)
+  notifiedIds   String[]  @default([])
+  createdAt     DateTime  @default(now())
 }
 
 model ContactMessage {
