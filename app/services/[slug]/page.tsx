@@ -1,3 +1,4 @@
+import { Fragment, type ReactNode } from 'react'
 import { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import Link from 'next/link'
@@ -16,8 +17,141 @@ const SITE = 'https://www.vula24.co.za'
 
 const SLUGS = SERVICE_PAGES.map((s) => s.slug)
 
+/** High-intent metros — surfaced early for users + crawlers. */
+const POPULAR_AREAS = [
+  { slug: 'johannesburg', name: 'Johannesburg' },
+  { slug: 'cape-town', name: 'Cape Town' },
+  { slug: 'pretoria', name: 'Pretoria' },
+  { slug: 'sandton', name: 'Sandton' },
+] as const
+
 const cityLinkClass =
   'inline-flex items-center rounded-md border border-border bg-background px-3 py-1.5 text-sm text-foreground hover:border-primary/40 hover:bg-primary/5 transition-colors'
+
+const inlineCityLinkClass =
+  'font-medium text-foreground underline decoration-primary/50 underline-offset-2 hover:decoration-primary'
+
+function CityLink({ slug, children }: { slug: string; children: ReactNode }) {
+  return (
+    <Link href={`/locksmith-${slug}`} className={inlineCityLinkClass}>
+      {children}
+    </Link>
+  )
+}
+
+/** Short label for “service + city” copy (SEO phrases without new routes). */
+const SERVICE_LOCAL_LABEL: Record<string, string> = {
+  'car-lockout': 'Car lockout',
+  'house-lockout': 'House lockout',
+  'lost-car-key': 'Lost car key replacement',
+  'lock-repair': 'Lock repair',
+  'safe-opening': 'Safe opening',
+}
+
+function LocalServiceRelevanceBlock({ slug }: { slug: string }) {
+  const label = SERVICE_LOCAL_LABEL[slug] ?? 'Locksmith'
+  return (
+    <section
+      className="mb-8 rounded-lg border border-border bg-primary/[0.03] px-4 py-4"
+      aria-labelledby={`local-service-${slug}`}
+    >
+      <h2
+        id={`local-service-${slug}`}
+        className="font-heading font-semibold text-lg text-foreground mb-2"
+      >
+        {label} across Gauteng and the Western Cape
+      </h2>
+      <p className="text-muted-foreground leading-relaxed text-[15px]">
+        {label} services in{' '}
+        <CityLink slug="johannesburg">Johannesburg</CityLink>,{' '}
+        <CityLink slug="pretoria">Pretoria</CityLink>,{' '}
+        <CityLink slug="cape-town">Cape Town</CityLink>,{' '}
+        <CityLink slug="sandton">Sandton</CityLink>
+        {' '}and surrounding areas — plus the full city list below.
+      </p>
+    </section>
+  )
+}
+
+/** Natural in-copy links (not only list blocks) — unique per service. */
+function ContextualServiceIntro({ slug }: { slug: string }) {
+  switch (slug) {
+    case 'car-lockout':
+      return (
+        <p className="text-muted-foreground leading-relaxed">
+          If you are locked out of your car in{' '}
+          <CityLink slug="johannesburg">Johannesburg</CityLink>, we route
+          locksmiths who aim for fast arrival at offices, malls, and roadside
+          stops. For{' '}
+          <CityLink slug="cape-town">Cape Town</CityLink> we also cover areas
+          like <CityLink slug="bellville">Bellville</CityLink> and{' '}
+          <CityLink slug="somerset-west">Somerset West</CityLink> — sea air,
+          basements, and estate boom gates included. In{' '}
+          <CityLink slug="pretoria">Pretoria</CityLink> and{' '}
+          <CityLink slug="sandton">Sandton</CityLink>, we match pros used to
+          complex parking and access control.
+        </p>
+      )
+    case 'house-lockout':
+      return (
+        <p className="text-muted-foreground leading-relaxed">
+          Locked out in <CityLink slug="johannesburg">Johannesburg</CityLink> or{' '}
+          <CityLink slug="pretoria">Pretoria</CityLink>? We dispatch home
+          locksmiths for flats, freestanding houses, and sectional-title units.
+          In <CityLink slug="cape-town">Cape Town</CityLink>,{' '}
+          <CityLink slug="claremont">Claremont</CityLink> and{' '}
+          <CityLink slug="sea-point">Sea Point</CityLink>-style blocks are
+          common — we factor in body corporate rules. For{' '}
+          <CityLink slug="sandton">Sandton</CityLink> and northern Gauteng
+          estates, mention the complex name when you request help.
+        </p>
+      )
+    case 'lost-car-key':
+      return (
+        <p className="text-muted-foreground leading-relaxed">
+          Lost keys near <CityLink slug="sandton">Sandton</CityLink> or{' '}
+          <CityLink slug="fourways">Fourways</CityLink>? We connect you with
+          locksmiths who can cut, code, and programme many brands. In{' '}
+          <CityLink slug="cape-town">Cape Town</CityLink> and{' '}
+          <CityLink slug="bellville">Bellville</CityLink>, tourists and fleet
+          drivers often need same-day help — bring ID and registration.{' '}
+          <CityLink slug="johannesburg">Johannesburg</CityLink> and{' '}
+          <CityLink slug="pretoria">Pretoria</CityLink> call-outs cover
+          dealerships, logistics parks, and residential streets alike.
+        </p>
+      )
+    case 'lock-repair':
+      return (
+        <p className="text-muted-foreground leading-relaxed">
+          Sticky cylinders in <CityLink slug="randburg">Randburg</CityLink> or
+          weather-worn gate hardware in{' '}
+          <CityLink slug="roodepoort">Roodepoort</CityLink> need different fixes
+          than a shopfront in{' '}
+          <CityLink slug="johannesburg">Johannesburg</CityLink>. Coastal
+          corrosion? We route Western Cape jobs across{' '}
+          <CityLink slug="cape-town">Cape Town</CityLink>,{' '}
+          <CityLink slug="strand">Strand</CityLink>, and{' '}
+          <CityLink slug="george">George</CityLink>. Describe the door or gate
+          when you book — we send the right skills.
+        </p>
+      )
+    case 'safe-opening':
+      return (
+        <p className="text-muted-foreground leading-relaxed">
+          Business safes in <CityLink slug="sandton">Sandton</CityLink> or{' '}
+          <CityLink slug="pretoria">Pretoria</CityLink> government precincts
+          often need proof of access before opening. Home safes in{' '}
+          <CityLink slug="constantia">Constantia</CityLink> or{' '}
+          <CityLink slug="johannesburg">Johannesburg</CityLink> suburbs may need
+          specialist tools — not angle grinders from the wrong trade. We match
+          verified pros; <CityLink slug="cape-town">Cape Town</CityLink> and
+          Gauteng both have experienced safe locksmiths on the network.
+        </p>
+      )
+    default:
+      return null
+  }
+}
 
 const COPY: Record<
   string,
@@ -140,8 +274,35 @@ export default async function ServicePage({ params }: Props) {
         <h1 className="font-heading font-bold text-3xl md:text-4xl mb-4">
           {meta.title}
         </h1>
-        <p className="text-lg text-muted-foreground mb-8">{meta.lead}</p>
+
+        <div
+          className="mb-6 flex flex-wrap items-baseline gap-x-1 gap-y-1 text-sm"
+          aria-label="Popular service areas"
+        >
+          <span className="font-medium text-muted-foreground">Popular areas:</span>
+          {POPULAR_AREAS.map((a, i) => (
+            <Fragment key={a.slug}>
+              {i > 0 && (
+                <span className="text-muted-foreground/60 px-0.5" aria-hidden>
+                  |
+                </span>
+              )}
+              <Link
+                href={`/locksmith-${a.slug}`}
+                className="text-foreground font-medium hover:underline underline-offset-4 decoration-primary/40"
+              >
+                {a.name}
+              </Link>
+            </Fragment>
+          ))}
+        </div>
+
+        <p className="text-lg text-muted-foreground mb-6">{meta.lead}</p>
+
+        <LocalServiceRelevanceBlock slug={slug} />
+
         <div className="space-y-4 text-muted-foreground leading-relaxed mb-8">
+          <ContextualServiceIntro slug={slug} />
           {meta.body.map((p, i) => (
             <p key={i}>{p}</p>
           ))}
