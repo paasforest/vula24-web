@@ -34,7 +34,7 @@ export function Nav() {
               </Link>
             ))}
             <Link
-              href="/for-locksmiths/account"
+              href="/locksmith/login"
               className="text-xs text-muted-foreground hover:text-foreground transition-colors"
             >
               Partner Login
@@ -91,7 +91,7 @@ export function Nav() {
           </div>
           <div className="border-t border-border mt-3 pt-3">
             <Link
-              href="/for-locksmiths/account"
+              href="/locksmith/login"
               onClick={() => setIsOpen(false)}
               className="text-xs text-muted-foreground hover:text-foreground transition-colors"
             >
