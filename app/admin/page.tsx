@@ -7,10 +7,13 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { GoldButton } from '@/components/GoldButton'
 import { cn } from '@/lib/utils'
 
+/** Display only — data uses `/api/admin/railway/*` (Bearer token on server). */
 function apiBase(): string | null {
   const b = process.env.NEXT_PUBLIC_VULA24_API_URL?.trim()
   return b ? b.replace(/\/$/, '') : null
 }
+
+const RW = (path: string) => `/api/admin/railway/${path}`
 
 type PendingApp = {
   id: number
@@ -118,16 +121,15 @@ export default function AdminPage() {
   const [lastUpdated, setLastUpdated] = useState<Date | null>(null)
 
   const loadRailway = useCallback(async () => {
-    if (!base) return
     const [rp, rpay, ra] = await Promise.all([
-      fetch(`${base}/api/admin/pending`).then((r) => r.json()),
-      fetch(`${base}/api/admin/payments`).then((r) => r.json()),
-      fetch(`${base}/api/admin/active`).then((r) => r.json()),
+      fetch(RW('pending')).then((r) => r.json()),
+      fetch(RW('payments')).then((r) => r.json()),
+      fetch(RW('active')).then((r) => r.json()),
     ])
     setPending(asArray<PendingApp>(rp))
     setPayments(asArray<PaymentRow>(rpay))
     setActive(asArray<ActiveRow>(ra))
-  }, [base])
+  }, [])
 
   const loadRequests = useCallback(async () => {
     const res = await fetch('/api/admin/requests-session')
@@ -144,10 +146,6 @@ export default function AdminPage() {
   }, [])
 
   const loadAll = useCallback(async () => {
-    if (!base) {
-      setLoading(false)
-      return
-    }
     setLoading(true)
     try {
       await loadRailway()
@@ -163,19 +161,18 @@ export default function AdminPage() {
     }
     setLastUpdated(new Date())
     setLoading(false)
-  }, [base, loadRailway, loadRequests])
+  }, [loadRailway, loadRequests])
 
   useEffect(() => {
     void loadAll()
   }, [loadAll])
 
   useEffect(() => {
-    if (!base) return
     const t = setInterval(() => {
       void loadAll()
     }, 60_000)
     return () => clearInterval(t)
-  }, [base, loadAll])
+  }, [loadAll])
 
   const logout = async () => {
     await fetch('/api/admin/session', { method: 'DELETE' })
@@ -184,10 +181,9 @@ export default function AdminPage() {
   }
 
   const approve = async (id: number, tier: 'starter' | 'pro') => {
-    if (!base) return
     setActionKey(`approve-${id}-${tier}`)
     try {
-      const res = await fetch(`${base}/api/admin/approve/${id}`, {
+      const res = await fetch(RW(`approve/${id}`), {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ tier, approved_by: 'admin' }),
@@ -214,10 +210,9 @@ export default function AdminPage() {
   }
 
   const activatePayment = async (id: number) => {
-    if (!base) return
     setActionKey(`activate-${id}`)
     try {
-      const res = await fetch(`${base}/api/admin/activate/${id}`, {
+      const res = await fetch(RW(`activate/${id}`), {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ activated_by: 'admin' }),
@@ -241,12 +236,11 @@ export default function AdminPage() {
   }
 
   const rejectPayment = (id: number) => {
-    if (!base) return
     if (!window.confirm('Reject this payment proof?')) return
     void (async () => {
       setActionKey(`reject-${id}`)
       try {
-        const res = await fetch(`${base}/api/admin/suspend/${id}`, {
+        const res = await fetch(RW(`suspend/${id}`), {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ reason: 'payment_rejected' }),
@@ -266,10 +260,9 @@ export default function AdminPage() {
   }
 
   const suspendActive = async (id: number) => {
-    if (!base) return
     setActionKey(`suspend-${id}`)
     try {
-      const res = await fetch(`${base}/api/admin/suspend/${id}`, {
+      const res = await fetch(RW(`suspend/${id}`), {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ reason: 'admin_suspended' }),
@@ -328,18 +321,6 @@ export default function AdminPage() {
     [pending.length, payments.length, active.length]
   )
 
-  if (!base) {
-    return (
-      <div className="mx-auto max-w-5xl px-4 py-10">
-        <Toaster richColors position="top-right" />
-        <p className="text-destructive text-sm">
-          Set <code className="font-mono">NEXT_PUBLIC_VULA24_API_URL</code> in
-          your environment. No other base URL is used.
-        </p>
-      </div>
-    )
-  }
-
   return (
     <div className="mx-auto max-w-7xl px-4 py-10 space-y-6">
       <Toaster richColors position="top-right" />
@@ -375,8 +356,16 @@ export default function AdminPage() {
         </div>
       </div>
       <p className="text-xs text-muted-foreground font-mono break-all">
-        API: {base}
+        Railway admin (proxied with Bearer): {base ?? '(set NEXT_PUBLIC_VULA24_API_URL on the server)'}
       </p>
+      {!base && (
+        <p className="text-xs text-amber-600 dark:text-amber-400">
+          Without the public API URL, the proxy cannot reach Railway. Set{' '}
+          <code className="font-mono">NEXT_PUBLIC_VULA24_API_URL</code> and{' '}
+          <code className="font-mono">VULA24_API_ADMIN_TOKEN</code> (or{' '}
+          <code className="font-mono">ADMIN_PASSWORD</code>) to match the API.
+        </p>
+      )}
 
       <Tabs defaultValue="pending" className="w-full">
         <TabsList className="flex flex-wrap h-auto gap-0 border-b border-border bg-transparent p-0 rounded-none w-full justify-start">
