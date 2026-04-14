@@ -9,7 +9,7 @@ import { GoldButton } from './GoldButton'
 /** Main site header links — keep in sync with routes under `app/` */
 const NAV_LINKS: { label: string; href: string }[] = [
   { label: 'How It Works', href: '/how-it-works' },
-  { label: 'Pricing', href: '/pricing' },
+  { label: 'Pricing', href: '/for-locksmiths#pricing' },
   { label: 'For Locksmiths', href: '/for-locksmiths' },
   { label: 'Contact', href: '/contact' },
 ]

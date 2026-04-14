@@ -1,7 +1,6 @@
 import { Metadata } from 'next'
 import { Nav } from '@/components/Nav'
 import { GoldButton } from '@/components/GoldButton'
-import { PricingTiers } from '@/components/PricingTiers'
 import { LOCKSMITH_PORTAL_HREF } from '@/lib/constants'
 
 export const metadata: Metadata = {
@@ -22,9 +21,9 @@ export default function ForLocksmithsPage() {
             <span className="text-gold">On Vula24.</span>
           </h1>
           <p className="text-lg md:text-xl text-muted-foreground mb-8 max-w-2xl mx-auto text-pretty">
-            Vula24 is a lead generation service. Subscribe monthly to receive
-            customer contact details by SMS — you call them, quote the job and get
-            paid your way.
+            Vula24 is a lead generation service. During launch, founding locksmiths
+            join free — receive customer contact details by SMS, call them, quote
+            the job and get paid your way.
           </p>
           <div className="flex flex-wrap justify-center gap-4">
             <GoldButton label="Join as a Locksmith" href={LOCKSMITH_PORTAL_HREF} size="lg" />
@@ -64,7 +63,7 @@ export default function ForLocksmithsPage() {
               {
                 title: 'Simple and transparent',
                 description:
-                  'One flat monthly fee. No commission. No percentage taken from your jobs. What you earn is yours — always.',
+                  'Launch period is free — no subscription while we grow the network. Later, founding members get locked-in preferential pricing.',
                 icon: (
                   <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                     <path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83" />
@@ -84,17 +83,126 @@ export default function ForLocksmithsPage() {
         </div>
       </section>
 
-      <section className="py-16 md:py-24 px-4 border-t border-border">
-        <div className="max-w-5xl mx-auto">
-          <div className="text-center mb-12">
-            <h2 className="font-heading font-bold text-3xl md:text-4xl mb-4">
-              Simple monthly pricing
+      <section
+        id="pricing"
+        className="py-16 md:py-24 px-4 border-t border-border bg-[#1A1A1A] scroll-mt-24"
+      >
+        <div className="max-w-4xl mx-auto">
+          <div className="text-center mb-10 md:mb-12">
+            <p className="inline-flex items-center rounded-full border border-gold/40 bg-gold/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-wide text-gold mb-6">
+              Launch offer — Limited time
+            </p>
+            <h2 className="font-heading font-bold text-3xl md:text-4xl lg:text-5xl text-foreground mb-4 text-balance">
+              Free for founding locksmiths
             </h2>
-            <p className="text-muted-foreground text-lg max-w-xl mx-auto">
-              One flat fee. No commission. What you earn is yours — always.
+            <p className="text-muted-foreground text-base md:text-lg max-w-2xl mx-auto leading-relaxed">
+              We are building our network across Gauteng and Western Cape. Join
+              now at no cost and be the first locksmith customers find in your
+              area.
             </p>
           </div>
-          <PricingTiers />
+
+          <div className="grid md:grid-cols-3 gap-6 md:gap-8 mb-10 md:mb-12">
+            {[
+              {
+                title: '6 months free',
+                body: 'No payment required during our launch period. Get leads, build your profile and grow your reputation — completely free.',
+                icon: (
+                  <svg
+                    className="w-8 h-8"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    aria-hidden
+                  >
+                    <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
+                    <line x1="16" y1="2" x2="16" y2="6" />
+                    <line x1="8" y1="2" x2="8" y2="6" />
+                    <line x1="3" y1="10" x2="21" y2="10" />
+                    <path d="M8 14h.01M12 14h.01M16 14h.01M8 18h.01M12 18h.01" />
+                  </svg>
+                ),
+              },
+              {
+                title: 'Founding member pricing',
+                body: 'Locksmiths who join during launch lock in our lowest rate forever when paid plans launch. Early members always pay less.',
+                icon: (
+                  <svg
+                    className="w-8 h-8"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    aria-hidden
+                  >
+                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+                    <path d="M12 8v4M12 16h.01" />
+                  </svg>
+                ),
+              },
+              {
+                title: 'Limited spots per city',
+                body: 'We only accept a small number of locksmiths per city to ensure every member gets quality leads. Apply before your city fills up.',
+                icon: (
+                  <svg
+                    className="w-8 h-8"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    aria-hidden
+                  >
+                    <path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2" />
+                    <circle cx="9" cy="7" r="4" />
+                    <path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75" />
+                  </svg>
+                ),
+              },
+            ].map((card) => (
+              <div
+                key={card.title}
+                className="rounded-xl border border-border bg-background/60 p-6 md:p-8 flex flex-col"
+              >
+                <div className="w-14 h-14 rounded-xl border border-gold/25 bg-gold/10 flex items-center justify-center text-gold mb-4">
+                  {card.icon}
+                </div>
+                <h3 className="font-heading font-bold text-lg md:text-xl text-foreground mb-3">
+                  {card.title}
+                </h3>
+                <p className="text-muted-foreground text-sm md:text-base leading-relaxed flex-1">
+                  {card.body}
+                </p>
+              </div>
+            ))}
+          </div>
+
+          <div className="text-center">
+            <GoldButton
+              label="Apply Now — It's Free"
+              href={`${LOCKSMITH_PORTAL_HREF}#apply`}
+              size="lg"
+              className="w-full sm:w-auto min-w-[240px]"
+            />
+            <p className="text-muted-foreground text-sm mt-4 max-w-md mx-auto">
+              No credit card. No commitment. Cancel anytime during the free
+              period.
+            </p>
+          </div>
+
+          <hr className="border-border my-12 md:my-14" />
+
+          <p className="text-center text-xs md:text-sm text-muted-foreground max-w-xl mx-auto leading-relaxed">
+            Paid plans will be introduced after the launch period. Founding
+            members will receive 30 days notice and will always receive
+            preferential pricing.
+          </p>
         </div>
       </section>
     </main>

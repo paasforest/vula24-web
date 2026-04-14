@@ -70,7 +70,7 @@ const faqs = [
   {
     question: 'How does pricing work for locksmiths?',
     answer:
-      'Locksmiths pay a simple flat monthly fee. We never take a commission or percentage from what you earn.',
+      'During launch, founding locksmiths join free. When paid plans are introduced later, we will give 30 days notice. We never take a commission or percentage from what you earn from jobs.',
   },
   {
     question: 'Do I need to install an app?',

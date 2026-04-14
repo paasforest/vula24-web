@@ -41,7 +41,7 @@ export default function LocksmithAccountPage() {
         </section>
       </div>
 
-      <section className="px-4 py-10 md:py-14">
+      <section id="apply" className="px-4 py-10 md:py-14 scroll-mt-24">
         <div className="max-w-3xl mx-auto">
           <div className="rounded-2xl border border-border bg-surface/40 p-6 md:p-10 shadow-[0_24px_48px_-24px_rgba(0,0,0,0.45)]">
             <LocksmithPortal />
