@@ -21,15 +21,15 @@ function escapeXml(s) {
     .replace(/"/g, '&quot;')
 }
 
+/** Do not list URLs that only `redirect()` — GSC reports "Page with redirect" for those. */
 const staticPaths = [
   { path: '', changefreq: 'weekly', priority: 1.0 },
   { path: '/how-it-works', changefreq: 'monthly', priority: 0.8 },
   { path: '/coverage', changefreq: 'monthly', priority: 0.8 },
-  { path: '/pricing', changefreq: 'monthly', priority: 0.65 },
-  { path: '/apply', changefreq: 'monthly', priority: 0.65 },
+  // /pricing → /for-locksmiths, /apply → /for-locksmiths/account, /locksmith → /locksmith/login (omit)
   { path: '/thank-you', changefreq: 'yearly', priority: 0.3 },
-  { path: '/for-locksmiths', changefreq: 'monthly', priority: 0.7 },
-  { path: '/locksmith', changefreq: 'monthly', priority: 0.68 },
+  { path: '/for-locksmiths', changefreq: 'monthly', priority: 0.72 },
+  { path: '/for-locksmiths/account', changefreq: 'monthly', priority: 0.68 },
   { path: '/about', changefreq: 'monthly', priority: 0.6 },
   { path: '/contact', changefreq: 'monthly', priority: 0.6 },
   { path: '/terms', changefreq: 'yearly', priority: 0.35 },
