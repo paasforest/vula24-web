@@ -74,10 +74,13 @@ function statusPresentation(statusRaw?: string) {
   return { label: statusRaw ?? 'Unknown', className: 'bg-muted text-foreground border-border' }
 }
 
-function tierAmountLabel(tier?: string) {
+/** When true, dashboard hides R499/R899 and shows launch / founding-member copy. */
+const LAUNCH_FREE_SUBSCRIPTION = true
+
+function tierLabel(tier?: string) {
   const t = norm(tier ?? '')
-  if (t.includes('pro')) return { amount: 'R899', label: 'Pro' }
-  return { amount: 'R499', label: 'Starter' }
+  if (t.includes('pro')) return 'Pro'
+  return 'Starter'
 }
 
 function BankCard({
@@ -453,7 +456,7 @@ function DashboardBody() {
   if (!data) return null
 
   const st = statusPresentation(data.status)
-  const tierInfo = tierAmountLabel(data.tier)
+  const tierName = tierLabel(data.tier)
   const codeStr = data.customer_code ?? codeFromUrl
   const days = data.days_remaining ?? null
   const barPct =
@@ -540,8 +543,11 @@ function DashboardBody() {
         )}
         <div className="grid gap-2 text-sm text-muted-foreground">
           <p>
-            <span className="text-foreground font-medium">Tier:</span>{' '}
-            {tierInfo.label}
+            <span className="text-foreground font-medium">Plan tier:</span>{' '}
+            {tierName}
+            {LAUNCH_FREE_SUBSCRIPTION ? (
+              <span className="text-gold"> — founding member, free during launch</span>
+            ) : null}
           </p>
           {data.activation_date && (
             <p>
@@ -562,16 +568,36 @@ function DashboardBody() {
         <section className="space-y-4">
           <h2 className="font-heading text-xl font-semibold text-foreground">
             {s.includes('expired')
-              ? 'Renew your subscription'
+              ? LAUNCH_FREE_SUBSCRIPTION
+                ? 'Restore your account access'
+                : 'Renew your subscription'
               : s.includes('pending')
                 ? 'Complete your registration'
                 : 'Activate your account'}
           </h2>
-          <p className="text-lg text-foreground">
-            Amount:{' '}
-            <span className="font-bold text-gold">{tierInfo.amount}/month</span>{' '}
-            ({tierInfo.label})
-          </p>
+          {LAUNCH_FREE_SUBSCRIPTION ? (
+            <div className="rounded-lg border border-gold/30 bg-gold/5 p-4 text-sm text-foreground space-y-2">
+              <p className="font-semibold text-gold">Launch period — no monthly subscription</p>
+              <p className="text-muted-foreground leading-relaxed">
+                Your assigned tier is <strong className="text-foreground">{tierName}</strong>.
+                You will receive at least 30 days&apos; notice before any platform
+                subscription fee applies. Founding members receive preferential pricing when
+                paid plans begin.
+              </p>
+              <p className="text-muted-foreground text-xs">
+                If we asked you to upload proof of payment below, it is for account
+                verification or onboarding — not a monthly subscription during launch.
+              </p>
+            </div>
+          ) : (
+            <p className="text-lg text-foreground">
+              Amount:{' '}
+              <span className="font-bold text-gold">
+                {tierName === 'Pro' ? 'R899' : 'R499'}/month
+              </span>{' '}
+              ({tierName})
+            </p>
+          )}
           <BankCard
             bank={bank}
             reference={codeStr}
