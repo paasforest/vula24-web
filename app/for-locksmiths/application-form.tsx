@@ -32,9 +32,6 @@ const FLEXIBLE_SERVICE_KEYS = [
 ] as const
 
 type Province = 'GP' | 'WC'
-type Tier = 'Starter' | 'Pro'
-
-const STARTER_MAX_SUBURBS = 3
 
 export function LocksmithApplicationForm() {
   const [name, setName] = useState('')
@@ -43,7 +40,6 @@ export function LocksmithApplicationForm() {
   const [baseAddress, setBaseAddress] = useState('')
   const [businessName, setBusinessName] = useState('')
   const [province, setProvince] = useState<Province>('GP')
-  const [tier, setTier] = useState<Tier>('Starter')
   const [coverageAreas, setCoverageAreas] = useState<string[]>([])
   const [accountType, setAccountType] = useState<'individual' | 'business'>('individual')
   const [services, setServices] = useState<string[]>([])
@@ -59,10 +55,6 @@ export function LocksmithApplicationForm() {
     setCoverageAreas((prev) => {
       const has = prev.includes(suburb)
       if (has) return prev.filter((s) => s !== suburb)
-      if (tier === 'Starter' && prev.length >= STARTER_MAX_SUBURBS) {
-        setError(`Starter covers up to ${STARTER_MAX_SUBURBS} suburbs. Switch to Pro or remove one.`)
-        return prev
-      }
       setError('')
       return [...prev, suburb]
     })
@@ -71,14 +63,6 @@ export function LocksmithApplicationForm() {
   const handleProvinceChange = (p: Province) => {
     setProvince(p)
     setCoverageAreas([])
-    setError('')
-  }
-
-  const handleTierChange = (t: Tier) => {
-    setTier(t)
-    if (t === 'Starter' && coverageAreas.length > STARTER_MAX_SUBURBS) {
-      setCoverageAreas((prev) => prev.slice(0, STARTER_MAX_SUBURBS))
-    }
     setError('')
   }
 
@@ -116,10 +100,6 @@ export function LocksmithApplicationForm() {
     }
     if (coverageAreas.length === 0) {
       setError('Select at least one suburb you cover')
-      return
-    }
-    if (tier === 'Starter' && coverageAreas.length > STARTER_MAX_SUBURBS) {
-      setError(`Starter allows at most ${STARTER_MAX_SUBURBS} suburbs`)
       return
     }
     if (services.length === 0) {
@@ -329,64 +309,25 @@ export function LocksmithApplicationForm() {
 
         <div>
           <span className="block text-sm font-medium text-muted-foreground mb-2">
-            Coverage tier
-          </span>
-          <p className="text-xs text-muted-foreground mb-2">
-            Starter: up to {STARTER_MAX_SUBURBS} suburbs. Pro: full province list.
-          </p>
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
-            <button
-              type="button"
-              onClick={() => handleTierChange('Starter')}
-              className={`px-4 py-3 rounded-lg text-sm font-medium border transition-colors ${
-                tier === 'Starter'
-                  ? 'bg-gold text-background border-gold'
-                  : 'bg-surface text-muted-foreground border-border hover:border-gold'
-              }`}
-            >
-              Starter
-            </button>
-            <button
-              type="button"
-              onClick={() => handleTierChange('Pro')}
-              className={`px-4 py-3 rounded-lg text-sm font-medium border transition-colors ${
-                tier === 'Pro'
-                  ? 'bg-gold text-background border-gold'
-                  : 'bg-surface text-muted-foreground border-border hover:border-gold'
-              }`}
-            >
-              Pro
-            </button>
-          </div>
-        </div>
-
-        <div>
-          <span className="block text-sm font-medium text-muted-foreground mb-2">
             Suburbs you cover <span className="text-destructive" aria-hidden>*</span>
           </span>
           <p className="text-xs text-muted-foreground mb-3">
-            {tier === 'Starter'
-              ? `Select up to ${STARTER_MAX_SUBURBS} suburbs.`
-              : 'Select all suburbs you want to receive leads in.'}
+            Select every suburb where you want to receive leads. We will confirm coverage when we
+            review your application.
           </p>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 max-h-[min(280px,50vh)] overflow-y-auto rounded-lg border border-border bg-surface/50 p-3">
             {suburbs.map((suburb) => {
               const checked = coverageAreas.includes(suburb)
-              const disabled =
-                !checked &&
-                tier === 'Starter' &&
-                coverageAreas.length >= STARTER_MAX_SUBURBS
               return (
                 <label
                   key={suburb}
                   className={`flex cursor-pointer items-start gap-2 rounded-md px-2 py-2 text-sm transition-colors hover:bg-background/80 ${
-                    disabled ? 'opacity-50 cursor-not-allowed' : ''
-                  } ${checked ? 'text-foreground' : 'text-muted-foreground'}`}
+                    checked ? 'text-foreground' : 'text-muted-foreground'
+                  }`}
                 >
                   <input
                     type="checkbox"
                     checked={checked}
-                    disabled={disabled}
                     onChange={() => toggleSuburb(suburb)}
                     className="mt-0.5 h-4 w-4 shrink-0 rounded border-border text-gold focus:ring-gold"
                   />
