@@ -456,16 +456,28 @@ export default function AdminPage() {
       const j = (await res.json().catch(() => ({}))) as {
         error?: string
         customer_code?: string
+        smsSent?: boolean
       }
       if (!res.ok) {
         toast.error(j.error ?? 'Approve failed.')
         return
       }
-      const msg =
+      const codePart =
         j.customer_code != null && j.customer_code !== ''
           ? `Approved. Code: ${j.customer_code}.`
           : 'Approved.'
-      toast.success(msg)
+      if (j.smsSent === false) {
+        toast.warning(
+          `${codePart} Welcome SMS was not sent — check their number, SMSPortal credits, and Railway logs.`,
+          { duration: 10000 }
+        )
+      } else {
+        toast.success(
+          j.smsSent === true
+            ? `${codePart} Welcome SMS sent.`
+            : codePart
+        )
+      }
       setPending((prev) => prev.filter((p) => p.id !== id))
     } catch {
       toast.error('Network error.')
