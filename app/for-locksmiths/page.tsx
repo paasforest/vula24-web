@@ -1,7 +1,10 @@
 import { Metadata } from 'next'
 import { Nav } from '@/components/Nav'
 import { GoldButton } from '@/components/GoldButton'
-import { LOCKSMITH_PORTAL_HREF } from '@/lib/constants'
+import {
+  FIRST_PLATFORM_BILLING_MONTH,
+  LOCKSMITH_PORTAL_HREF,
+} from '@/lib/constants'
 
 export const metadata: Metadata = {
   title: 'Vula24 — For Locksmiths | Get more locksmith jobs',
@@ -105,8 +108,8 @@ export default function ForLocksmithsPage() {
           <div className="grid md:grid-cols-3 gap-6 md:gap-8 mb-10 md:mb-12">
             {[
               {
-                title: '6 months free',
-                body: 'No payment required during our launch period. Get leads, build your profile and grow your reputation — completely free.',
+                title: 'Founding period — join free',
+                body: `No platform subscription during launch. Build your profile and reputation first; we plan first billing from ${FIRST_PLATFORM_BILLING_MONTH} (with notice).`,
                 icon: (
                   <svg
                     className="w-8 h-8"
@@ -191,16 +194,16 @@ export default function ForLocksmithsPage() {
               className="w-full sm:w-auto min-w-[240px]"
             />
             <p className="text-muted-foreground text-sm mt-4 max-w-md mx-auto">
-              No credit card. No commitment. Cancel anytime during the free
-              period.
+              No credit card. Join now; first platform subscription planned from{' '}
+              {FIRST_PLATFORM_BILLING_MONTH}, with at least 30 days notice.
             </p>
           </div>
 
           <hr className="border-border my-12 md:my-14" />
 
           <p className="text-center text-xs md:text-sm text-muted-foreground max-w-xl mx-auto leading-relaxed">
-            Paid plans will be introduced after the launch period. Founding
-            members will receive 30 days notice and will always receive
+            We plan paid platform subscriptions from {FIRST_PLATFORM_BILLING_MONTH},
+            with at least 30 days notice. Founding members always receive
             preferential pricing.
           </p>
         </div>

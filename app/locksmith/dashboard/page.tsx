@@ -9,6 +9,10 @@ import { CONTACT } from '@/lib/constants'
 import { API_SERVICE_OPTIONS } from '@/lib/api-services'
 import { cn } from '@/lib/utils'
 import {
+  FIRST_PLATFORM_BILLING_MONTH,
+  LAUNCH_FREE_PLATFORM,
+} from '@/lib/constants'
+import {
   clearLocksmithToken,
   LOCKSMITH_TOKEN_KEY,
 } from '@/lib/locksmith-auth-storage'
@@ -73,9 +77,6 @@ function statusPresentation(statusRaw?: string) {
   }
   return { label: statusRaw ?? 'Unknown', className: 'bg-muted text-foreground border-border' }
 }
-
-/** When true, dashboard hides R499/R899 and shows launch / founding-member copy. */
-const LAUNCH_FREE_SUBSCRIPTION = true
 
 function tierLabel(tier?: string) {
   const t = norm(tier ?? '')
@@ -545,7 +546,7 @@ function DashboardBody() {
           <p>
             <span className="text-foreground font-medium">Plan tier:</span>{' '}
             {tierName}
-            {LAUNCH_FREE_SUBSCRIPTION ? (
+            {LAUNCH_FREE_PLATFORM ? (
               <span className="text-gold"> — founding member, free during launch</span>
             ) : null}
           </p>
@@ -568,20 +569,21 @@ function DashboardBody() {
         <section className="space-y-4">
           <h2 className="font-heading text-xl font-semibold text-foreground">
             {s.includes('expired')
-              ? LAUNCH_FREE_SUBSCRIPTION
+              ? LAUNCH_FREE_PLATFORM
                 ? 'Restore your account access'
                 : 'Renew your subscription'
               : s.includes('pending')
                 ? 'Complete your registration'
                 : 'Activate your account'}
           </h2>
-          {LAUNCH_FREE_SUBSCRIPTION ? (
+          {LAUNCH_FREE_PLATFORM ? (
             <div className="rounded-lg border border-gold/30 bg-gold/5 p-4 text-sm text-foreground space-y-2">
               <p className="font-semibold text-gold">Launch period — no monthly subscription</p>
               <p className="text-muted-foreground leading-relaxed">
                 Your assigned tier is <strong className="text-foreground">{tierName}</strong>.
-                You will receive at least 30 days&apos; notice before any platform
-                subscription fee applies. Founding members receive preferential pricing when
+                We plan the first platform subscription payment from{' '}
+                <strong className="text-foreground">{FIRST_PLATFORM_BILLING_MONTH}</strong>, with
+                at least 30 days&apos; notice. Founding members receive preferential pricing when
                 paid plans begin.
               </p>
               <p className="text-muted-foreground text-xs">

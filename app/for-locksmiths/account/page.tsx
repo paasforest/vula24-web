@@ -2,6 +2,7 @@ import Link from 'next/link'
 import { Metadata } from 'next'
 import { Nav } from '@/components/Nav'
 import { LocksmithPortal } from '@/components/LocksmithPortal'
+import { FIRST_PLATFORM_BILLING_MONTH } from '@/lib/constants'
 
 export const metadata: Metadata = {
   title: 'Vula24 — Join as a Locksmith',
@@ -35,7 +36,8 @@ export default function LocksmithAccountPage() {
             </h1>
             <p className="text-muted-foreground text-base md:text-lg max-w-xl leading-relaxed">
               Fill in your details below. We will review your application and contact you on WhatsApp
-              within 24 hours.
+              within 24 hours. Join now — we plan the first platform subscription payment from{' '}
+              {FIRST_PLATFORM_BILLING_MONTH}, with notice before any charge.
             </p>
           </div>
         </section>

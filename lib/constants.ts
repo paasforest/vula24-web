@@ -18,6 +18,12 @@ export const CONTACT = {
 /** Locksmith apply page */
 export const LOCKSMITH_PORTAL_HREF = "/for-locksmiths/account";
 
+/** First month targeted for platform subscription billing — keep marketing and admin copy in sync. */
+export const FIRST_PLATFORM_BILLING_MONTH = "November 2026";
+
+/** Launch: founding period — hide monthly tier prices in locksmith + admin; approvals still assign tier. */
+export const LAUNCH_FREE_PLATFORM = true;
+
 export const CITIES = {
   gauteng: [
     "Johannesburg",

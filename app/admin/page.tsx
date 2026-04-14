@@ -21,6 +21,10 @@ import {
 import { GoldButton } from '@/components/GoldButton'
 import { cn } from '@/lib/utils'
 import { getServiceLabel } from '@/lib/api-services'
+import {
+  FIRST_PLATFORM_BILLING_MONTH,
+  LAUNCH_FREE_PLATFORM,
+} from '@/lib/constants'
 
 /** Display only — data uses `/api/admin/railway/*` (Bearer token on server). */
 function apiBase(): string | null {
@@ -191,6 +195,7 @@ const TIER_EXPECTED_AMOUNT: Record<string, number> = {
 }
 
 function expectedTierAmount(tier?: string): number {
+  if (LAUNCH_FREE_PLATFORM) return 0
   if (!tier) return TIER_EXPECTED_AMOUNT.Starter
   const t = String(tier).trim()
   return TIER_EXPECTED_AMOUNT[t] ?? (t.toLowerCase() === 'pro' ? 899 : 499)
@@ -511,6 +516,10 @@ export default function AdminPage() {
     if (!activateTarget) return
     const row = activateTarget
     const amountPaid = parseFloat(activateAmountStr) || 0
+    if (LAUNCH_FREE_PLATFORM) {
+      void submitActivatePayment(row, amountPaid)
+      return
+    }
     const expected = expectedTierAmount(row.tier)
     if (amountPaid !== expected && !activateMismatchStep) {
       setActivateMismatchStep(true)
@@ -672,6 +681,7 @@ export default function AdminPage() {
   ])
 
   const financeMismatchCount = useMemo(() => {
+    if (LAUNCH_FREE_PLATFORM) return 0
     return financePayments.filter((p) => {
       if (p.amountPaid == null) return false
       const exp = expectedTierAmount(p.tier)
@@ -737,6 +747,19 @@ export default function AdminPage() {
           <code className="font-mono">VULA24_API_ADMIN_TOKEN</code> (or{' '}
           <code className="font-mono">ADMIN_PASSWORD</code>) to match the API.
         </p>
+      )}
+
+      {LAUNCH_FREE_PLATFORM && (
+        <div className="rounded-xl border border-gold/40 bg-gold/10 px-4 py-3 text-sm text-foreground">
+          <p className="font-semibold text-gold">Launch mode</p>
+          <p className="text-muted-foreground mt-1 leading-relaxed">
+            Approvals assign Starter or Pro and move applicants through onboarding — not a
+            monthly subscription. No platform subscription is due before{' '}
+            <strong className="text-foreground">{FIRST_PLATFORM_BILLING_MONTH}</strong>{' '}
+            (we will give notice). Keep approving to verify identity, PSIRA and capacity per
+            city.
+          </p>
+        </div>
       )}
 
       <Tabs defaultValue="pending" className="w-full">
@@ -807,14 +830,14 @@ export default function AdminPage() {
                         <div className="flex flex-wrap gap-2">
                           <GoldButton
                             type="button"
-                            label="Approve Starter — R499"
+                            label={`Approve Starter — free until ${FIRST_PLATFORM_BILLING_MONTH}`}
                             size="sm"
                             disabled={!!actionKey}
                             onClick={() => void approve(row.id, 'Starter')}
                           />
                           <GoldButton
                             type="button"
-                            label="Approve Pro — R899"
+                            label={`Approve Pro — free until ${FIRST_PLATFORM_BILLING_MONTH}`}
                             size="sm"
                             variant="outline"
                             disabled={!!actionKey}
@@ -1453,7 +1476,9 @@ export default function AdminPage() {
                     )}
                   </p>
                   <p className="text-xs text-muted-foreground mt-1">
-                    Based on active subscribers
+                    {LAUNCH_FREE_PLATFORM
+                      ? `From active members · first platform billing ${FIRST_PLATFORM_BILLING_MONTH}`
+                      : 'Based on active subscribers'}
                   </p>
                 </div>
                 <div className="rounded-xl border border-success/40 bg-success/10 p-4">
@@ -1592,7 +1617,9 @@ export default function AdminPage() {
                 htmlFor="activate-amount"
                 className="text-sm font-medium text-foreground"
               >
-                Amount on proof of payment
+                {LAUNCH_FREE_PLATFORM
+                  ? 'Amount on proof (if any)'
+                  : 'Amount on proof of payment'}
               </label>
               <input
                 id="activate-amount"
@@ -1604,13 +1631,24 @@ export default function AdminPage() {
                 className="w-full rounded-lg border border-border bg-background px-3 py-2 text-sm"
               />
               <p className="text-xs text-muted-foreground">
-                Expected: R
-                {activateTarget
-                  ? expectedTierAmount(activateTarget.tier).toLocaleString(
-                      'en-ZA'
-                    )
-                  : '—'}{' '}
-                ({activateTarget?.tier ?? '—'})
+                {LAUNCH_FREE_PLATFORM ? (
+                  <>
+                    Launch: no subscription due before {FIRST_PLATFORM_BILLING_MONTH}. Use{' '}
+                    <strong className="text-foreground">0</strong> if there is no charge, or
+                    enter any verification or onboarding amount on the proof (
+                    {activateTarget?.tier ?? '—'} tier).
+                  </>
+                ) : (
+                  <>
+                    Expected: R
+                    {activateTarget
+                      ? expectedTierAmount(activateTarget.tier).toLocaleString(
+                          'en-ZA'
+                        )
+                      : '—'}{' '}
+                    ({activateTarget?.tier ?? '—'})
+                  </>
+                )}
               </p>
             </div>
           ) : (
