@@ -6,6 +6,7 @@ import { StickyMobileCTA } from '@/components/StickyMobileCTA'
 import { CoverageVisual } from '@/components/home/CoverageVisual'
 import { HeroIllustration } from '@/components/home/HeroIllustration'
 import { LocksmithStripVisual } from '@/components/home/LocksmithStripVisual'
+import { AppDownload } from '@/components/home/AppDownload'
 import Link from 'next/link'
 import { CITIES, CONTACT } from '@/lib/constants'
 
@@ -342,6 +343,8 @@ export default function HomePage() {
           </div>
         </div>
       </section>
+
+      <AppDownload />
 
       {/* Final CTA */}
       <section className="py-16 md:py-24 px-4 text-center">
