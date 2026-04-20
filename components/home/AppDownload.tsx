@@ -12,49 +12,57 @@ export function AppDownload() {
             Mobile app
           </p>
           <h2 className="font-heading font-bold text-3xl md:text-4xl mb-4">
-            Book a locksmith from your phone
+            Get a locksmith in minutes — without the stress
           </h2>
           <p className="text-muted-foreground mb-6 max-w-lg">
-            The Vula24 app lets you book a verified locksmith, 
-            track them live on the map, and pay securely — 
-            all from your phone. No phone calls, no waiting on hold.
+            The Vula24 app connects you to a verified locksmith near you, shows the
+            price upfront, and lets you track them live — so you are never left
+            guessing.
           </p>
-          
+
           <ul className="space-y-3 text-muted-foreground text-sm mb-8">
             <li className="flex gap-2">
               <span className="text-gold font-heading font-bold shrink-0">→</span>
-              See the price before you confirm
+              See the full price before you confirm — no surprises, no price changes on
+              arrival.
             </li>
             <li className="flex gap-2">
               <span className="text-gold font-heading font-bold shrink-0">→</span>
-              Track your locksmith live on the map
+              Get help fast, 24/7 — request a locksmith in seconds and get matched
+              nearby.
             </li>
             <li className="flex gap-2">
               <span className="text-gold font-heading font-bold shrink-0">→</span>
-              Pay securely through the app
+              Track your locksmith live on the map — know exactly who is coming and
+              when.
             </li>
             <li className="flex gap-2">
               <span className="text-gold font-heading font-bold shrink-0">→</span>
-              Rate your locksmith after the job
+              Pay securely through the app — safe, simple, and recorded.
+            </li>
+            <li className="flex gap-2">
+              <span className="text-gold font-heading font-bold shrink-0">→</span>
+              Rate and review after the job — only trusted professionals stay on the
+              platform.
             </li>
           </ul>
 
           <div className="flex flex-wrap gap-4">
-            <GoldButton 
-              label="Coming soon on Google Play" 
-              href="https://wa.me/27729543821" 
+            <GoldButton
+              label="Coming soon on Google Play"
+              href="https://wa.me/27661235067"
               size="lg"
             />
             <GoldButton
-              label="WhatsApp to get early access"
-              href="https://wa.me/27729543821"
+              label="Join early access on WhatsApp"
+              href="https://wa.me/27661235067"
               size="lg"
               variant="outline"
             />
           </div>
 
-          <p className="text-muted-foreground text-xs mt-4">
-            App launching soon. WhatsApp us to join the early access list.
+          <p className="mt-4 text-xs text-muted-foreground">
+            No scams. No price changes. No waiting.
           </p>
         </div>
 
