@@ -1,6 +1,7 @@
 'use client'
 
 import { GoldButton } from '@/components/GoldButton'
+import { CONTACT } from '@/lib/constants'
 
 export function AppDownload() {
   return (
@@ -50,12 +51,12 @@ export function AppDownload() {
           <div className="flex flex-wrap gap-4">
             <GoldButton
               label="Coming soon on Google Play"
-              href="https://wa.me/27661235067"
+              href={`https://wa.me/${CONTACT.whatsapp}`}
               size="lg"
             />
             <GoldButton
               label="Join early access on WhatsApp"
-              href="https://wa.me/27661235067"
+              href={`https://wa.me/${CONTACT.whatsapp}`}
               size="lg"
               variant="outline"
             />

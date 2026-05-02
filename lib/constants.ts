@@ -10,8 +10,8 @@ export const COLORS = {
 };
 
 export const CONTACT = {
-  whatsapp: process.env.NEXT_PUBLIC_WHATSAPP_NUMBER ?? "27000000000",
-  phone: process.env.NEXT_PUBLIC_PHONE_NUMBER ?? "+27000000000",
+  whatsapp: process.env.NEXT_PUBLIC_WHATSAPP_NUMBER ?? "27661235067",
+  phone: process.env.NEXT_PUBLIC_PHONE_NUMBER ?? "+27661235067",
   email: process.env.NEXT_PUBLIC_EMAIL ?? "hello@vula24.co.za",
 };
 
